@@ -1,8 +1,8 @@
 #!/bin/bash
 # I think it is as simple as calling rubber on the .latex file
-# the following creates a ps file, converts it to pdf, 
-# and then removes temporary files. There is a '--clean' option for
-# rubber, but I can't get it to work without also removing the
-# intended output pdf file.
-rubber -pd $1
-rm *.dvi *.log *.aux *.ps
+
+# Creates a pdf file directly from a latex file, using pdflatex
+# 'rubber -pd $1' would create a ps file first, then a pdf from the ps
+rubber --pdf $1
+# Cleans up temporary files (e.g. *.aux) used to create the pdf
+rubber --clean $1
