@@ -1,6 +1,6 @@
-\begin{tabbing}
-\textbf{To:} \ \ \ \ \ \ \= Alyssa P. Hacker\\
-\textbf{From:} \> Ben Bitdiddle\\
-\textbf{Re:} \> Scheme\\
-\textbf{Date:} \> \today{}\\
-\end{tabbing}
+\begin{tabular}{@{}ll@{}}
+\textbf{To:} & Alyssa P. Hacker \\
+\textbf{From:} & Ben Bitdiddle \\
+\textbf{Re:} & Scheme \\
+\textbf{Date:} & \today
+\end{tabular}

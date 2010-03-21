@@ -1,3 +1,4 @@
-\documentclass[12pt]{article}
-\usepackage{fullpage}
+\documentclass[12pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
 \pagestyle{empty}

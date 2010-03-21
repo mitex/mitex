@@ -1,7 +1,4 @@
-\documentclass[12pt]{article}
-
+\documentclass[12pt,letterpaper]{article}
 \usepackage{fancyhdr}
-\usepackage[in,myheadings]{fullpage}
-
+\usepackage[margin=1in,top=1.5in,headheight=3em]{geometry}
 \pagestyle{fancy}
-\headheight 42pt
