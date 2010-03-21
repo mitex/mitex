@@ -69,20 +69,31 @@ def compile_ps(latex_file):
 
     print stdout
 
+def make_error_message(message):
+    return "<html><head><title>MITeX -- Error!</title></head><body>" + \
+        "<p><strong>Error: %s</strong></p></body></html>" % message
+
 form = cgi.FieldStorage()
 if "type" not in form:
     print "Content-type: text/plain"
     print
+    print make_error_message("Missing filetype!")
+
 elif "template" not in form:
     print "Content-type: text/plain"
     print
+    print make_error_message("Missing template name!")
+
+elif "filename" not in form:
+    print "Content-type: text/html"
+    print
+    print make_error_message("Missing filename!")
+
 elif re.match("^[A-z0-9_. -]+$", form.getvalue("filename")) is None:
     print "Content-type: text/html"
     print
-    print """
-<html><head><title>MITeX -- Error!</title></head><body>
-<p><strong>Error: Please limit your filename to alphanumreic characters, underscores, dashes, spaces, and periods!</strong></p>
-</body></html>"""
+    print make_error_message("Please limit your filename to alphanumreic characters, underscores, dashes, spaces, and periods!")
+
 else:
     latex_file = LaTeXFile(begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
                            middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
@@ -98,3 +109,4 @@ else:
     else:
         print "Content-type: text/plain"
         print
+        print make_error_message("Unexpected filetype: %s" % type)
