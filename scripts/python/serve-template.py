@@ -11,24 +11,30 @@ def serve():
         return
 
     file = None
+
+    # Serve template/begin
     if form.getvalue("type") == "begin":
         file = open("../../templates/%s/begin" % form.getvalue("template"), "r")
         print "<br />".join(file.readlines())
 
+    # Serve template/preamble (if it exists)
     elif form.getvalue("type") == "preamble":
         if os.path.exists("../../templates/%s/preamble" % form.getvalue("template")):
             file = open("../../templates/%s/preamble" % form.getvalue("template"), "r")
             print "".join(file.readlines())
 
+    # Serve template/middle
     elif form.getvalue("type") == "middle":
         file = open("../../templates/%s/middle" % form.getvalue("template"), "r")
         print "<br />".join(file.readlines())
 
+    # Serve template/body (if it exists)
     elif form.getvalue("type") == "body":
         if os.path.exists("../../templates/%s/body" % form.getvalue("template")):
             file = open("../../templates/%s/body" % form.getvalue("template"), "r")
             print "".join(file.readlines())
 
+    # Serve template/end
     elif form.getvalue("type") == "end":
         file = open("../../templates/%s/end" % form.getvalue("template"), "r")
         print "<br />".join(file.readlines())
