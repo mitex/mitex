@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # Composes a latex file by concatenating the latex segments contained
 # in the arguments to this script.
 
