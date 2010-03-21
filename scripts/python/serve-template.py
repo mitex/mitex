@@ -3,6 +3,7 @@
 import sys, cgi, cgitb, os
 cgitb.enable()
 
+
 def serve():
     form = cgi.FieldStorage()
 
@@ -33,5 +34,10 @@ def serve():
         print "<br />".join(file.readlines())
     
 
-print "Content-type: text/html\n";
-serve()
+def main():
+    print "Content-type: text/html\n";
+    serve()
+
+
+if __name__ == "__main__":
+    sys.exit(main())
