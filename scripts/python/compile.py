@@ -36,6 +36,19 @@ def compile_tex(begin_file, middle_file, end_file, preamble, body, name):
     print "".join(file.readlines())
     file.close()
 
+def compile_dvi(begin_file, middle_file, end_file, preamble, body, name):
+    print "Content-type: application/x-dvi"
+    print "Content-disposition: attachment; filename=%s.dvi" % name
+    print
+
+    tex = make_tex_string(begin_file, middle_file, end_file, preamble, body)
+    os.chdir("/tmp")
+    p = subprocess.Popen("rubber-pipe", shell=True, stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = p.communicate(tex)
+
+    return stdout
+
 def compile_pdf(begin_file, middle_file, end_file, preamble, body, name):
     print "Content-type: application/pdf"
     print "Content-disposition: attachement; filename=%s.pdf" % name
@@ -85,6 +98,7 @@ else:
         
         type = form.getvalue("type")
         if type == "tex": compile_tex(begin_file, middle_file, end_file, preamble, body, name)
+        elif type == "dvi": compile_dvi(begin_file, middle_file, end_file, preamble, body, name)
         elif type == "pdf": compile_pdf(begin_file, middle_file, end_file, preamble, body, name)
         elif type == "ps": compile_ps(begin_file, middle_file, end_file, preamble, body, name)
         else:
