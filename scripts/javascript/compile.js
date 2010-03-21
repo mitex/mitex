@@ -4,7 +4,7 @@ function get_log () {
     filename = document.getElementById("filename");
     template = document.getElementById("templates");
     log = document.getElementById("log");
-    log.innerHTML = ""
+    log.innerHTML = "Loading, please wait..."
 	    
     $.get("scripts/python/compile.py", { template: template.value, type: "log", 
 		latex_preamble: preamble.value, latex_body: body.value,
