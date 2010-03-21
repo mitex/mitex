@@ -98,8 +98,11 @@ def compile_log(latex_file):
 
 
 def make_error_message(message):
-    return "<html><head><title>MITeX -- Error!</title></head><body>" + \
-        "<p><strong>Error: %s</strong></p></body></html>" % message
+    return """Content-type: text/html
+
+<html><head><title>MITeX -- Error!</title></head><body>
+<p><strong>Error: %s</strong></p></body></html>
+""" % message
 
 
 def main():
@@ -108,28 +111,18 @@ def main():
 
     form = cgi.FieldStorage()
     if "type" not in form:
-        print "Content-type: text/html"
-        print
         print make_error_message("Missing filetype!")
 
     elif "template" not in form:
-        print "Content-type: text/html"
-        print
         print make_error_message("Missing template name!")
 
     elif "filename" not in form:
-        print "Content-type: text/html"
-        print
         print make_error_message("Missing filename!")
 
     elif re.match("^[A-z0-9_. -]+$", form.getvalue("filename")) is None:
-        print "Content-type: text/html"
-        print
         print make_error_message("Please limit your filename to alphanumreic characters, underscores, dashes, spaces, and periods!")
 
     elif form.getvalue("type") not in allowed_types.keys():
-        print "Content-type: text/html"
-        print
         print make_error_message("Unexpected filetype: %s" % form.getvalue("type"))
 
     else:
