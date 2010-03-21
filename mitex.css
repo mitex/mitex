@@ -34,6 +34,11 @@ td.logbox
 
 }
 
+td.logbox .tex
+{
+    display: none;
+}
+
 td.td_tex
 {
     border: 1px solid black;
