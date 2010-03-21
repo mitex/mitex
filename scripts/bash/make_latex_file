@@ -7,5 +7,10 @@ header=$2
 middle_file_name=$3
 body=$4
 end_file_name=$5
+output_filename=$6
 
-cat beginning_file_name header middle_file_name body end_file_name
+(cat $beginning_file_name; \
+echo $header; \
+cat $middle_file_name; \
+echo $body; \
+cat $end_file_name) > $output_filename
