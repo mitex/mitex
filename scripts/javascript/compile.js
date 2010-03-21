@@ -10,6 +10,6 @@ function get_log () {
 		latex_preamble: preamble.value, latex_body: body.value,
 		filename: filename.value },
 	function(data) {
-	    log.innerHTML = "<font face='Courier' size='2'>" + data + "</font>"
+	    log.innerHTML = data;
 		});
 }

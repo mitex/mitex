@@ -11,7 +11,7 @@ function loadTemplateFile(value) {
 	    if(value != "none") {
  		$.get("scripts/python/serve-template.py", { template: value, type: "begin" },
 		      function(data) {
-			  begin.innerHTML = "<font face='Courier'>" + data + "</font>";
+			  begin.innerHTML = data;
 			  begin_latex = data;
 		      });
 
@@ -22,7 +22,7 @@ function loadTemplateFile(value) {
 		
 		$.get("scripts/python/serve-template.py", { template: value, type: "middle" },
 		      function(data) {
-			  middle.innerHTML = "<font face='Courier'>" + data + "</font>";
+			  middle.innerHTML = data;
 			  mid_latex = data;
 		      });
 		
@@ -33,7 +33,7 @@ function loadTemplateFile(value) {
 		
 		$.get("scripts/python/serve-template.py", { template: value, type: "end" },
 		      function(data) {
-			  end.innerHTML = "<font face='Courier'>" + data + "</font>";
+			  end.innerHTML = data;
 			  end_latex = data;
 		      });
 
