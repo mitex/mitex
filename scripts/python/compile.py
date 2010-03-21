@@ -3,13 +3,17 @@
 import sys, cgi, cgitb, subprocess, os, re, tempfile
 cgitb.enable()
 
-
+# Make sure the object passed in is not None
+# (change it to "" if it is)
 def not_none(obj):
     if obj is None:
         return ""
     else:
         return obj
 
+# Wrapper for a tex file -- split up into beginning,
+# preamble, middle, body, and end.  It also has a name.
+# Can be made into a single string.
 class LaTeXFile(object):
     def __init__(self, begin, middle, end, preamble, body, name):
         self.begin = begin
@@ -19,39 +23,38 @@ class LaTeXFile(object):
         self.body = not_none(body)
         self.name = name
 
+    def __str__(self):
+        tex = ""
+        file = open(self.begin, "r")
+        tex += "".join(file.readlines()) + "\n"
+        file.close()
+        tex += self.preamble + "\n"
+        file = open(self.middle, "r")
+        tex += "".join(file.readlines()) + "\n"
+        file.close()
+        tex += self.body + "\n"
+        file = open(self.end, "r")
+        tex += "".join(file.readlines()) + "\n"
+        file.close()
 
-def make_tex_string(latex_file):
-    tex = ""
-    file = open(latex_file.begin, "r")
-    tex += "".join(file.readlines()) + "\n"
-    file.close()
-    tex += latex_file.preamble + "\n"
-    file = open(latex_file.middle, "r")
-    tex += "".join(file.readlines()) + "\n"
-    file.close()
-    tex += latex_file.body + "\n"
-    file = open(latex_file.end, "r")
-    tex += "".join(file.readlines()) + "\n"
-    file.close()
+        return tex
 
-    return tex
-
-
+# Respond with a tex file
 def compile_tex(latex_file):
     print "Content-type: application/x-tex"
     print "Content-disposition: attachment; filename=%s.tex" % latex_file.name
     print
 
-    tex = make_tex_string(latex_file)
+    tex = str(latex_file)
     print tex
 
-
+# Respond with a pdf file
 def compile_pdf(latex_file):
     print "Content-type: application/pdf"
     print "Content-disposition: attachment; filename=%s.pdf" % latex_file.name
     print
 
-    tex = make_tex_string(latex_file)
+    tex = str(latex_file)
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --pdf", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -59,13 +62,13 @@ def compile_pdf(latex_file):
 
     print stdout
 
-
+# Respond with a ps file
 def compile_ps(latex_file):
     print "Content-type: application/postscript"
     print "Content-disposition: attachment; filename=%s.ps" % latex_file.name
     print
 
-    tex = make_tex_string(latex_file)
+    tex = str(latex_file)
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --ps", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -73,14 +76,14 @@ def compile_ps(latex_file):
 
     print stdout
 
-
+# Respond with a log file
 def compile_log(latex_file):
     print "Content-type: text/html"
     print
 
     os.chdir("/tmp")
     tex = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False)
-    tex.write(make_tex_string(latex_file))
+    tex.write(str(latex_file))
     texname = tex.name
     tex.close()
 
@@ -97,6 +100,7 @@ def compile_log(latex_file):
     (stdout, stderr) = p.communicate()
 
 
+# Make an error message
 def make_error_message(message):
     return """Content-type: text/html
 
@@ -105,6 +109,8 @@ def make_error_message(message):
 """ % message
 
 
+# Parse the cgi input, and give a response of a certain file
+# type.
 def main():
     allowed_types = {"tex": compile_tex, "pdf": compile_pdf,
                      "ps": compile_ps,   "log": compile_log}
