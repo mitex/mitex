@@ -1,8 +1,11 @@
-include("jquery.js");
+function setTemplateList(data) {
+    list = document.getElementById("templates");
 
-alert("here")
+    $.each(data, function(i, item) {
+      	    list.options[list.options.length] = new Option(item, item);
+	});  
+}
 
-.get("../python/serve-template-list.py",
-     function(data) {
-	 alert("Data loaded:" + data)
-     });
+$(function () {
+	$.getJSON("scripts/python/serve-template-list.py", setTemplateList);
+    });

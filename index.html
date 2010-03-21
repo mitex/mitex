@@ -2,18 +2,27 @@
 <head>
 <title>MITeX -- Text->LaTeX Compiler</title>
 
+<script type="text/javascript" src="scripts/javascript/jquery.js"></script>
 <script type="text/javascript" src="scripts/javascript/query-templates.js"></script>
+<script type="text/javascript" src="scripts/javascript/load-template.js"></script>
 
 </head>
 <body>
 
 Please select a LaTeX template:
-<div id="templates">
-</div>
+<select id="templates" onchange="loadTemplateFile(this.value);">
+<option value="none"></option>
+</select><br /><br />
 
-Please enter your LaTeX code in the text box below:
+There are two parts of the LaTeX file that you can edit: the header,
+or the body.  The rest of the code is provided for you.<br /><br /><br />
 <form>
-<textarea rows="20" cols="100" name="code"></textarea>
+<div id="begin"></div>
+<textarea rows="10" cols="100" name="latex_header" id="header" disabled="true"></textarea>
+<div id="middle"></div>
+<textarea rows="20" cols="100" name="latex_body" id="body" disabled="true"></textarea>
+<div id="end"></div>
+<br /><br />
 <input type="submit" value="Compile" />
 </form>
 
