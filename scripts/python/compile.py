@@ -103,6 +103,9 @@ def make_error_message(message):
 
 
 def main():
+    allowed_types = {"tex": compile_tex, "pdf": compile_pdf,
+                     "ps": compile_ps,   "log": compile_log}
+
     form = cgi.FieldStorage()
     if "type" not in form:
         print "Content-type: text/html"
@@ -124,6 +127,11 @@ def main():
         print
         print make_error_message("Please limit your filename to alphanumreic characters, underscores, dashes, spaces, and periods!")
 
+    elif form.getvalue("type") not in allowed_types.keys():
+        print "Content-type: text/html"
+        print
+        print make_error_message("Unexpected filetype: %s" % form.getvalue("type"))
+
     else:
         latex_file = LaTeXFile(begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
                                middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
@@ -132,16 +140,7 @@ def main():
                                body=form.getvalue("latex_body"),
                                name=form.getvalue("filename"))
 
-        type = form.getvalue("type")
-        if type == "tex": compile_tex(latex_file)
-        elif type == "pdf": compile_pdf(latex_file)
-        elif type == "ps": compile_ps(latex_file)
-        elif type == "log": compile_log(latex_file)
-        else:
-            print "Content-type: text/html"
-            print
-            print make_error_message("Unexpected filetype: %s" % type)
-
+        allowed_types[form.getvalue("type")](latex_file)
 
 if __name__ == "__main__":
     sys.exit(main())
