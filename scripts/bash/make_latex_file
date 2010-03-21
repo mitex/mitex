@@ -13,4 +13,4 @@ output_filename="$6"
 echo "$header"; \
 cat "$middle_file_name"; \
 echo "$body"; \
-cat "$end_file_name") > "$output_filename"
+cat "$end_file_name") >> "$output_filename"
