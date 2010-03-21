@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, cgi, cgitb, subprocess, os, tempfile
+import sys, cgi, cgitb, subprocess, os, tempfile, re
 cgitb.enable()
 
 def not_none(obj):
@@ -73,22 +73,28 @@ form = cgi.FieldStorage()
 if "type" not in form:
     print "Content-type: text/plain"
     print
+elif "template" not in form:
+    print "Content-type: text/plain"
+    print
+elif re.match("^[A-z0-9_. -]+$", form.getvalue("filename")) is None:
+    print "Content-type: text/html"
+    print
+    print """
+<html><head><title>MITeX -- Error!</title></head><body>
+<p><strong>Error: Please limit your filename to alphanumreic characters, underscores, dashes, spaces, and periods!</strong></p>
+</body></html>"""
 else:
-    if not "template" in form:
-        print "Content-type: text/plain";
-        print
-    else:
-        latex_file = LaTeXFile(begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
-                               middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
-                               end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
-                               preamble=form.getvalue("latex_preamble"),
-                               body=form.getvalue("latex_body"),
-                               name=form.getvalue("filename"))
+    latex_file = LaTeXFile(begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
+                           middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
+                           end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
+                           preamble=form.getvalue("latex_preamble"),
+                           body=form.getvalue("latex_body"),
+                           name=form.getvalue("filename"))
 
-        type = form.getvalue("type")
-        if type == "tex": compile_tex(latex_file)
-        elif type == "pdf": compile_pdf(latex_file)
-        elif type == "ps": compile_ps(latex_file)
-        else:
-            print "Content-type: text/plain"
-            print
+    type = form.getvalue("type")
+    if type == "tex": compile_tex(latex_file)
+    elif type == "pdf": compile_pdf(latex_file)
+    elif type == "ps": compile_ps(latex_file)
+    else:
+        print "Content-type: text/plain"
+        print
