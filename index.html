@@ -12,65 +12,63 @@
 </head>
 <body>
 
-<table class="pagetable">
-<tr>
-<td colspan="2">
-<div class="not-tex">
-<h1>MITeX</h1>
-There are two parts of the LaTeX file that you can edit: the preamble,
-or the body.  The rest of the code is provided for you.<br /><br />
-<form name="compile" action="scripts/python/compile.py" method="post" target="_blank">
-Please select a LaTeX template:
-<select id="templates" onchange="loadTemplateFile(this.value);" name="template">
-<option value="none"></option>
-</select>
-<br /><br /><hr />
-</div>
-</td>
-</tr>
-
-<tr>
-<td class="td_tex">
-<div id="begin" class="tex"></div>
-</td>
-<td class="logbox" rowspan="6">
-<div class="not-tex"><b>Compile Log:</b>
-<button type="button" id="check" disabled="true" onclick="get_log();">Refresh</button></div><br />
-<div id="log" class="tex"></div>
-</td>
-</tr>
-
-<tr><td>
-<textarea rows="10" cols="100" name="latex_preamble" id="latex_preamble" disabled="true" class="tex"></textarea>
-</td></tr>
-
-<tr><td class="td_tex">
-<div id="middle" class="tex"></div>
-</td></tr>
-
-<tr><td>
-<textarea rows="20" cols="100" name="latex_body" id="latex_body" disabled="true" class="tex"></textarea>
-</td></tr>
-
-<tr><td class="td_tex">
-<div id="end" class="tex"></div>
-</tr></td>
-
-<tr><td>
-<div class="not-tex">
-<input type="text" name="filename" id="filename" value="out" />
-<select id="type" name="type">
-<option value="pdf">.pdf</option>
-<option value="ps">.ps</option>
-<option value="tex">.tex</option>
-</select>
-<input type="submit" id="submit" value="Compile!" disabled="true">
-</div>
-</form>
-</td>
-</tr>
-
-</table>
-
+  <table class="pagetable">
+    <form name="compile" action="scripts/python/compile.py" method="post" target="_blank">
+      <tr>
+	<td colspan="2">
+	  <div class="not-tex">
+	    <h1>MITeX</h1>
+	    There are two parts of the LaTeX file that you can edit: the preamble,
+	    or the body.  The rest of the code is provided for you.<br /><br />
+	    Please select a LaTeX template:
+	    <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
+	      <option value="none"></option>
+	    </select>
+	    <br /><br /><hr />
+	  </div>
+	</td>
+      </tr>
+    
+      <tr>
+	<td class="td_tex">
+	  <div id="begin" class="tex"></div>
+	</td>
+	<td class="logbox" rowspan="6">
+	  <div class="not-tex"><b>Compile Log:</b>
+	    <button type="button" id="check" disabled="true" onclick="get_log();">Refresh</button></div><br />
+	  <div id="log" class="tex"></div>
+	</td>
+      </tr>
+      
+      <tr><td>
+	  <textarea rows="10" cols="100" name="latex_preamble" id="latex_preamble" disabled="true" class="tex"></textarea>
+      </td></tr>
+      
+      <tr><td class="td_tex">
+	  <div id="middle" class="tex"></div>
+      </td></tr>
+      
+      <tr><td>
+	  <textarea rows="20" cols="100" name="latex_body" id="latex_body" disabled="true" class="tex"></textarea>
+      </td></tr>
+      
+      <tr><td class="td_tex">
+	  <div id="end" class="tex"></div>
+      </td></tr>
+    
+      <tr><td>
+	  <div class="not-tex">
+	    <input type="text" name="filename" id="filename" value="out" />
+	    <select id="type" name="type">
+	      <option value="pdf">.pdf</option>
+	      <option value="ps">.ps</option>
+	      <option value="tex">.tex</option>
+	    </select>
+	    <input type="submit" id="submit" value="Compile!" disabled="true">
+	  </div>
+	</td>
+      </tr>
+    </form>
+  </table>
 </body>
 </html>
