@@ -3,45 +3,52 @@
 import sys, cgi, cgitb, subprocess, os, tempfile
 cgitb.enable()
 
-def make_tex_string(begin_file, middle_file, end_file, preamble, body):
+def not_none(obj):
+    if obj is None:
+        return ""
+    else:
+        return obj
+
+class LaTeXFile(object):
+    def __init__(self, begin, middle, end, preamble, body, name):
+        self.begin = begin
+        self.middle = middle
+        self.end = end
+        self.preamble = not_none(preamble)
+        self.body = not_none(body)
+        self.name = name
+
+
+def make_tex_string(latex_file):
     tex = ""
-    file = open(begin_file, "r")
+    file = open(latex_file.begin, "r")
     tex += "".join(file.readlines()) + "\n"
     file.close()
-    tex += preamble + "\n"
-    file = open(middle_file, "r")
+    tex += latex_file.preamble + "\n"
+    file = open(latex_file.middle, "r")
     tex += "".join(file.readlines()) + "\n"
     file.close()
-    tex += body + "\n"
-    file = open(end_file, "r")
+    tex += latex_file.body + "\n"
+    file = open(latex_file.end, "r")
     tex += "".join(file.readlines()) + "\n"
     file.close()
 
     return tex
 
-def compile_tex(begin_file, middle_file, end_file, preamble, body, name):
+def compile_tex(latex_file):
     print "Content-type: application/x-tex"
-    print "Content-disposition: attachment; filename=%s.tex" % name
+    print "Content-disposition: attachment; filename=%s.tex" % latex_file.name
     print
 
-    file = open(begin_file, "r")
-    print "".join(file.readlines())
-    file.close()
-    print preamble
-    file = open(middle_file, "r")
-    print "".join(file.readlines())
-    file.close()
-    print body
-    file = open(end_file, "r")
-    print "".join(file.readlines())
-    file.close()
+    tex = make_tex_string(latex_file)
+    print tex
 
-def compile_pdf(begin_file, middle_file, end_file, preamble, body, name):
+def compile_pdf(latex_file):
     print "Content-type: application/pdf"
-    print "Content-disposition: attachment; filename=%s.pdf" % name
+    print "Content-disposition: attachment; filename=%s.pdf" % latex_file.name
     print
 
-    tex = make_tex_string(begin_file, middle_file, end_file, preamble, body)
+    tex = make_tex_string(latex_file)
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --pdf", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -49,12 +56,12 @@ def compile_pdf(begin_file, middle_file, end_file, preamble, body, name):
 
     print stdout
 
-def compile_ps(begin_file, middle_file, end_file, preamble, body, name):
+def compile_ps(latex_file):
     print "Content-type: application/postscript"
-    print "Content-disposition: attachment; filename=%s.ps" % name
+    print "Content-disposition: attachment; filename=%s.ps" % latex_file.name
     print
 
-    tex = make_tex_string(begin_file, middle_file, end_file, preamble, body)
+    tex = make_tex_string(latex_file)
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --ps", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -71,22 +78,17 @@ else:
         print "Content-type: text/plain";
         print
     else:
-        begin_file = os.path.abspath("../../templates/%s/begin" % form.getvalue("template"))
-        middle_file = os.path.abspath("../../templates/%s/middle" % form.getvalue("template"))
-        end_file = os.path.abspath("../../templates/%s/end" % form.getvalue("template"))
-        
-        preamble = form.getvalue("latex_preamble")
-        body = form.getvalue("latex_body")
+        latex_file = LaTeXFile(begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
+                               middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
+                               end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
+                               preamble=form.getvalue("latex_preamble"),
+                               body=form.getvalue("latex_body"),
+                               name=form.getvalue("filename"))
 
-        if preamble == None: preamble = ""
-        if body == None: body = ""
-
-        name = form.getvalue("filename")
-        
         type = form.getvalue("type")
-        if type == "tex": compile_tex(begin_file, middle_file, end_file, preamble, body, name)
-        elif type == "pdf": compile_pdf(begin_file, middle_file, end_file, preamble, body, name)
-        elif type == "ps": compile_ps(begin_file, middle_file, end_file, preamble, body, name)
+        if type == "tex": compile_tex(latex_file)
+        elif type == "pdf": compile_pdf(latex_file)
+        elif type == "ps": compile_ps(latex_file)
         else:
             print "Content-type: text/plain"
             print
