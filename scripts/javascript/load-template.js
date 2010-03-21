@@ -5,8 +5,7 @@ function loadTemplateFile(value) {
 	    begin = document.getElementById("begin");
 	    middle = document.getElementById("middle");
 	    end = document.getElementById("end");
-	    submit_tex = document.getElementById("submit_tex");
-	    submit_pdf = document.getElementById("submit_pdf");
+	    submit = document.getElementById("submit");
 	    head = document.getElementById("header");
 	    body = document.getElementById("body");
 	    
@@ -31,16 +30,14 @@ function loadTemplateFile(value) {
 
 		head.disabled = "";
 		body.disabled = "";
-		submit_tex.disabled = "";
-		submit_pdf.disabled = "";
+		submit.disabled = "";
 	    } else {
 		begin.innerHTML = "";
 		middle.innerHTML = "";
 		end.innerHTML = "";
 		head.disabled = "true";
 		body.disabled = "true";
-		submit_tex.disabled = "true";
-		submit_pdf.disabled = "true";
+		submit.disabled = "true";
 	    }
 	});
 }

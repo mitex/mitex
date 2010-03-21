@@ -1,8 +1,0 @@
-#!/bin/bash
-# I think it is as simple as calling rubber on the .latex file
-
-# Creates a pdf file directly from a latex file, using pdflatex
-# 'rubber -pd $1' would create a ps file first, then a pdf from the ps
-rubber --pdf $1
-# Cleans up temporary files (e.g. *.aux) used to create the pdf
-rubber --clean $1
