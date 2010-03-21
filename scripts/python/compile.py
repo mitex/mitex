@@ -21,7 +21,7 @@ def make_tex_string(begin_file, middle_file, end_file, preamble, body):
 
 def compile_tex(begin_file, middle_file, end_file, preamble, body, name):
     print "Content-type: application/x-tex"
-    print "Content-disposition: attachement; filename=%s.tex" % name
+    print "Content-disposition: attachment; filename=%s.tex" % name
     print
 
     file = open(begin_file, "r")
@@ -51,7 +51,7 @@ def compile_dvi(begin_file, middle_file, end_file, preamble, body, name):
 
 def compile_pdf(begin_file, middle_file, end_file, preamble, body, name):
     print "Content-type: application/pdf"
-    print "Content-disposition: attachement; filename=%s.pdf" % name
+    print "Content-disposition: attachment; filename=%s.pdf" % name
     print
 
     tex = make_tex_string(begin_file, middle_file, end_file, preamble, body)
@@ -64,7 +64,7 @@ def compile_pdf(begin_file, middle_file, end_file, preamble, body, name):
 
 def compile_ps(begin_file, middle_file, end_file, preamble, body, name):
     print "Content-type: application/postscript"
-    print "Content-disposition: attachement; filename=%s.ps" % name
+    print "Content-disposition: attachment; filename=%s.ps" % name
     print
 
     tex = make_tex_string(begin_file, middle_file, end_file, preamble, body)
