@@ -1,0 +1,6 @@
+- have it save a temp file automatically every so often; we don't want
+   users to lose their data 
+- be able to pipe the resulting file to google document viewer, or
+   something
+- add a WYSIWYG option
+- add more templates

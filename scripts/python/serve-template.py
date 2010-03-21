@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, cgi, cgitb
+import sys, cgi, cgitb, os
 cgitb.enable()
 
 def serve():
@@ -12,15 +12,26 @@ def serve():
     file = None
     if form.getvalue("type") == "begin":
         file = open("../../templates/%s/begin" % form.getvalue("template"), "r")
+        print "<br />".join(file.readlines())
+
+    elif form.getvalue("type") == "preamble":
+        if os.path.exists("../../templates/%s/preamble" % form.getvalue("template")):
+            file = open("../../templates/%s/preamble" % form.getvalue("template"), "r")
+            print "".join(file.readlines())
+
     elif form.getvalue("type") == "middle":
         file = open("../../templates/%s/middle" % form.getvalue("template"), "r")
+        print "<br />".join(file.readlines())
+
+    elif form.getvalue("type") == "body":
+        if os.path.exists("../../templates/%s/body" % form.getvalue("template")):
+            file = open("../../templates/%s/body" % form.getvalue("template"), "r")
+            print "".join(file.readlines())
+
     elif form.getvalue("type") == "end":
         file = open("../../templates/%s/end" % form.getvalue("template"), "r")
-        
-    if file == None:
-        return
-
-    print "<br />".join(file.readlines())
+        print "<br />".join(file.readlines())
+    
 
 print "Content-type: text/html\n";
 serve()

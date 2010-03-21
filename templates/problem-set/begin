@@ -1,0 +1,7 @@
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr}
+\usepackage[in,myheadings]{fullpage}
+
+\pagestyle{fancy}
+\headheight 42pt

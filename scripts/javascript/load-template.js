@@ -1,19 +1,22 @@
-var begin_latex, mid_latex, end_latex, head, body;
-
 function loadTemplateFile(value) {
     $(function () {
 	    begin = document.getElementById("begin");
 	    middle = document.getElementById("middle");
 	    end = document.getElementById("end");
 	    submit = document.getElementById("submit");
-	    head = document.getElementById("header");
-	    body = document.getElementById("body");
+	    preamble = document.getElementById("latex_preamble");
+	    body = document.getElementById("latex_body");
 	    
 	    if(value != "none") {
 		$.get("scripts/python/serve-template.py", { template: value, type: "begin" },
 		      function(data) {
 			  begin.innerHTML = "<font face='Courier'>" + data + "</font>";
 			  begin_latex = data;
+		      });
+
+		$.get("scripts/python/serve-template.py", { template: value, type: "preamble" },
+		      function(data) {
+			  preamble.value = data;
 		      });
 		
 		$.get("scripts/python/serve-template.py", { template: value, type: "middle" },
@@ -22,20 +25,25 @@ function loadTemplateFile(value) {
 			  mid_latex = data;
 		      });
 		
+		$.get("scripts/python/serve-template.py", { template: value, type: "body" },
+		      function(data) {
+			  body.value = data;
+		      });
+		
 		$.get("scripts/python/serve-template.py", { template: value, type: "end" },
 		      function(data) {
 			  end.innerHTML = "<font face='Courier'>" + data + "</font>";
 			  end_latex = data;
 		      });
 
-		head.disabled = "";
+		preamble.disabled = "";
 		body.disabled = "";
 		submit.disabled = "";
 	    } else {
 		begin.innerHTML = "";
 		middle.innerHTML = "";
 		end.innerHTML = "";
-		head.disabled = "true";
+		preamble.disabled = "true";
 		body.disabled = "true";
 		submit.disabled = "true";
 	    }
