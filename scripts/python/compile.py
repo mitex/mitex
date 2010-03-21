@@ -75,12 +75,12 @@ def make_error_message(message):
 
 form = cgi.FieldStorage()
 if "type" not in form:
-    print "Content-type: text/plain"
+    print "Content-type: text/html"
     print
     print make_error_message("Missing filetype!")
 
 elif "template" not in form:
-    print "Content-type: text/plain"
+    print "Content-type: text/html"
     print
     print make_error_message("Missing template name!")
 
@@ -107,6 +107,6 @@ else:
     elif type == "pdf": compile_pdf(latex_file)
     elif type == "ps": compile_ps(latex_file)
     else:
-        print "Content-type: text/plain"
+        print "Content-type: text/html"
         print
         print make_error_message("Unexpected filetype: %s" % type)
