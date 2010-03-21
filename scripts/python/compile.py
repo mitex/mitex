@@ -86,6 +86,10 @@ def compile_log(latex_file):
     print "<br />".join(log.readlines())
     log.close()
 
+    p = subprocess.Popen("rubber --clean %s " % texname, shell=True, stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = p.communicate()
+
 def make_error_message(message):
     return "<html><head><title>MITeX -- Error!</title></head><body>" + \
         "<p><strong>Error: %s</strong></p></body></html>" % message
