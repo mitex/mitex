@@ -10,6 +10,10 @@
 </head>
 <body>
 
+<table>
+<tr>
+<td colspan="2" valign="top"
+<h1>MITeX</h1>
 <form name="compile" action="scripts/python/compile.py" method="post" target="_blank">
 Please select a LaTeX template:
 <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
@@ -17,7 +21,12 @@ Please select a LaTeX template:
 </select><br /><br />
 
 There are two parts of the LaTeX file that you can edit: the preamble,
-or the body.  The rest of the code is provided for you.<br /><br /><br />
+or the body.  The rest of the code is provided for you.<br /><br /><hr /><br />
+</td>
+</tr>
+
+<tr>
+<td valign="top">
 <div id="begin"></div>
 <textarea rows="10" cols="100" name="latex_preamble" id="latex_preamble" disabled="true"></textarea>
 <div id="middle"></div>
@@ -32,8 +41,15 @@ or the body.  The rest of the code is provided for you.<br /><br /><br />
 </select>
 <input type="submit" id="submit" value="Compile!" disabled="true">
 </form>
+</td>
 
-<div id="error"></div>
+<td valign="top">
+<b>Compile Log:</b>
+<button type="button" id="check" disabled="true" onclick="get_log();">Check LaTeX for Errors</button>
+<div id="log"></div>
+</td>
+</tr>
+</table>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, cgi, cgitb, subprocess, os, re
+import sys, cgi, cgitb, subprocess, os, re, tempfile
 cgitb.enable()
 
 def not_none(obj):
@@ -17,7 +17,6 @@ class LaTeXFile(object):
         self.preamble = not_none(preamble)
         self.body = not_none(body)
         self.name = name
-
 
 def make_tex_string(latex_file):
     tex = ""
@@ -69,6 +68,24 @@ def compile_ps(latex_file):
 
     print stdout
 
+def compile_log(latex_file):
+    print "Content-type: text/html"
+    print
+
+    os.chdir("/tmp")
+    tex = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False)
+    tex.write(make_tex_string(latex_file))
+    texname = tex.name
+    tex.close()
+
+    p = subprocess.Popen("rubber %s" % texname, shell=True, stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = p.communicate()
+
+    log = open(texname.replace(".tex", ".log"), "r")
+    print "<br />".join(log.readlines())
+    log.close()
+
 def make_error_message(message):
     return "<html><head><title>MITeX -- Error!</title></head><body>" + \
         "<p><strong>Error: %s</strong></p></body></html>" % message
@@ -106,6 +123,7 @@ else:
     if type == "tex": compile_tex(latex_file)
     elif type == "pdf": compile_pdf(latex_file)
     elif type == "ps": compile_ps(latex_file)
+    elif type == "log": compile_log(latex_file)
     else:
         print "Content-type: text/html"
         print

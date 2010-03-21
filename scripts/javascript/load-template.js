@@ -6,9 +6,10 @@ function loadTemplateFile(value) {
 	    submit = document.getElementById("submit");
 	    preamble = document.getElementById("latex_preamble");
 	    body = document.getElementById("latex_body");
+	    check = document.getElementById("check");
 	    
 	    if(value != "none") {
-		$.get("scripts/python/serve-template.py", { template: value, type: "begin" },
+ 		$.get("scripts/python/serve-template.py", { template: value, type: "begin" },
 		      function(data) {
 			  begin.innerHTML = "<font face='Courier'>" + data + "</font>";
 			  begin_latex = data;
@@ -39,6 +40,7 @@ function loadTemplateFile(value) {
 		preamble.disabled = "";
 		body.disabled = "";
 		submit.disabled = "";
+		check.disabled = "";
 	    } else {
 		begin.innerHTML = "";
 		middle.innerHTML = "";
@@ -46,6 +48,7 @@ function loadTemplateFile(value) {
 		preamble.disabled = "true";
 		body.disabled = "true";
 		submit.disabled = "true";
+		check.disabled = "true";
 	    }
 	});
 }
