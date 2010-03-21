@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, cgi, cgitb, subprocess, os, tempfile, re
+import sys, cgi, cgitb, subprocess, os, re
 cgitb.enable()
 
 def not_none(obj):
