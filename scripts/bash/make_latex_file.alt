@@ -1,0 +1,38 @@
+#!/bin/bash
+
+function exit_with_error {
+    export message=$1
+    export code=$2
+    echo $message 2>&1
+    exit $code
+}
+
+USAGE_ERRMSG='usage: make_latex_file beginning-file preamble-file middle-file body-file ending-file output-file'
+USAGE_ERRCODE=1
+
+TEMPLATENOTFOUND_ERRMSG='Cannot find file:'
+TEMPLATENOTFOUND_ERRCODE=2
+
+if [ $# -lt 6 ]; then
+    exit_with_error "$USAGE_ERRMSG" $USAGE_ERRCODE
+fi
+
+beginning_file="$1"
+preamble_file="$2"
+middle_file="$3"
+body_file="$4"
+ending_file="$5"
+output_file="$6"
+
+files_to_check="$beginning_file $preamble_file $middle_file $body_file $ending_file"
+for file in $files_to_check; do
+    if [ ! -e $file ]; then
+        exit_with_error "$TEMPLATENOTFOUND_ERRMSG $file" $TEMPLATENOTFOUND_ERRCODE
+    fi
+done
+
+(cat "$beginning_file"; \
+echo "$preamble_file"; \
+cat "$middle_file"; \
+echo "$body_file"; \
+cat "$ending_file") >> "$output_file"
