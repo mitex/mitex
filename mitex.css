@@ -45,3 +45,8 @@ td.td_tex
     padding: 10px;
     background-color: #CCCCCC;
 }
+
+h2.warning
+{
+    color: red;
+}
