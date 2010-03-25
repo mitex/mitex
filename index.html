@@ -6,16 +6,15 @@
 <script type="text/javascript" src="scripts/javascript/query-templates.js"></script>
 <script type="text/javascript" src="scripts/javascript/load-template.js"></script>
 <script type="text/javascript" src="scripts/javascript/log.js"></script>
+<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="scripts/javascript/editor.js"></script>
 
 <link rel="stylesheet" type="text/css" href="mitex.css" />
 
 </head>
 <body>
 
-  <table class="pagetable">
     <form name="compile" action="scripts/python/compile.py" method="post" target="_blank">
-      <tr>
-	<td colspan="2">
 	  <div class="not-tex">
 	    <h1>MITeX</h1>
 	    <h2 class="warning">NOTE: THIS SERVICE IS STILL IN DEVELOPMENT.  USE AT YOUR OWN RISK.</h2>
@@ -27,9 +26,15 @@
 	    </select>
 	    <br /><br /><hr />
 	  </div>
-	</td>
-      </tr>
-    
+	  <div class="not-tex">
+	    <button type="button" id="wysiwyg_button"
+	    onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
+	    <button type="button" id="source_button"
+	    onclick="javascript:switchToSource();">Source</button>
+	  </div>
+
+<div id="editor">
+  <table class="pagetable">
       <tr>
 	<td class="td_tex">
 	  <div id="begin" class="tex"></div>
@@ -56,7 +61,7 @@
       <tr><td class="td_tex">
 	  <div id="end" class="tex"></div>
       </td></tr>
-    
+
       <tr><td>
 	  <div class="not-tex">
 	    <input type="text" name="filename" id="filename" value="out" />
@@ -71,5 +76,6 @@
       </tr>
     </form>
   </table>
+</div>
 </body>
 </html>
