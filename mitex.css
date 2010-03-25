@@ -39,11 +39,13 @@ td.logbox .tex
     display: none;
 }
 
-td.td_tex
+div.div_tex
 {
     border: 1px solid black;
     padding: 10px;
     background-color: #CCCCCC;
+    font-family: "Lucida Console", monospace;
+    font-size: 12px;
 }
 
 h2.warning

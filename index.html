@@ -21,46 +21,44 @@
 	    There are two parts of the LaTeX file that you can edit: the preamble,
 	    or the body.  The rest of the code is provided for you.<br /><br />
 	    Please select a LaTeX template:
-	    <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
+	    <select id="templates" onchange="loadTemplateFile(this.value);" 
+		    name="template">
 	      <option value="none"></option>
 	    </select>
 	    <br /><br /><hr />
 	  </div>
 	  <div class="not-tex">
 	    <button type="button" id="wysiwyg_button"
-	    onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
+		    onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
 	    <button type="button" id="source_button"
-	    onclick="javascript:switchToSource();">Source</button>
+		    onclick="javascript:switchToSource();">Source</button>
 	  </div>
 
-<div id="editor">
   <table class="pagetable">
       <tr>
-	<td class="td_tex">
-	  <div id="begin" class="tex"></div>
+	<td>
+	  <div id="editor">
+	  <div id="begin" class="div_tex"></div>
+
+	  <textarea rows="10" cols="100" name="latex_preamble"
+		    id="latex_preamble" disabled="true" class="tex"></textarea>
+      
+	  <div id="middle" class="div_tex"></div>
+
+	  <textarea rows="20" cols="100" name="latex_body"
+		    id="latex_body" disabled="true" class="tex"></textarea>
+
+	  <div id="end" class="tex"></div>
+	  </div>
 	</td>
+
 	<td class="logbox" rowspan="6">
 	  <div class="not-tex"><b>Compile Log:</b>
-	    <button type="button" id="check" disabled="true" onclick="get_log();">Refresh</button></div><br />
+	    <button type="button" id="check" disabled="true"
+		    onclick="get_log();">Refresh</button></div><br />
 	  <textarea id="log" class="tex" rows="40" cols="80"></textarea>
 	</td>
       </tr>
-      
-      <tr><td>
-	  <textarea rows="10" cols="100" name="latex_preamble" id="latex_preamble" disabled="true" class="tex"></textarea>
-      </td></tr>
-      
-      <tr><td class="td_tex">
-	  <div id="middle" class="tex"></div>
-      </td></tr>
-      
-      <tr><td>
-	  <textarea rows="20" cols="100" name="latex_body" id="latex_body" disabled="true" class="tex"></textarea>
-      </td></tr>
-      
-      <tr><td class="td_tex">
-	  <div id="end" class="tex"></div>
-      </td></tr>
 
       <tr><td>
 	  <div class="not-tex">
@@ -76,6 +74,5 @@
       </tr>
     </form>
   </table>
-</div>
 </body>
 </html>
