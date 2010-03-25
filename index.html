@@ -39,17 +39,29 @@
 	<td>
 	  <div id="wysiwyg_editor"></div>
 	  <div id="source_editor">
-	  <div id="begin" class="div_tex"></div>
+	    <table>
+	      <tr><td class="td_tex">
+		  <div id="begin" class="tex"></div>
+	      </td></tr>
 
-	  <textarea rows="10" cols="100" name="latex_preamble"
-		    id="latex_preamble" disabled="true" class="tex"></textarea>
-      
-	  <div id="middle" class="div_tex"></div>
+	      <tr><td>
+		  <textarea rows="10" cols="100" name="latex_preamble"
+			    id="latex_preamble" disabled="true" class="tex"></textarea>
+	      </td></tr>
 
-	  <textarea rows="20" cols="100" name="latex_body"
-		    id="latex_body" disabled="true" class="tex"></textarea>
+      	      <tr><td class="td_tex">
+		  <div id="middle" class="tex"></div>
+	      </td></tr>
 
-	  <div id="end" class="tex"></div>
+	      <tr><td>
+		  <textarea rows="20" cols="100" name="latex_body"
+			    id="latex_body" disabled="true" class="tex"></textarea>
+	      </td></tr>
+
+	      <tr><td class="td_tex">	
+		  <div id="end" class="tex"></div>
+	      </td></tr>
+	    </table>
 	  </div>
 	</td>
 
