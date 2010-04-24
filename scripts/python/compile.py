@@ -58,7 +58,7 @@ def compile_google(latex_file):
     
     tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="/mit/mitex/web_scripts/docs", delete=False)
     tmp.write(stdout)
-    print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://mitex.mit.edu/docs/" + os.path.basename(tmp.name), "")
+    print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://mitex.mit.edu/docs/get.sh?" + tmp.name, "")
     print
     tmp.close()
 
