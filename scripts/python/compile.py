@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-import sys, cgi, cgitb, subprocess, os, re, tempfile
-cgitb.enable()
+import sys, cgi, cgitb, subprocess, os, re, tempfile, urllib
+cgitb.enable(format="nothtml")
 
 # Make sure the object passed in is not None
 # (change it to "" if it is)
@@ -50,20 +50,16 @@ def compile_tex(latex_file):
 
 # Respond with a pdf file piped to Google Reader
 def compile_google(latex_file):
-    import tempfile
-    
-    print "Content-type: text/html"
-    print
-    
     tex = str(latex_file)
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --pdf", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = p.communicate(tex)
     
-    tmp = tempfile.NamedTemporaryFile(suffix='.pdf', dir='/tmp', delete=False)
+    tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="/mit/mitex/web_scripts/docs", delete=False)
     tmp.write(stdout)
-    print tmp.name
+    print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://mitex.mit.edu/docs/" + os.path.basename(tmp.name), "")
+    print
     tmp.close()
 
 # Respond with a pdf file
@@ -110,7 +106,7 @@ def compile_log(latex_file):
     (stdout, stderr) = p.communicate()
 
     log = open(texname.replace(".tex", ".log"), "r")
-    print "\n".join(log.readlines())
+    print "".join(log.readlines())
     log.close()
 
     p = subprocess.Popen("rubber --clean %s " % texname, shell=True, stdin=subprocess.PIPE,
