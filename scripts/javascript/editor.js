@@ -23,7 +23,6 @@ function switchToWYSIWYG() {
     wysiwyg_button.disabled = "true";
 
     $('#source_editor').hide();
-    $('#wysiwyg_editor').show();
 }
 
 $(function () {
