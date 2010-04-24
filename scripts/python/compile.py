@@ -48,6 +48,24 @@ def compile_tex(latex_file):
     tex = str(latex_file)
     print tex
 
+# Respond with a pdf file piped to Google Reader
+def compile_google(latex_file):
+    import tempfile
+    
+    print "Content-type: text/html"
+    print
+    
+    tex = str(latex_file)
+    os.chdir("/tmp")
+    p = subprocess.Popen("rubber-pipe --pdf", shell=True, stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = p.communicate(tex)
+    
+    tmp = tempfile.NamedTemporaryFile(suffix='.pdf', dir='/tmp', delete=False)
+    tmp.write(stdout)
+    print tmp.name
+    tmp.close()
+
 # Respond with a pdf file
 def compile_pdf(latex_file):
     print "Content-type: application/pdf"
@@ -92,7 +110,7 @@ def compile_log(latex_file):
     (stdout, stderr) = p.communicate()
 
     log = open(texname.replace(".tex", ".log"), "r")
-    print "<br />".join(log.readlines())
+    print "\n".join(log.readlines())
     log.close()
 
     p = subprocess.Popen("rubber --clean %s " % texname, shell=True, stdin=subprocess.PIPE,
@@ -113,7 +131,8 @@ def make_error_message(message):
 # type.
 def main():
     allowed_types = {"tex": compile_tex, "pdf": compile_pdf,
-                     "ps": compile_ps,   "log": compile_log}
+                     "ps": compile_ps,   "log": compile_log,
+                     "google": compile_google}
 
     form = cgi.FieldStorage()
     if "type" not in form:
@@ -126,7 +145,7 @@ def main():
         print make_error_message("Missing filename!")
 
     elif re.match("^[A-z0-9_. -]+$", form.getvalue("filename")) is None:
-        print make_error_message("Please limit your filename to alphanumreic characters, underscores, dashes, spaces, and periods!")
+        print make_error_message("Please limit your filename to alphanumeric characters, underscores, dashes, spaces, and periods!")
 
     elif form.getvalue("type") not in allowed_types.keys():
         print make_error_message("Unexpected filetype: %s" % form.getvalue("type"))
