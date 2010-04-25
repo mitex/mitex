@@ -31,11 +31,6 @@
     </p>
     
     <p>
-      If you are interested in helping out in the development of MITeX, please
-      email <a href="mailto:mitex@mit.edu">mitex@mit.edu</a>.
-    </p>
-    
-    <p>
       Please select a LaTeX template:
       <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
         <option value="empty"></option>
@@ -45,19 +40,28 @@
     <hr />
   </div>
   
-  <div class="pagetablediv">
-    <table class="pagetable">
-      <tr>
-        <td>
-          <div class="not-tex">
-            <button type="button" id="wysiwyg_button"
-                onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
-            <button type="button" id="source_button"
-                onclick="javascript:switchToSource();">Source</button>
-          </div>
-        </td>
-      </tr>
-      
+  <div id="compile-log" class="not-tex">
+    <div id="log-div">
+      <b>Compile Log:</b>
+      <button type="button" id="check" disabled="true" onclick="get_log();">Refresh</button>
+      <span id="log-span">
+        <button type="button" id="close" onclick="close_log();">Close</button>
+        <br />
+        <textarea id="log" class="tex" cols="60" readonly="true">
+        </textarea>
+      </span>
+    </div>
+  </div>
+  
+  <div class="not-tex">
+    <button type="button" id="wysiwyg_button"
+        onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
+    <button type="button" id="source_button"
+        onclick="javascript:switchToSource();">Source</button>
+  </div>
+  
+  <div id="pagetablediv">
+    <table id="pagetable">
       <tr>
         <td>
           <div id="wysiwyg_editor"></div>
@@ -72,8 +76,8 @@
               
               <tr>
                 <td>
-                  <textarea rows="10" cols="80" name="latex_preamble"
-                            id="latex_preamble" disabled="true" class="tex">
+                  <textarea rows="10" name="latex_preamble" id="latex_preamble"
+                            disabled="true" class="tex">
                   </textarea>
                 </td>
               </tr>
@@ -87,8 +91,8 @@
               
               <tr>
                 <td>
-                  <textarea rows="20" cols="80" name="latex_body"
-                            id="latex_body" disabled="true" class="tex">
+                  <textarea rows="20" name="latex_body" id="latex_body"
+                            disabled="true" class="tex">
                   </textarea>
                 </td>
               </tr>
@@ -100,16 +104,6 @@
               </tr>
             </table>
           </div>
-        </td>
-      
-        <td class="logbox" rowspan="6">
-          <div class="not-tex">
-            <b>Compile Log:</b>
-            <button type="button" id="check" disabled="true"
-                    onclick="get_log();">Refresh</button>
-          </div>
-          <textarea id="log" class="tex" rows="40" cols="60" readonly="true">
-          </textarea>
         </td>
       </tr>
       
@@ -130,5 +124,12 @@
     </table>
   </div>
 </form>
+
+<div class="not-tex footer">
+  This project is released under
+  <a href="http://example.com">$LICENSE</a>.
+  If you are interested in contributing, please email
+  <a href="mailto:mitex@mit.edu">mitex@mit.edu</a>.
+</div>
 </body>
 </html>
