@@ -1,9 +1,4 @@
-- have it save a temp file automatically every so often; 
-  we don't want users to lose their data 
-- be able to pipe the resulting file to google document 
-  viewer, or something
-- OR just give a preview of the document on the page
-  (as an image?) whenever the user refreshes the log as well
+- have it save a temp file automatically every so often
 - add a WYSIWYG option
 - add more templates
 - highlight errors
