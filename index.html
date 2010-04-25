@@ -1,105 +1,134 @@
 <html>
 <head>
-	<title>MITeX</title>
+  <title>MITeX</title>
 
-	<script type="text/javascript" src="scripts/javascript/jquery.js"></script>
-	<script type="text/javascript" src="scripts/javascript/query-templates.js"></script>
-	<script type="text/javascript" src="scripts/javascript/load-template.js"></script>
-	<script type="text/javascript" src="scripts/javascript/log.js"></script>
-	<script type="text/javascript" src="scripts/javascript/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="scripts/javascript/editor.js"></script>
+  <script type="text/javascript" src="scripts/javascript/jquery.js"></script>
+  <script type="text/javascript" src="scripts/javascript/query-templates.js"></script>
+  <script type="text/javascript" src="scripts/javascript/load-template.js"></script>
+  <script type="text/javascript" src="scripts/javascript/log.js"></script>
+  <script type="text/javascript" src="scripts/javascript/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="scripts/javascript/editor.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="mitex.css" />
-	
-	<link rel="SHORTCUT ICON" href="/favicon.ico"/>
-	<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="mitex.css" />
+  
+  <link rel="SHORTCUT ICON" href="/favicon.ico"/>
+  <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
 </head>
 
 <body>
 <a href="http://mitex.mit.edu"><img src="mitex.png" class="headerleft"></a>
 <a href="http://sipb.mit.edu"><img src="sipb.png" class="headerright"></a>
 
-<form id="compile" name="compile" action="scripts/python/compile.py" method="post" target="_blank">
-	<div class="not-tex" id="top">
-		<h2 class="warning">NOTE: THIS SERVICE IS STILL IN DEVELOPMENT.
-		USE AT YOUR OWN RISK.</h2>
-		
-		<p>This is MITeX, an online LaTeX composer. You can use a graphical
-		interface, or edit the source of the preamble and body.</p>
-		
-                <p>If you are interested in helping out in the
-                development of MITeX, please email
-                <a href="mailto:mitex@mit.edu">mitex@mit.edu</a>.</p>
-
-		<p>Please select a LaTeX template:
-		<select id="templates" onchange="loadTemplateFile(this.value);" name="template">
-			<option value="empty"></option>
-		</select></p>
-		
-		<hr />
-	</div>
-	
-	<div class="pagetablediv"><table class="pagetable">
-		<tr><td>
-			<div class="not-tex">
-				<button type="button" id="wysiwyg_button"
-						onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
-				<button type="button" id="source_button"
-						onclick="javascript:switchToSource();">Source</button>
-			</div>
-		</td></tr>
-		
-		<tr><td>
-			<div id="wysiwyg_editor"></div>
-			
-			<div id="source_editor">
-				<table>
-					<tr><td class="td_tex">
-						<div id="begin" class="tex"></div>
-					</td></tr>
-					
-					<tr><td>
-						<textarea rows="10" cols="80" name="latex_preamble"
-								id="latex_preamble" disabled="true" class="tex"></textarea>
-					</td></tr>
-					
-					<tr><td class="td_tex">
-						<div id="middle" class="tex"></div>
-					</td></tr>
-					
-					<tr><td>
-						<textarea rows="20" cols="80" name="latex_body"
-								id="latex_body" disabled="true" class="tex"></textarea>
-					</td></tr>
-					
-					<tr><td class="td_tex">
-						<div id="end" class="tex"></div>
-					</td></tr>
-				</table>
-			</div>
-		</td>
-		
-		<td class="logbox" rowspan="6">
-			<div class="not-tex"><b>Compile Log:</b>
-				<button type="button" id="check" disabled="true"
-					onclick="get_log();">Refresh</button>
-			</div>
-			<textarea id="log" class="tex" rows="40" cols="60" readonly="true"></textarea>
-		</td></tr>
-		
-		<tr><td>
-			<div class="not-tex">
-				<input type="text" name="filename" id="filename" value="out" />
-				<select id="type" name="type">
-					<option value="pdf">.pdf</option>
-					<option value="ps">.ps</option>
-					<option value="tex">.tex</option>
-					<option value="google">.pdf (view)</option>
-				</select>
-				<input type="submit" id="submit" value="Compile!" disabled="true">
-			</div>
-		</td></tr>
-	</table></div>
+<form id="compile" action="scripts/python/compile.py" method="post" target="_blank">
+  <div class="not-tex" id="top">
+    <h2 class="warning">
+      NOTE: THIS SERVICE IS STILL IN DEVELOPMENT. USE AT YOUR OWN RISK.
+    </h2>
+    
+    <p>
+      This is MITeX, an online LaTeX composer. You can use a graphical interface,
+      or edit the source of the preamble and body.
+    </p>
+    
+    <p>
+      If you are interested in helping out in the development of MITeX, please
+      email <a href="mailto:mitex@mit.edu">mitex@mit.edu</a>.
+    </p>
+    
+    <p>
+      Please select a LaTeX template:
+      <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
+        <option value="empty"></option>
+      </select>
+    </p>
+    
+    <hr />
+  </div>
+  
+  <div class="pagetablediv">
+    <table class="pagetable">
+      <tr>
+        <td>
+          <div class="not-tex">
+            <button type="button" id="wysiwyg_button"
+                onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
+            <button type="button" id="source_button"
+                onclick="javascript:switchToSource();">Source</button>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <div id="wysiwyg_editor"></div>
+          
+          <div id="source_editor">
+            <table>
+              <tr>
+                <td class="td_tex">
+                  <div id="begin" class="tex"></div>
+                </td>
+              </tr>
+              
+              <tr>
+                <td>
+                  <textarea rows="10" cols="80" name="latex_preamble"
+                            id="latex_preamble" disabled="true" class="tex">
+                  </textarea>
+                </td>
+              </tr>
+              
+              <tr>
+                <td class="td_tex">
+                  <div id="middle" class="tex">
+                  </div>
+                </td>
+              </tr>
+              
+              <tr>
+                <td>
+                  <textarea rows="20" cols="80" name="latex_body"
+                            id="latex_body" disabled="true" class="tex">
+                  </textarea>
+                </td>
+              </tr>
+              
+              <tr>
+                <td class="td_tex">
+                  <div id="end" class="tex"></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      
+        <td class="logbox" rowspan="6">
+          <div class="not-tex">
+            <b>Compile Log:</b>
+            <button type="button" id="check" disabled="true"
+                    onclick="get_log();">Refresh</button>
+          </div>
+          <textarea id="log" class="tex" rows="40" cols="60" readonly="true">
+          </textarea>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <div class="not-tex">
+            <input type="text" name="filename" id="filename" value="out" />
+            <select id="type" name="type">
+              <option value="pdf">.pdf</option>
+              <option value="ps">.ps</option>
+              <option value="tex">.tex</option>
+              <option value="google">.pdf (view)</option>
+            </select>
+            <input type="submit" id="submit" value="Compile!" disabled="true" />
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </form>
 </body>
 </html>
