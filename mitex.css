@@ -1,3 +1,24 @@
+.mitex sub {
+	vertical-align: -0.50ex;
+	margin-left: -0.17em;
+	margin-right: -0.12em;
+	font-size: 1em;
+}
+
+.mitex sup {
+	font-size: 0.85em;
+	vertical-align: 0.20em;
+	margin-left: -0.12em;
+	margin-right: -0.05em;
+}
+
+.mitex {
+	text-decoration: none;
+	color: #993333;
+	font-family: serif;
+	font-size: 50px;
+}
+
 .tex {
     font-family: "Lucida Console", monospace;
     font-size: 12px;
