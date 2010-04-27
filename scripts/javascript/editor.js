@@ -11,6 +11,7 @@ function switchToSource() {
     $('#source_editor').show();
     $('#wysiwyg_editor').hide();
     resize_log();
+    reload_editarea();
 }
 
 function switchToWYSIWYG() {

@@ -4,9 +4,11 @@
 
   <script type="text/javascript" src="scripts/javascript/jquery.js"></script>
   <script type="text/javascript" src="scripts/javascript/query-templates.js"></script>
-  <script type="text/javascript" src="scripts/javascript/load-template.js"></script>
   <script type="text/javascript" src="scripts/javascript/log.js"></script>
   <script type="text/javascript" src="scripts/javascript/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="scripts/javascript/editarea/edit_area/edit_area_full.js"></script>
+  <script type="text/javascript" src="scripts/javascript/editarea.js"></script>
+  <script type="text/javascript" src="scripts/javascript/load-template.js"></script>
   <script type="text/javascript" src="scripts/javascript/editor.js"></script>
 
   <link rel="stylesheet" type="text/css" href="mitex.css" />
@@ -33,7 +35,7 @@
     <p>
       Please select a LaTeX template:
       <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
-        <option value="empty"></option>
+        <option value="none"></option>
       </select>
     </p>
     
@@ -77,8 +79,7 @@
               <tr>
                 <td>
                   <textarea rows="10" name="latex_preamble" id="latex_preamble"
-                            disabled="true" class="tex">
-                  </textarea>
+                            disabled="true" class="tex tex-edit"></textarea>
                 </td>
               </tr>
               
@@ -92,8 +93,7 @@
               <tr>
                 <td>
                   <textarea rows="20" name="latex_body" id="latex_body"
-                            disabled="true" class="tex">
-                  </textarea>
+                            disabled="true" class="tex tex-edit"></textarea>
                 </td>
               </tr>
               

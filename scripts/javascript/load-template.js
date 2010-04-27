@@ -18,6 +18,7 @@ function loadTemplateFile(value) {
 		$.get("scripts/python/serve-template.py", { template: value, type: "preamble" },
 		      function(data) {
 			  preamble.value = data;
+			  copy_to_editarea(preamble);
 		      });
 		
 		$.get("scripts/python/serve-template.py", { template: value, type: "middle" },
@@ -29,6 +30,7 @@ function loadTemplateFile(value) {
 		$.get("scripts/python/serve-template.py", { template: value, type: "body" },
 		      function(data) {
 			  body.value = data;
+			  copy_to_editarea(body);
 		      });
 		
 		$.get("scripts/python/serve-template.py", { template: value, type: "end" },
@@ -50,5 +52,7 @@ function loadTemplateFile(value) {
 		submit.disabled = "true";
 		check.disabled = "true";
 	    }
+	    
+	    reload_editarea();
 	});
 }

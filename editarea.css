@@ -1,0 +1,21 @@
+.area_toolbar {
+	display: none;
+}
+
+#container {
+	position: absolute;
+	left: -45px;
+}
+
+body {
+	padding: 0px 8px;
+}
+
+#container {
+	width: 100%;
+	padding-right: 0px;
+}
+
+strong {
+	border: 1px solid black;
+}
