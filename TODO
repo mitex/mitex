@@ -1,8 +1,9 @@
 - have it save a temp file automatically every so often
-- add a WYSIWYG option
+- connect the WYSIWYG editor to the source editor
 - add more templates
 - highlight errors
-- add syntax highlighting to code editor
 - figure out a better story for auto-emailing pushes
 - possibly provide a math-image service?
 - word count
+- possibly integrate with detexify?
+- possibly allow modification of the documentclass and options
