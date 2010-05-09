@@ -45,6 +45,6 @@ function switchToWYSIWYG() {
 }
 
 $(function () {
-        switchToWYSIWYG();
+        switchToSource();
         close_log();
     });
