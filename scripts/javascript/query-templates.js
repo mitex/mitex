@@ -19,11 +19,16 @@
 // Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 function setTemplateList(data) {
-    list = document.getElementById("templates");
-
+    elements = Array();
     $.each(data, function(i, item) {
-      	    list.options[list.options.length] = new Option(item, item);
-	});  
+            elements[elements.length] = item;
+	});
+    elements.sort();
+    var len = elements.length; // because JS is stupid and otherwise it's quadratic
+    list = document.getElementById("templates");
+    for (var i = 0; i < len; i++) {
+        list[list.options.length] = new Option(elements[i], elements[i]);
+    }
 }
 
 $(function () {
