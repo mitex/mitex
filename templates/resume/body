@@ -1,0 +1,29 @@
+\begin{center}
+\large{\textbf{Alyssa P Hacker \\
+77 Massachusetts Ave., Cambridge, MA, 02139 \\
++1 555-123-4567}}
+\end{center}
+
+\heading{Objective:} To go where no man has gone before.
+
+\heading{Skills:}
+\begin{itemize}
+\item Experienced in juggling, fence climbing, and caribou hunting. Proficiency in scuba diving. World champion in full-contact clamming.
+\item I can also cook a mean omelette.
+\end{itemize}
+
+\heading{Experience:}
+
+\begin{itemize}
+\item
+  \begin{indentpar}
+    \event{Acme, Inc.}{Anytown, USA}{January 1, 1970-Present}
+
+    Did awesome things for everyone.  Saved the world, the princess,
+    basically everyone who ever lived.  Got a 6.0 GPA.  6.0!! I am
+    just writing stuff to show you how this thing wraps.  I don't
+    know, I think it's a decent-looking r\'{e}sum\'{e}.  Add more
+    items, change the text, and you're sure to land that job!
+  \end{indentpar}
+\end{itemize}
+

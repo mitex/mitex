@@ -1,0 +1,10 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{parskip}
+\pagestyle{empty}
+\newenvironment{indentpar}{\begin{quote}}{\end{quote}}
+\newcommand{\heading}[1]{\vspace{0.1in}\noindent\underline{\textbf{#1}}}
+\newcommand{\place}[1]{{\sc #1}}
+\newcommand{\city}[1]{#1}
+\newcommand{\period}[1]{{\it #1}}
+\newcommand{\event}[3]{\underline{\place{#1}}, \city{#2} \hfill \period{#3}}
