@@ -1,8 +1,10 @@
+- sandboxing the compiler (I bet you could easily get it in an infinte loop right now)
+- provide a nice way for people to contribute/share templates (maybe read them from homedir via certs..?)
 - have it save a temp file automatically every so often
 - connect the WYSIWYG editor to the source editor
+- add math to the WYSIWYG editor (e.g. http://www.imathas.com/editordemo/demo.html)
 - add more templates
 - highlight errors
-- figure out a better story for auto-emailing pushes
 - possibly provide a math-image service?
 - word count
 - possibly integrate with detexify?
