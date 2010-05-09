@@ -1,5 +1,9 @@
 This is MITeX, a project of the Massachusetts Institute of Technology
 Student Information Processing Board (MIT SIPB, http://sipb.mit.edu).
+
+MITeX is a web-based LaTeX editor, providing a source editor, built-in
+templates, and eventually a WYSIWYG editor.
+
 MITeX is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free
 Software Foundation; either version 2 of the License, or (at your
