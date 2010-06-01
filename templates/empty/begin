@@ -1,1 +1,3 @@
-\documentclass[12pt,letterpaper]{article}
+% This is a totally blank template.  It will *NOT* compile without a
+% \documentclass and a \begin{document}...\end{document} pair.  See
+% the other templates for examples.
