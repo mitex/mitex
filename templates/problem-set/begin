@@ -1,3 +1,4 @@
+% A template for problem sets
 \documentclass[12pt,letterpaper]{article}
 \usepackage{fancyhdr}
 \usepackage[margin=1in,top=1.5in,headheight=3em]{geometry}

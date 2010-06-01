@@ -1,3 +1,4 @@
+% A template for a resume or CV
 \documentclass[12pt]{article}
 \usepackage[margin=0.5in]{geometry}
 \usepackage{parskip}
