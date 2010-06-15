@@ -15,6 +15,18 @@
   
   <link rel="SHORTCUT ICON" href="/favicon.ico"/>
   <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+
+  <script type="text/javascript" src="scripts/javascript/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js"></script> 
+  <script type="text/javascript">
+  var AMTcgiloc = "http://www.imathas.com/cgi-bin/mimetex.cgi";  		//change me
+  </script>
+
+  <!-- TinyMCE --> 
+  <script type="text/javascript" src="scripts/javascript/tiny_mce/tiny_mce.js"></script> 
+  
+  <!-- /TinyMCE --> 
+
+
 </head>
 
 <body>
@@ -55,6 +67,8 @@
     </div>
   </div>
   
+  
+  
   <div class="not-tex">
     <button type="button" id="wysiwyg_button"
         onclick="javascript:switchToWYSIWYG();">WYSIWYG</button>
@@ -66,7 +80,22 @@
     <table id="pagetable">
       <tr>
         <td>
-          <div id="wysiwyg_editor"></div>
+        <div id="wysiwyg_editor">
+            <textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 80%">
+&lt;p&gt;
+Include text along with math equations like &lt;span class="AM"&gt;`x=(-b+-sqrt(b^2-4ac))/(2a)`&lt;/span&gt; in your documents   
+&lt;/p&gt;
+&lt;p&gt;
+Click on the math formula to edit the AsciiMath expression used to generate it.
+&lt;/p&gt;
+&lt;p&gt;
+To edit the graph, click on the graph, then click the Graph button in the toolbar to open the control panel.
+&lt;/p&gt;
+&lt;p&gt;
+&lt;embed type="image/svg+xml" style="width: 300px; height: 200px; vertical-align: middle; float: none;" src="http://www.imathas.com/editordemo/jscripts/tiny_mce/plugins/asciisvg/js/d.svg" sscr="-7.5,7.5,-5,5,1,1,1,1,1,300,200,func,x^2,null,0,0,,,black,1,none" /&gt;
+&lt;/p&gt;
+            </textarea>
+          </div>
           
           <div id="source_editor">
             <table>
