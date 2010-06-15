@@ -1,0 +1,37 @@
+<head>
+	<script type="text/javascript" src="edit_area/edit_area_full.js"></script>
+	<script type="text/javascript">
+		editAreaLoader.init({
+			id: "preamble",
+			start_highlight: true,
+			allow_resize: "no",
+			allow_toggle: false,
+			language: "en",
+			syntax: "python",
+			toolbar: "",
+			EA_load_callback: "clean_box"
+		});
+		
+		function clean_box(id) {
+			var css = document.createElement("link");
+			css.href = "style.css";
+			css.rel = "stylesheet";
+			css.type = "text/css";
+			window.frames["frame_" + id].document.body.appendChild(css);
+		}
+	</script>
+</head>
+<body>
+	<textarea id="preamble">
+#!/usr/bin/python
+import sys
+import time
+
+p, a, b, x = [int(x) for x in sys.argv[1:]]
+while True:
+	print x,
+	sys.stdout.flush()
+	x = (a * x + b) % p
+	time.sleep(0.1)
+	</textarea>
+</body>
