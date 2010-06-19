@@ -27,7 +27,7 @@ cgitb.enable()
 def main():
     print "Content-type: text/json\n";
 
-    templates = os.listdir("../../templates")
+    templates = os.listdir(os.path.join(os.getcwd(),  "..", "..", "templates"))
     print json.dumps(dict((t,t) for t in templates))
 
 
