@@ -76,9 +76,9 @@ def compile_google(latex_file):
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = p.communicate(tex)
     
-    tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="../../docs", delete=False)
+    tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="/mit/mitex/web_scripts/docs", delete=False)
     tmp.write(stdout)
-    print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://" + os.environ['SERVER_NAME'] + "/docs/get.py?" + os.path.basename(tmp.name), "")
+    print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://mitex.mit.edu/docs/get.py?" + os.path.basename(tmp.name), "")
     print
     tmp.close()
 
