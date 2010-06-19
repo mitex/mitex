@@ -49,10 +49,10 @@ function init_tinyMCE() {
       
       // If someone can get the following php file working on scripts, change the path to a local version (scripts/php/svgimg.php).
       AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me  
-      ASdloc : 'scripts/javascript/tiny_mce/plugins/asciisvg/js/d.svg',  //change me  	
+      ASdloc : 'scripts/javascript/tiny_mce/plugins/asciisvg/js/d.svg',	
 
 //      AScgiloc : 'scripts/php/svgimg.php',			      //change me  
-//      ASdloc : 'scripts/javascript/tiny_mce/plugins/asciisvg/js/d.svg',  //change me          
+     
   
       content_css : "/css/content.css"
   });
