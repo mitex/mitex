@@ -36,7 +36,8 @@ function switchToSource() {
 
 function init_tinyMCE() {
   tinyMCE.init({
-      mode : "textareas",
+      mode : "exact",
+      elements : "wysiwyg-textarea",
       theme : "advanced",
       theme_advanced_buttons1 : "fontselect,fontsizeselect,formatselect,bold,italic,underline,strikethrough,separator,sub,sup,separator,cut,copy,paste,undo,redo",
       theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,forecolor,backcolor,separator,hr,link,unlink,image,table,code,separator,asciimath,asciimathcharmap,asciisvg",
