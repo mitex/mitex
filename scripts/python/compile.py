@@ -71,12 +71,13 @@ def compile_tex(latex_file):
 # Respond with a pdf file piped to Google Reader
 def compile_google(latex_file):
     tex = str(latex_file)
+    tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="../../docs", delete=False)
+    
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --pdf", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = p.communicate(tex)
     
-    tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="../../docs", delete=False)
     tmp.write(stdout)
     print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://" + os.environ['SERVER_NAME'] + "/docs/get.py?" + os.path.basename(tmp.name), "")
     print
