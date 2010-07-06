@@ -21,7 +21,8 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import sys, cgi, cgitb, subprocess, os, re, tempfile, urllib
-cgitb.enable(format="nothtml")
+#cgitb.enable(format="nothtml")
+cgitb.enable(format="html")
 
 # Make sure the object passed in is not None
 # (change it to "" if it is)
@@ -71,11 +72,13 @@ def compile_tex(latex_file):
 # Respond with a pdf file piped to Google Reader
 def compile_google(latex_file):
     tex = str(latex_file)
+    old_dir = os.getcwd()
     os.chdir("/tmp")
     p = subprocess.Popen("rubber-pipe --pdf", shell=True, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = p.communicate(tex)
     
+    os.chdir(old_dir)
     tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="../../docs", delete=False)
     tmp.write(stdout)
     print "Location: http://docs.google.com/viewer?url=" + urllib.quote("http://" + os.environ['SERVER_NAME'] + "/docs/get.py?" + os.path.basename(tmp.name), "")
