@@ -1,0 +1,50 @@
+\input{text/hevea.hva}
+\renewcommand{\@locname}[2]{\@infoname{#1}#2}
+\renewcommand{\@locref}[2]
+{#2{\@nostyle\@print{\@reference}\{#1\}}}
+\renewcommand{\@locnameref}[3]
+{\@infoname{#1}#3{{\@nostyle\@print{\@reference}\{#2\}}}}
+\let\textdocument=\document
+\let\endtextdocument=\enddocument
+\renewenvironment{document}
+{\textdocument\@infonode{Top}{Racine}}
+{\newboolean{infofoot}\setboolean{infofoot}{\boolean{footer}}\footerfalse
+\endtextdocument\setboolean{footer}{\boolean{infofoot}}}
+%%%%%%%%%%% Footnotes
+%%%% References only from text to note
+\renewcommand{\@noteref}[4]
+{\ifthenelse{\equal{#2}{text}}
+{\@locref{#1#3}{#4}}
+{\@locname{#2#3}{#4}}}
+%%%% Number footnote nodes
+\newcounter{footnotesflush}
+\newcommand{\theflush}{Notes \arabic{footnotesflush}}
+\newsavebox{\footflushed}
+\renewenvironment{thefootnotes}[1]
+  {\begin{lrbox}{\footflushed}
+  \footnoterule%
+  \begin{list}{}{\renewcommand{\makelabel}[1]{##1}}}
+  {\end{list}\end{lrbox}%
+  \@infoextranode{\theflush}{Notes}{\usebox{\footflushed}}%
+  \stepcounter{footnotesflush}}
+%%%%%%%%%%%%%%Menus are introduced by redefining \@makesection
+%% #1 is section name, #2 is section depth number
+\newcounter{menudepth}
+\newcounter{lastnode}\setcounter{lastnode}{-1000}
+\newcommand{\@insertmenu}[3]
+  {\ifthenelse{\value{menudepth} > #2}
+     {\ifthenelse{#2 > \value{lastnode}}
+       {\@infomenu{#1}}
+       {}%
+       \setcounter{lastnode}{#2}%
+       \@infonode[#1]
+         {\csname #1name\endcsname\ \csname the#1\endcsname}
+         {#3}}
+     {}}%
+\renewcommand{\@makesection}[7]{%
+\newcommand{#1}[2][!*!]
+{\@checkdepth{#2}{\refstepcounter{#3}}%
+\@footnoteflush{#3}%
+\@insertmenu{#3}{#2}{\begin{@norefs}##2\end{@norefs}}%
+#4\@checkdepth{#2}{#5#6} ##2#7\@secend}%
+\newcommand{#1*}[1]{#4##1#7\@secend}}

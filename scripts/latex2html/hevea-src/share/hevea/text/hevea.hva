@@ -1,0 +1,200 @@
+%%% Une précaution.
+\ifhtml\hva@warn{text/hevea is for text and info mode !!!}\endinput\fi
+%%%% package used by all packages
+\input{plain.hva}
+\newif\ififthen\ifthenfalse
+\input{ifthen.hva}
+%% Style sheet information is ignored
+\newcommand{\newstyle}[2]{}
+\newcommand{\@getstylecolor}[1]{}
+\newcommand{\class@attr}[2]{}
+\newcommand{\setenvclass}[2]{}
+\newcommand{\getenvclass}[1]{}
+\newcommand{\envclass@attr}[2][]{}
+\newcommand{\loadcssfile}[1]{}
+%% Packages
+\input{packages.hva}
+%%%%%% Spacing
+\input{spaces.hva}
+\renewcommand{\
+}{ }
+%%
+\input{latexcommon.hva}
+\input{iso-text.hva}
+%%% Special characters
+%%% Logos
+\def\TeX{\@print{TeX}}
+\def\LaTeX{\@print{LaTeX}}
+\def\LaTeXe{\@print{LaTeX2e}}
+\newcommand{\hevea}{\@print{HeVeA}}
+\newcommand{\hacha}{\@print{HaChA}}
+\newcommand{\html}{\@print{HTML}}
+%%% HTML related stuff (TEX equivalents are in the hevea.sty file)
+\newcommand{\@aelement}[2]{#2}
+\newcommand{\@footahref}[2]{#2\footnote{#1}}
+\newcommand{\ahref}[2]{\@footahref{#1}{#2}}
+\let\footahref\ahref
+\newcommand{\ahrefurl}[1]{\texttt{#1}}
+\newcommand{\mailto}[1]{{#1}}
+\newcommand{\imgsrc}[2][]{\hva@warn{Image in text}*#2*}
+\newcommand{\anchor}[1]{}
+%% Hyper-text references inside the document:
+\newcommand{\@locref}[2]{{#2}}
+\newcommand{\@locname}[2]{{#2}}
+\newcommand{\@locnameref}[3]{{#3}}
+%%% Two exported commands
+\let\ahrefloc\@locref
+\let\aname\@locname
+%%% footer and header, useful ???
+\newsavebox{\@htmlhead}
+\newsavebox{\@htmlfoot}
+\newcommand{\htmlhead}[1]{\sbox{\@htmlhead}{#1}}
+\newcommand{\htmlfoot}[1]{\sbox{\@htmlfoot}{#1}}
+%%%%%%%%%%% Footnotes text dependant part
+\newcommand{\@noteref}[4]{#4}
+\newcommand{\@notetextstyle}[1]{~(#1)}
+\newcommand{\@notenotestyle}[1]{(#1)}
+\newcommand{\footnoterule}{\@hr[ALIGN=left]{.5\textwidth}{1pt}}
+\newenvironment{thefootnotes}[2][]
+  {\footnoterule\begin{list}{}{\renewcommand{\makelabel}[1]{##1}}}
+  {\end{list}}
+%%% Captions
+\newenvironment{hva@capted}
+  {\begin{center}\begin{flushleft}}
+  {\end{flushleft}\end{center}}
+%%% Neutral definitions for hacha
+\newcounter{cuttingdepth}
+\setcounter{cuttingdepth}{1}
+\newcommand{\cutdef}[2][]{}
+\newcommand{\cutend}{}
+\newcommand{\cuthere}[2]{\footnoteflush{#1}}
+\newcommand{\@secbegin}{}
+\newcommand{\@secend}{}
+\newcommand{\@secanchor}{}
+\newenvironment{cutflow}[1]{}{}
+\newcommand{\cutname}[1]{}
+\newcommand{\toplinks}[3]{}
+\newcommand{\setlinkstext}[3]{}
+%%%%%%%%%%%%%
+% Maketitle %
+%%%%%%%%%%%%%
+\newcommand{\title@tohaux}[1]{}
+\newcommand{\maketitle}{%
+\@open{ALIGN}{CENTER}
+\@open{HEAD}{*}%
+\@title\\%
+\@close{HEAD}%
+\@open{HEAD}{=}%H3
+\usebox{\@author}\par
+\usebox{\@date}
+\@close{HEAD}%
+\@close{ALIGN}%
+\global\let\maketitle\relax}
+%%%%%%%%%%%% Bibliography
+\newcommand{\@bibref}[3]{#2\@bib@post{#3}}
+\newcommand{\@biblabel}[1]{[\@bibread{\bibtaghook{#1}}]}
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Document environment %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{document}{%
+\@end{document}
+\@restartoutput\unskip%
+\@atbegindocument%
+\cutdef[\thecuttingdepth]{\cuttingunit}%
+}{%
+\@atenddocument\@final@footer\@footnoteflush{document}\@raise@enddocument}
+\newenvironment{center}{\@open{ALIGN}{CENTER}}{\@close{ALIGN}}
+\newenvironment{flushleft}{\@open{ALIGN}{LEFT}}{\@close{ALIGN}}
+\newenvironment{flushright}{\@open{ALIGN}{RIGHT}}{\@close{ALIGN}}
+\newcommand{\centerline}[1]{\begin{center}#1\end{center}}
+\newenvironment{quote}{\@open{QUOTE}{}}{\@close{QUOTE}}
+\newenvironment{quotation}{\@open{QUOTATION}{}}{\@close{QUOTATION}}
+\newcommand{\centering}{\@insert{ALIGN}{CENTER}}
+\newcommand{\raggedleft}{\@insert{ALIGN}{RIGHT}}
+\newcommand{\raggedright}{\@insert{ALIGN}{LEFT}}
+%%%%%%%%%%% Figures
+
+%% Equations
+\newcommand{\rule}[3][]{\@printHR{left}{100}\@print{
+}}%
+%%%%%%%%%%%%%%%% LaTeX 2.09 style declarations
+\newenvironment{tt}{\@style{TT}}{}
+\newenvironment{bf}{\@style{B}}{}
+\newenvironment{em}{\@style{EM}}{}
+\newenvironment{it}{\@style{I}}{}
+\newenvironment{rm}{\@anti{\sf,\tt}}{}
+\newenvironment{tiny}{\@fontsize{1}}{}
+\newenvironment{footnotesize}{\@fontsize{2}}{}
+\newenvironment{scriptsize}{\@fontsize{2}}{}
+\newenvironment{small}{\@fontsize{3}}{}
+\newenvironment{normalsize}{\@fontsize{3}}{}
+\newenvironment{large}{\@fontsize{4}}{}
+\newenvironment{Large}{\@fontsize{5}}{}
+\newenvironment{LARGE}{\@fontsize{5}}{}
+\newenvironment{huge}{\@fontsize{6}}{}
+\newenvironment{Huge}{\@fontsize{7}}{}
+\newenvironment{purple}{\@fontcolor{purple}}{}
+\newenvironment{silver}{\@fontcolor{silver}}{}
+\newenvironment{gray}{\@fontcolor{gray}}{}
+\newenvironment{white}{\@fontcolor{white}}{}
+\newenvironment{maroon}{\@fontcolor{maroon}}{}
+\newenvironment{red}{\@fontcolor{red}}{}
+\newenvironment{fuchsia}{\@fontcolor{fuchsia}}{}
+\newenvironment{green}{\@fontcolor{green}}{}
+\newenvironment{lime}{\@fontcolor{lime}}{}
+\newenvironment{olive}{\@fontcolor{olive}}{}
+\newenvironment{yellow}{\@fontcolor{yellow}}{}
+\newenvironment{navy}{\@fontcolor{navy}}{}
+\newenvironment{blue}{\@fontcolor{blue}}{}
+\newenvironment{teal}{\@fontcolor{teal}}{}
+\newenvironment{aqua}{\@fontcolor{aqua}}{}
+\def\cal{\red}
+\def\sf{\purple}
+\def\sc{\navy}
+\def\sl{\it\maroon}
+%%%% LaTeX2e verbose declarations
+\newenvironment{mdseries}{\@anti{\bf}}{}
+\newenvironment{bfseries}{\bf}{}
+\newenvironment{rmfamily}{\rm}{}
+\newenvironment{sffamily}{\@anti{\tt}\sf}{}
+\newenvironment{ttfamily}{\@anti{\sf}\tt}{}
+\newenvironment{upshape}{\@anti{\it,\sl,\sc}}{}
+\newenvironment{itshape}{\@anti{\sl,\sc}\it}{}
+\newenvironment{slshape}{\@anti{\it,\sc}\sl}{}
+\newenvironment{scshape}{\@anti{\it,\sl}\sc}{}
+\newenvironment{normalfont}{\rm\mdseries\upshape}{}
+%%%%%%%%%%%%%%%%
+\def\textrm#1{\mbox{\rmfamily#1}}
+\def\textup#1{\mbox{\upshape#1}}
+\def\textmd#1{\mbox{\mdseries#1}}
+\def\textnormal#1{\mbox{\normalfont#1}}
+\def\texttt#1{\mbox{\ttfamily#1}}
+\def\textit#1{\mbox{\itshape#1}}
+\def\textbf#1{\mbox{\bfseries#1}}
+\def\textsf#1{\mbox{\sffamily#1}}
+\def\textsl#1{\mbox{\slshape#1}}
+\def\textsc#1{\mbox{\scshape#1}}
+\newcommand{\emph}[1]{\mbox{\em#1}}
+%%%%%%%%% Index formating
+\newenvironment{indexenv}{\begin{itemize}}{\end{itemize}}
+\newcommand{\indexitem}{\item}
+\newcommand{\indexspace}{\vspace*{1em}}
+%%%%%%%%concrete minipage
+\setenvclass{minipage}{minipage}
+\newenvironment{@minipage}{}{}
+%%%%%% format theorems
+\let\th@font\em
+\newcommand{\set@th}[1]
+{\global\let\csname#1@font\endcsname\th@font}
+\newenvironment{th@env}[3]
+{\begin{flushleft}%
+\refstepcounter{#2}\textbf{#3~\csname{}the#2\endcsname}%
+\def\th@tmp{#1}\th@kont}
+{\end{flushleft}}
+\newcommand{\th@kont}[1][]
+{\ifoptarg~\textbf{(#1)}\fi\quad\csname\th@tmp{}@font\endcsname}
+%%%%%%%%%% No attributes for arrays and tabular
+\newcommand{\@table@attributes}{}
+\newcommand{\@table@attributes@border}{}
+%% Over
+\def\csname hevea@loaded\endcsname{}

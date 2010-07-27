@@ -1,0 +1,371 @@
+%%  Hyperlatex makeidx.hlx extensions for subentry support 
+%%  Extensions Version 1.03
+%%  December 3 2004
+%%  Dan Corkill <corkill@cs.umass.edu>
+%%
+%%  The following changes to makeidx.hlx (Version 1.0) support hyperlatex 
+%%  indexing with subentries (via "!" char) and commands (via "|" char).  As with
+%%  normal LaTeX indexing, the double-quote character can be used to quote
+%%  special characters.
+%%
+%%  To use, load this file after makeidx.hlx.
+%%
+%%  Note that since hyperlatex entries do not have page numbers
+%%  (unless hyperlatex-index-node-format is true--the new default),
+%%  entries involving a command do not generate an automatic \xlink
+%%  (so the ! command must handle the xlink arguments itself). 
+%%  For example, to do italic page numbers, \index{alpha|itidx},
+%%  the command definitions for itidx would be:
+%%     \W\newcommand{\itidx}[2]{\textit{\xlink{#1}{#2}}}
+%%     \T\newcommand{\itidx}[1]{\textit{#1}}
+%%  A command like \index{beta|see{alpha}} (where \see is already
+%%  defined for LaTeX indexing) would call \see with 3 arguments in
+%%  hyperlatex: (1) alpha, (2) beta, and (3) the url. (This definition
+%%  of \see appears below.)
+%%
+%%  Some examples:
+%%     \index{aaa"!bbb!ccc}%
+%%     \index{aaa!bbb"!ccc}%
+%%     \index{aaa!bbb!ccc@\textbf{ccc}}%
+%%     \index{aaa!bbb@\textbf{bbb}!ccc}%
+%%     \index{aaa@\textbf{aaa}!bbb!ccc}%
+%%     \cindex[aaa!bbb!ccc]{aaa!bbb!\textbf{ccc}}%
+%%     \cindex[aa!bb!cc]{aa!\textbf{bb}!\textit{cc}}%
+%%     \cindex[aa"!bb!cc]{aa"!\textbf{bb}!\textit{cc}}%
+%%     \index{aaa|see{aaa"!bbb}}%
+%%     \index{aaa|itidx}%
+%%     \index{aaa"!bbb"|ccc""ddd|see{wow}}%
+%%     \index{aaa"!bbb"|ccc""ddd@fff|see{wow}}%
+%%     \index{aaa"!bbb"|ccc""ddd"@fff|see{wow}}%
+
+\T\begin{ifhtml}
+%% \see definition for nil hyperlatex-index-node-format:
+%% \W\newcommand{\see}[3]{#2, \textit{see} #1}
+\W\newcommand{\see}[3]{\textit{see} #1}
+
+\HlxEval{
+(defvar hyperlatex-index-node-format t)
+
+(defun hyperlatex-se-format-index ()
+  "Adds an index entry."
+  (let ((opt (hyperlatex-single-line (hyperlatex-parse-optional-argument)))
+        (arg (hyperlatex-single-line (hyperlatex-parse-required-argument)))
+        (label (hyperlatex-drop-label)))
+    (unless hyperlatex-final-pass
+      (unless opt 
+        ;; If opt is specified, no @ commands should be present
+        (let ((entry arg)
+              (subentry nil)
+              (subsubentry nil)
+              entry-opt
+              subentry-opt
+              subsubentry-opt
+              (pos (subentry-match arg))) 
+          ;; break up entry into sub & subentries
+          (cond 
+           (pos (setq entry (substring arg 0 pos))
+                (setq arg (substring arg (+ 1 pos)))
+                (setq subentry arg)
+                (setq pos (subentry-match arg))
+                (cond
+                 (pos (setq subentry (substring arg 0 pos))
+                      (setq subsubentry (substring arg (+ 1 pos)))
+                      ;; check subsubentry for @
+                      (setq pos (atentry-match subsubentry))
+                      (cond
+                       (pos (setq subsubentry-opt 
+                              (substring subsubentry 0 pos))
+                            (setq subsubentry
+                              (substring subsubentry (+ 1 pos))))
+                       (t (setq subsubentry-opt subsubentry)))))
+                ;; check subentry for @
+                (setq pos (atentry-match subentry))
+                (cond
+                 (pos (setq subentry-opt 
+                        (substring subentry 0 pos))
+                      (setq subentry
+                        (substring subentry (+ 1 pos))))
+                 (t (setq subentry-opt subentry)))))
+          ;; check entry for @
+          (setq pos (atentry-match entry))
+          (cond
+           (pos (setq entry-opt 
+                  (substring entry 0 pos))
+                (setq entry
+                  (substring entry (+ 1 pos))))
+           (t (setq entry-opt entry)))
+          (cond 
+           (subsubentry
+            (setq arg (concat entry "!" subentry "!" subsubentry))
+            (setq opt (concat entry-opt "!" subentry-opt "!" subsubentry-opt)))
+           (subentry
+            (setq arg (concat entry "!" subentry))
+            (setq opt (concat entry-opt "!" subentry-opt)))
+           (t
+            (setq arg entry)
+            (setq opt entry-opt)))))
+      (setq hyperlatex-index
+        (cons (list (if opt opt arg) arg hyperlatex-node-number label)
+              hyperlatex-index)))))
+
+(defun hyperlatex-se-format-printindex ()
+  (if (not hyperlatex-final-pass)
+      ()
+    (setq hyperlatex-index
+          (sort hyperlatex-index 'hyperlatex-se-index-compare))
+    (let ((indexelts hyperlatex-index)
+          (used-chars (make-vector 256 nil))
+          (toc-num    0)
+          (symbol-num 1)
+          (number-num 2)
+          (char-num   3)
+          (prev-num  -1)
+          (first-in-section? t)
+          (prev-entry "")
+          (entry1 nil)
+          (entry2 nil)
+          this-num
+          this-char)
+      ;;
+      ;; insert index body
+      ;;
+      (insert "\\begin{description}\n")
+      (while indexelts
+        (setq this-char (aref (upcase (car (car indexelts))) 0))
+        ;;
+        ;; determine entry type (numeric, alphabetic, symbol)
+        ;;
+        (cond ((and (<= ?0 this-char) (<= this-char ?9)
+                    (string-match "^[0-9]+$" (car (car indexelts))))
+               (setq this-num number-num))
+              ((and (<= ?A this-char) (<= this-char ?Z))
+               (setq this-num (+ (- this-char ?A) char-num)))
+              (t
+               (setq this-num symbol-num)))
+        ;;
+        ;; insert entry
+        ;;
+        (unless (= prev-num this-num)
+          (aset used-chars this-num t)
+          (let ((keyname this-char))
+            (cond ((= this-num symbol-num)
+                   (setq keyname "\\HlxIdxSymbols"))
+                  ((= this-num number-num)
+                   (setq keyname "\\HlxIdxNumbers")
+                   (if (= prev-num symbol-num)
+                       (insert "\\xml{p}"))))
+            (insert "\\item[")
+            (hyperlatex-se-insert-url toc-num this-num keyname)
+            (insert "]\n")
+            (setq first-in-section? t)
+            (setq entry1 nil entry2 nil)
+            (setq prev-num this-num)))
+        (let* ((el (nth 1 (car indexelts)))
+               (pos (subentry-match el))
+               entry)
+          (cond (pos
+                 (setq entry (substring el 0 pos))
+                 (unless (string= entry entry1)
+                   (subentry-indent nil nil first-in-section?)
+                   (setq first-in-section? nil)
+                   (insert (format "%s\n" 
+                                   (strip-quotes-from-string
+                                    (setq entry1 entry)))))
+                 (setq el (substring el (+ 1 pos)))
+                 ;; sub-sub-entry?
+                 (setq pos (subentry-match el))
+                 (cond (pos
+                        (setq entry (substring el 0 pos))
+                        (unless (string= entry entry2)
+                          (subentry-indent entry1 nil first-in-section?)
+                          (insert (format "%s\n" 
+                                          (strip-quotes-from-string
+                                           (setq entry2 entry)))))
+                        (setq el (substring el (+ 1 pos))))
+                       (t (setq entry2 nil))))
+                (t (setq entry1 nil)
+                   (setq entry2 nil)))
+          (let* ((pos (commandentry-match el))
+                 (node (nth 2 (car indexelts)))
+                 (url (hyperlatex-gen-url node
+                                          (nth 3 (car indexelts)))))
+            (cond (pos 
+                   (cond (hyperlatex-index-node-format
+                          (let ((ent 
+                                 (strip-quotes-from-string  
+                                  (substring el 0 pos))))
+                            (unless (string= ent prev-entry)
+                              (subentry-indent entry1 entry2 first-in-section?)
+                              (insert ent)
+                              (setq prev-entry ent)))
+                          (insert ", ")
+                          (insert (format "\\%s{%s}{%s}\n" 
+                                          (strip-quotes-from-string
+                                           (substring el (+ 1 pos)))
+                                            node
+                                            url)))
+                         (t (subentry-indent entry1 entry2 first-in-section?)
+                            (insert (format "\\%s{%s}{%s}\n" 
+                                            (strip-quotes-from-string
+                                             (substring el (+ 1 pos)))
+                                            (strip-quotes-from-string 
+                                             (substring el 0 pos))
+                                            url)))))
+                  (t (cond 
+                      (hyperlatex-index-node-format
+                       (let ((ent (strip-quotes-from-string el)))
+                         (unless (string= ent prev-entry)
+                           (subentry-indent entry1 entry2 first-in-section?)
+                           (insert ent)
+                           (setq prev-entry ent)))
+                       (insert ", \n")
+                       (insert (format "\\xlink{%s}{%s}" node url)))
+                      (t (subentry-indent entry1 entry2 first-in-section?)
+                         (insert (format "\\xlink{%s}{%s}"
+                                         (strip-quotes-from-string el)
+                                         url))))))))
+        (setq first-in-section? nil)
+        (setq indexelts (cdr indexelts)))
+      (insert "\\end{description}\n")
+      ;;
+      ;; insert index directory
+      ;;
+      (goto-char hyperlatex-command-start)
+      (insert "\\HlxBeginIndexDir{}")
+      (let ((sep "")
+            (name toc-num))
+        (if (aref used-chars symbol-num)
+            (progn
+              (insert sep "\\HlxIndexDirActive{")
+              (hyperlatex-se-insert-url symbol-num name "\\HlxIdxSymbols")
+              (insert "}")
+              (setq sep "\\HlxIndexDirSep{}")
+              (setq name nil)))
+        (if (aref used-chars number-num)
+            (progn
+              (insert sep "\\HlxIndexDirActive{")
+              (hyperlatex-se-insert-url number-num name "\\HlxIdxNumbers")
+              (insert "}")
+              (setq sep "\\HlxIndexDirSep{}")
+              (setq name nil)))
+        (setq this-char ?A)
+        (setq this-num char-num)
+        (while (<= this-char ?Z)
+          (if (aref used-chars this-num)
+              (progn
+                (insert sep "\\HlxIndexDirActive{")
+                (hyperlatex-se-insert-url this-num name
+                                          (char-to-string this-char))
+                (insert "}")
+                (setq name nil))
+            (insert sep "\\HlxIndexDirInactive{" this-char "}"))
+          (setq sep "\\HlxIndexDirSep{}")
+          (setq this-char (1+ this-char))
+          (setq this-num (1+ this-num))))
+      (insert "\\HlxEndIndexDir{}\n")
+      (goto-char hyperlatex-command-start)))
+  ;; allocate label numbers
+  (setq hyperlatex-label-number (+ hyperlatex-label-number 29)))
+
+(defun subentry-indent (entry1 entry2 first-in-section?)
+  (unless first-in-section? (insert "\\\\"))
+  (cond (entry2 (insert "~~~~~~~~~~~~"))
+        (entry1 (insert "~~~~~~"))))
+
+(defun atentry-match (str &optional start)
+  (let ((pos (string-match "@" str (or start 0))))
+    (cond ((and pos (char-equal ?\" (aref str (- pos 1))))
+           (atentry-match str (+ pos 1)))
+          (t pos))))
+
+(defun subentry-match (str &optional start)
+  (let ((pos (string-match "!" str (or start 0))))
+    (cond ((and pos (char-equal ?\" (aref str (- pos 1))))
+           (subentry-match str (+ pos 1)))
+          (t pos))))
+
+(defun commandentry-match (str &optional start)
+  (let ((pos (string-match "|" str (or start 0))))
+    (cond ((and pos (char-equal ?\" (aref str (- pos 1))))
+           (commandentry-match str (+ pos 1)))
+          (t pos))))
+
+(defun strip-quotes-from-string (str)
+  (let* ((ptr 0)
+         (end (length str))
+         (offset 0))
+    (while (< ptr end)
+      (let ((char (aref str (+ ptr offset))))
+        (when (and (char-equal ?\" char) 
+                   ; ignore an erroneous quote at end of string
+                   (< ptr (decf end)))
+          (incf offset)
+          (setq char (aref str (+ ptr offset))))
+        (aset str ptr char)
+        (incf ptr)))
+    (substring str 0 end)))
+
+;;; From makeindex(1):
+;;;
+;;; Modified to compare hyperlatex-index-node numbers on identitcal
+;;; matches
+;;;
+;;; Numbers are always sorted in numeric order. Letters are first
+;;; sorted without regard to case; when words are identical, the
+;;; uppercase version precedes its lowercase counterpart.
+;;;  
+;;; A special symbol is defined here to be any character not appearing
+;;; in the union of digits and the English alphabetic characters.
+;;; Patterns starting with special symbols precede numbers, which
+;;; precede patterns starting with letters. As a special case, a string
+;;; starting with a digit but mixed with non-digits is considered to be
+;;; a pattern starting with a special character.
+
+(defun hyperlatex-se-index-compare (a b)
+  (let* ((au (upcase (car a)))
+         (bu (upcase (car b)))
+         (a0 (aref au 0))
+         (b0 (aref bu 0)))
+    (cond
+     ;; a is a number
+     ((and (<= ?0 a0) (<= a0 ?9) (string-match "^[0-9]+$" au))
+      (cond
+       ((and (<= ?0 b0) (<= b0 ?9)      ; b is a number
+             (string-match "^[0-9]+$" bu))
+        (or (< (string-to-number au)
+               (string-to-number bu))
+            (and (= (string-to-number au)
+                    (string-to-number bu))
+                 ;; differentiate on node number
+                 (< (nth 2 a) (nth 2 b)))))
+       ((and (<= ?A b0) (<= b0 ?Z)) t)  ; b0 is alphabetic
+       (t nil)))                        ; b0 is a symbol
+     ;; a0 is alphabetic
+     ((and (<= ?A a0) (<= a0 ?Z))
+      (cond
+       ((and (<= ?A b0) (<= b0 ?Z))     ; b0 is alphabetic
+        (or (string< au bu)
+            (and (string= au bu)
+                 (or (string< (car a) (car b))
+                     (and (string= (car a) (car b))
+                          ;; differentiate on node number
+                          (< (nth 2 a) (nth 2 b)))))))
+       (t nil)))                        ; b0 is a digit or symbol
+     ;; a0 is a symbol
+     (t
+      (cond
+       ((and (<= ?0 b0) (<= b0 ?9)) t)  ; b0 is a digit
+       ((and (<= ?A b0) (<= b0 ?Z)) t)  ; b0 is alphabetic
+       (t (or (string< (car a) (car b)) ; b0 is a symbol
+              (and (string= (car a) (car b))
+                   ; differentiate  on node number
+                   (< (nth 2 a) (nth 2 b))))))))))
+
+}
+\T\end{ifhtml}
+  
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "reference"
+%%% End: 

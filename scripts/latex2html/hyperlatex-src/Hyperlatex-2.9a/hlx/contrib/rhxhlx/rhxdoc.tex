@@ -1,0 +1,106 @@
+% The file is a wrapper for rh-hyperlatex.tex (a description for 
+% Ralf Hemmecke's hyperlatex extensions).
+
+% $Id: rhxdoc.tex,v 1.2 2006/11/20 02:31:51 tomfool Exp $
+
+\documentclass[a4paper]{article}
+\usepackage{hyperlatex}% Version 2.6
+%\setcounter{htmldepth}{4}
+%\W\usepackage{sequential}
+
+\usepackage{color}
+\newcommand{\Xlink}[2]{\xmlattributes*{a}{target="_top"}\xlink{#1}{#2}}
+\newcommand{\xxlink}[3]{\xlink{#1}{#3}}
+
+
+%\T\newcommand{\CVSDATE}{\W}
+%\CVSDATE $Date: 2006/11/20 02:31:51 $
+\pagecolor[gray]{0.9}
+\W\newcommand{\HlxIcons}{pics}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\htmldirectory{hyperlatex}
+\htmlname{index}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\MyName}{Ralf Hemmecke}
+\newcommand{\MyEMail}{ralf@hemmecke.de}
+\newcommand{\MyHomePage}{http://www.hemmecke.de/ralf}
+\newcommand{\MyOfficeHomePage}{http://www.risc.uni-linz.ac.at/people/hemmecke}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\htmlpanel{1}
+\htmltopname{Ralf Hemmecke}% Argument is not expanded
+\newcommand{\HlxNavigationPanelTitle}{\MyName}
+\htmladdress{\xlink{\MyName}{mailto:\MyEMail} \Xlink{\MyHomePage}{\MyHomePage} \today}
+\htmltitle{Hyperlatex Extension}
+\title{Hyperlatex Extension}
+\T\author{\MyName}
+\W\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\W\begin{iftex}
+\frenchspacing
+\addtolength{\oddsidemargin}{-10mm}
+\addtolength{\textwidth}{20mm}
+\parindent0pt
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\lhead{\footnotesize \MyName}
+\chead{\footnotesize Hyperlatex Extension}
+\rhead{\footnotesize \thepage/\pageref{LastPage}}
+\cfoot{}
+\pagestyle{fancy}
+\W\end{iftex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{ifhtml}
+\begin{ifset}{HlxFramesNavigation}
+%-- Change the standard Navigation panel.
+\renewcommand{\HlxFramesNavigation}{%
+  \renewcommand{\HlxTopPanel}{%
+    \EmptyP{\HlxSeqPrevUrl\HlxUpUrl\HlxSeqNextUrl}{%
+%
+      \HlxSetIcons{\HlxIcons}% 
+%
+      \xml*{table width="100%" cellpadding=0 cellspacing=2}\xml{tr}%
+      \HlxPanelHomeButton%
+      \HlxPanelItem[align="center" width="100%"]{\HlxNavigationPanelTitle}%
+%      \HlxPanelFields%
+      \xml*{/tr}%
+      \xml*{/table}}{}}
+%
+  \renewcommand{\HlxBottomPanel}{}
+  \renewcommand{\HlxBottomMatter}{}
+  \HlxTocName
+  \section[\navigationname]{}
+  \begin{center}
+    \htmlimg{\MyOfficeHomePage/pics/ralf.jpg}{Photo of Ralf Hemmecke}\\
+    \xlink{ralf@hemmecke.de}{mailto:\MyEMail}
+  \end{center}
+  \xml{base target="main"}
+  \htmlmenu[0]{1}
+}
+\end{ifset}
+\end{ifhtml}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+
+\htmlmenu{5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{rh-hyperlatex.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%EMACS Local Variables:
+%EMACS mode: latex
+%EMACS ispell-local-dictionary: "british"
+%EMACS End:

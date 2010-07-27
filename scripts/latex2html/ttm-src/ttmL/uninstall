@@ -1,0 +1,10 @@
+#!/bin/bash
+# UNInstall script for TtM. (C) 2000 Ian Hutchinson.
+rm $HOME/.kde/share/applnk/ttm.kdelnk
+rm $HOME/Desktop/ttm.kdelnk
+rm $HOME/bin/ttm
+rm $HOME/bin/ps2gif
+rm $HOME/bin/ps2png
+rm $HOME/bin/latex2gif
+rm $HOME/.kde/share/icons/mini/ttm_mini.gif 
+rm $HOME/.kde/share/icons/ttm_icon.gif 

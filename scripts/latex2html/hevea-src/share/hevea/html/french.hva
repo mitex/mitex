@@ -1,0 +1,3 @@
+%%%% Hevea support for babel option 'french'.
+\input{french-common.hva}
+\newcommand{\french@babel}{\common@french@babel}%

@@ -1,0 +1,133 @@
+
+\typeout{Babel package: Dutch}
+
+\newcommand{\captionsdutch}{%
+  \newcommand{\prefacename}{Voorwoord}%
+  \newcommand{\refname}{Referenties}%
+  \newcommand{\abstractname}{Samenvatting}%
+  \newcommand{\bibname}{Bibliografie}%
+  \newcommand{\chaptername}{Hoofdstuk}%
+  \newcommand{\appendixname}{Bijlage}%
+  \newcommand{\contentsname}{Inhoudsopgave}%
+  \newcommand{\listfigurename}{Lijst van figuren}%
+  \newcommand{\listtablename}{Lijst van tabellen}%
+  \newcommand{\indexname}{Index}%
+  \newcommand{\figurename}{Figuur}%
+  \newcommand{\tablename}{Tabel}%
+  \newcommand{\partname}{Deel}%
+  \newcommand{\enclname}{Bijlage(n)}%
+  \newcommand{\ccname}{cc}%
+  \newcommand{\headtoname}{Aan}%
+  \newcommand{\pagename}{Pagina}%
+  \newcommand{\seename}{zie}%
+  \newcommand{\alsoname}{zie ook}%
+  \newcommand{\proofname}{Bewijs}%
+}
+
+\HlxEval{
+(defun hyperlatex-dutch-active-doublequote ()
+  ;; doublequote has already been removed from text
+  (let ((here (point))
+	(match (assoc (following-char) hyperlatex-dutch-interesting-chars)))
+    (if match
+	;; if char is not in the list, we don't do anything
+	(progn
+	  ;; replace the character with its expansion
+	  (delete-region (point) (1+ (point)))
+	  (insert (cdr match))
+	  (goto-char here)))))
+
+(defvar hyperlatex-dutch-interesting-chars
+  '( ( ?a . "\\xmlent{auml}")
+     ( ?A . "\\xmlent{Auml}")
+     ( ?o . "\\xmlent{ouml}")
+     ( ?O . "\\xmlent{Ouml}")					      
+     ( ?u . "\\xmlent{uuml}")
+     ( ?U . "\\xmlent{Uuml}")					      
+     ( ?e . "\\xmlent{euml}")
+     ( ?E . "\\xmlent{Euml}")					      
+     ( ?i . "\\xmlent{iuml}")
+     ( ?I . "\\xmlent{Iuml}")					      
+     ( ?s . "\\xmlent{szlig}")
+     ( ?S . "SS")
+     ( ?y . "ij")
+     ( ?Y . "IJ")
+     ( ?z . "\\xmlent{szlig}")
+     ( ?Z . "SZ")
+     ( ?| . "")
+     ( ?- . "")
+     ( ?\" . "")
+     ( ?~ . "-")
+     ( ?= . "-")
+     ( ?` . "\\glqq{}")
+     ( ?' . "\\grqq{}")
+     ( ?< . "\\flqq{}")
+     ( ?> . "\\frqq{}")
+     ))
+}
+
+\newcommand{\mdqon}{
+  \HlxEval{
+	;; Make " an active character
+	(setq hyperlatex-additional-special-characters
+		  (concat "\"" hyperlatex-additional-special-characters))
+	(hyperlatex-update-special-chars)
+	;; Provide definition for active "
+	(put '\" 'hyperlatex-active 'hyperlatex-dutch-active-doublequote)
+  }
+}
+\newcommand{\mdqoff}{
+  \HlxEval{
+	;; Remove " definition
+	(string-match "\"" hyperlatex-additional-special-characters)
+	(replace-match "" t t hyperlatex-additional-special-characters)
+	(hyperlatex-update-special-chars)
+  }
+}
+
+\newcommand{\datedutch}{%
+  \renewcommand{\today}{\HlxTodayDutch}
+}
+
+\HlxEval{
+(put 'HlxTodayDutch 'hyperlatex 'hyperlatex-format-hlxtodaydutch)
+
+(defun hyperlatex-format-hlxtodaydutch ()
+   (let* ((date (decode-time))
+	  (day (elt date 3))
+	  (month (elt date 4))
+	  (year (elt date 5))
+	  (month-list '("januari" "februari" "maar" "april"
+		      	"mei" "juni" "juli" "augustus" 
+			"september" "oktober" "november" "december")))
+    (insert
+      (concat (int-to-string day)
+ 	     " " (elt month-list (1- month))
+ 	     " " (int-to-string year)))))
+}
+
+\newcommand{\extrasdutch}{
+  \mdqon
+}
+
+\newcommand{\htmlpaneldutch}{
+  \renewcommand{\HlxGoBackName}{Terug naar:}
+  \renewcommand{\HlxGoUpName}{Omhoog naar:}
+  \renewcommand{\HlxGoForwardName}{Verder naar:}
+}
+
+\newcommand{\noextrasdutch}{
+  \mdqoff
+}
+
+\newcommand{\glqq}{,,{}}
+\newcommand{\grqq}{'{'}}
+\newcommand{\glq}{,}
+\newcommand{\grq}{'}
+\newcommand{\flqq}{\xmlent{##171}}
+\newcommand{\frqq}{\xmlent{##187}}
+\newcommand{\flq}{<}
+\newcommand{\frq}{>}
+\newcommand{\dq}{\"{}}
+
+

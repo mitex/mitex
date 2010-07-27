@@ -1,0 +1,9 @@
+\ifstyleloaded\relax\else
+\input{text/book.hva}
+\setcounter{menudepth}{2}
+\newcommand{\sectionname}{Section}
+\newcommand{\subsectionname}{Subsection}
+\newcommand{\subsubsectionname}{Subsubsection}
+\renewcommand{\@indexsection}[1]{\chapter{#1}}
+\renewcommand{\@bibliosection}[1]{\chapter{#1}}
+\fi
