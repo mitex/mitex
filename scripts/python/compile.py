@@ -23,18 +23,23 @@
 import sys, cgi, cgitb, subprocess, os, re, tempfile, urllib
 cgitb.enable(format="nothtml")
 
-# Make sure the object passed in is not None
-# (change it to "" if it is)
 def not_none(obj):
+    """
+    Make sure the object passed in is not None
+    (change it to "" if it is)
+    """
     if obj is None:
         return ""
     else:
         return obj
 
-# Wrapper for a tex file -- split up into beginning,
-# preamble, middle, body, and end.  It also has a name.
-# Can be made into a single string.
+
 class LaTeXFile(object):
+    """
+    Wrapper for a tex file -- split up into beginning,
+    preamble, middle, body, and end.  It also has a name.
+    Can be made into a single string.
+    """
     def __init__(self, begin, middle, end, preamble, body, name):
         self.begin = begin
         self.middle = middle
@@ -59,8 +64,10 @@ class LaTeXFile(object):
 
         return tex
 
-# Respond with a tex file
 def compile_tex(latex_file):
+    """
+    Respond with a tex file
+    """
     print "Content-type: application/x-tex"
     print "Content-disposition: attachment; filename=%s.tex" % latex_file.name
     print
@@ -68,8 +75,10 @@ def compile_tex(latex_file):
     tex = str(latex_file)
     print tex
 
-# Respond with a pdf file piped to Google Reader
 def compile_google(latex_file):
+    """
+    Respond with a pdf file piped to Google Reader
+    """
     tex = str(latex_file)
     tmp = tempfile.NamedTemporaryFile(suffix=".pdf", dir="../../docs", delete=False)
     
@@ -83,8 +92,10 @@ def compile_google(latex_file):
     print
     tmp.close()
 
-# Respond with a pdf file
 def compile_pdf(latex_file):
+    """
+    Respond with a pdf file
+    """
     print "Content-type: application/pdf"
     print "Content-disposition: attachment; filename=%s.pdf" % latex_file.name
     print
@@ -97,8 +108,10 @@ def compile_pdf(latex_file):
 
     print stdout
 
-# Respond with a ps file
 def compile_ps(latex_file):
+    """
+    Respond with a ps file
+    """
     print "Content-type: application/postscript"
     print "Content-disposition: attachment; filename=%s.ps" % latex_file.name
     print
@@ -111,8 +124,10 @@ def compile_ps(latex_file):
 
     print stdout
 
-# Respond with a log file
 def compile_log(latex_file):
+    """
+    Respond with a log file
+    """
     print "Content-type: text/html"
     print
 
@@ -135,8 +150,10 @@ def compile_log(latex_file):
     (stdout, stderr) = p.communicate()
 
 
-# Make an error message
 def make_error_message(message):
+    """
+    Make an error message
+    """
     return """Content-type: text/html
 
 <html><head><title>MITeX -- Error!</title></head><body>
@@ -144,9 +161,12 @@ def make_error_message(message):
 """ % message
 
 
-# Parse the cgi input, and give a response of a certain file
-# type.
+
 def main():
+    """
+    Parse the cgi input, and give a response of a certain file
+    type.
+    """
     allowed_types = {"tex": compile_tex, "pdf": compile_pdf,
                      "ps": compile_ps,   "log": compile_log,
                      "google": compile_google}
