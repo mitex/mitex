@@ -30,33 +30,36 @@ function switchToSource() {
 
     $('#source_editor').show();
     $('#wysiwyg_editor').hide();
+    
+    switch_to_latex_to_html_conversion();
+    
     resize_log();
     reload_editarea();
 }
 
 function init_tinyMCE() {
-  tinyMCE.init({
-      mode : "exact",
-      elements : "wysiwyg-textarea",
-      theme : "advanced",
-      theme_advanced_buttons1 : "fontselect,fontsizeselect,formatselect,bold,italic,underline,strikethrough,separator,sub,sup,separator,cut,copy,paste,undo,redo",
-      theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,forecolor,backcolor,separator,hr,link,unlink,image,table,code,separator,asciimath,asciimathcharmap,asciisvg",
-      theme_advanced_buttons3 : "",
-      theme_advanced_fonts : "Arial=arial,helvetica,sans-serif,Courier New=courier new,courier,monospace,Georgia=georgia,times new roman,times,serif,Tahoma=tahoma,arial,helvetica,sans-serif,Times=times new roman,times,serif,Verdana=verdana,arial,helvetica,sans-serif",
-      theme_advanced_toolbar_location : "top",
-      theme_advanced_toolbar_align : "left",
-      theme_advanced_statusbar_location : "bottom",
-      plugins : 'safari,asciimath,asciisvg,table,inlinepopups',
-      
-      // If someone can get the following php file working on scripts, change the path to a local version (scripts/php/svgimg.php).
-      AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me  
-      ASdloc : 'scripts/javascript/tiny_mce/plugins/asciisvg/js/d.svg',	
+    tinyMCE.init({
+        mode : "exact",
+        elements : "wysiwyg-textarea",
+        theme : "advanced",
+        theme_advanced_buttons1 : "fontselect,fontsizeselect,formatselect,bold,italic,underline,strikethrough,separator,sub,sup,separator,cut,copy,paste,undo,redo",
+        theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,forecolor,backcolor,separator,hr,link,unlink,image,table,code,separator,asciimath,asciimathcharmap,asciisvg",
+        theme_advanced_buttons3 : "",
+        theme_advanced_fonts : "Arial=arial,helvetica,sans-serif,Courier New=courier new,courier,monospace,Georgia=georgia,times new roman,times,serif,Tahoma=tahoma,arial,helvetica,sans-serif,Times=times new roman,times,serif,Verdana=verdana,arial,helvetica,sans-serif",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_statusbar_location : "bottom",
+        plugins : 'safari,asciimath,asciisvg,table,inlinepopups',
+        
+        // If someone can get the following php file working on scripts, change the path to a local version (scripts/php/svgimg.php).
+        AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me  
+        ASdloc : 'scripts/javascript/tiny_mce/plugins/asciisvg/js/d.svg',	
 
 //      AScgiloc : 'scripts/php/svgimg.php',			      //change me  
      
   
-      content_css : "/css/content.css"
-  });
+        content_css : "/css/content.css"
+    });
 }
 
 function switchToWYSIWYG() {
@@ -68,6 +71,9 @@ function switchToWYSIWYG() {
 
     $('#wysiwyg_editor').show();
     $('#source_editor').hide();
+
+    switch_to_html_to_latex_conversion();
+    
     resize_log();
 }
 

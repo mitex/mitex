@@ -1,0 +1,128 @@
+% ----------------------------------------------
+% Map several symbols to their unicode entities
+% ----------------------------------------------
+\newcommand{\ldots}{\xmlent{hellip}}
+
+
+% Greek letters
+% lower case:
+\newcommand{\alpha}{\xmlent{alpha}}
+\newcommand{\beta}{\xmlent{beta}}
+\newcommand{\gamma}{\xmlent{gamma}}
+\newcommand{\delta}{\xmlent{delta}}
+\newcommand{\epsilon}{\xmlent{epsilon}}
+\newcommand{\varepsilon}{\epsilon}   % take the same symbol
+\newcommand{\zeta}{\xmlent{zeta}}
+\newcommand{\eta}{\xmlent{eta}}
+\newcommand{\theta}{\xmlent{theta}}
+\newcommand{\vartheta}{\xmlent{thetasym}}
+\newcommand{\iota}{\xmlent{iota}}
+\newcommand{\kappa}{\xmlent{kappa}}
+\newcommand{\lambda}{\xmlent{lambda}}
+\newcommand{\mu}{\xmlent{mu}}
+\newcommand{\nu}{\xmlent{nu}}
+\newcommand{\xi}{\xmlent{xi}}
+\newcommand{\pi}{\xmlent{pi}}
+\newcommand{\varpi}{\xmlent{piv}}
+\newcommand{\rho}{\xmlent{rho}}
+\newcommand{\sigma}{\xmlent{sigma}}
+\newcommand{\varsigma}{\xmlent{sigmaf}}
+\newcommand{\tau}{\xmlent{tau}}
+\newcommand{\upsilon}{\xmlent{upsilon}}
+\newcommand{\phi}{\xmlent{phi}}
+%%\newcommand{\varphi}{\xmlent{##981}}   % not supported
+\newcommand{\varphi}{\phi}                  % take the same symbol
+\newcommand{\chi}{\xmlent{chi}}
+\newcommand{\psi}{\xmlent{psi}}
+\newcommand{\omega}{\xmlent{omega}}
+
+% Upper case:
+\newcommand{\Gamma}{\xmlent{Gamma}}
+\newcommand{\Delta}{\xmlent{Delta}}
+\newcommand{\Theta}{\xmlent{Theta}}
+\newcommand{\Lambda}{\xmlent{Lambda}}
+\newcommand{\Xi}{\xmlent{Xi}}
+\newcommand{\Pi}{\xmlent{Pi}}
+\newcommand{\Sigma}{\xmlent{Sigma}}
+\newcommand{\Upsilon}{\xmlent{upsih}}
+\newcommand{\Phi}{\xmlent{Phi}}
+\newcommand{\Psi}{\xmlent{Psi}}
+\newcommand{\Omega}{\xmlent{Omega}}
+
+
+
+
+% -------------------------------------------------
+% Declare several math operators:
+% Note that spaces are included after the symbols
+
+\newcommand{\leftarrow}{\xmlent{larr}\xspace}
+\newcommand{\Leftarrow}{\xmlent{lArr}\xspace}
+\newcommand{\rightarrow}{\xmlent{rarr}\xspace}
+\newcommand{\Rightarrow}{\xmlent{rArr}\xspace}
+%\newcommand{\longleftarrow}{\leftarrow\xmlent{mdash}\xspace}
+%\newcommand{\longrightarrow}{\xmlent{mdash}\rightarrow\xspace}
+\newcommand{\longleftarrow}{\leftarrow}
+\newcommand{\longrightarrow}{\rightarrow}
+\newcommand{\leftrightarrow}{\xmlent{harr}\xspace}
+\newcommand{\Leftrightarrow}{\xmlent{hArr}\xspace}
+\newcommand{\uparrow}{\xmlent{uarr}\xspace}
+\newcommand{\Uparrow}{\xmlent{uArr}\xspace}
+\newcommand{\downarrow}{\xmlent{darr}\xspace}
+\newcommand{\Downarrow}{\xmlent{dArr}\xspace}
+
+\newcommand{\langle}{\xmlent{lang}\xspace}
+\newcommand{\rangle}{\xmlent{rang}\xspace}
+
+\newcommand{\forall}{\xmlent{forall}\xspace}
+\newcommand{\exist}{\xmlent{exists}\xspace}
+\newcommand{\in}{\xmlent{isin}\xspace}
+\newcommand{\ni}{\xmlent{ni}\xspace}
+\newcommand{\notin}{\xmlent{notin}\xspace}
+\newcommand{\cong}{\xmlent{cong}\xspace}
+\newcommand{\leq}{\xmlent{le}\xspace}
+\newcommand{\infty}{\xmlent{infin}\xspace}
+\newcommand{\geq}{\xmlent{ge}\xspace}
+\newcommand{\partial}{\xmlent{part}\xspace}
+%\newcommand{\bullet}{\xmlent{##8729}\xspace}
+\newcommand{\bullet}{\xmlent{bull}\xspace}
+\newcommand{\neq}{\xmlent{ne}\xspace}
+\newcommand{\equiv}{\xmlent{equiv}\xspace}
+\newcommand{\approx}{\xmlent{assump}\xspace}
+\newcommand{\otimes}{\xmlent{otimes}\xspace}
+\newcommand{\oplus}{\xmlent{oplus}\xspace}
+\newcommand{\emptyset}{\xmlent{empty}\xspace}
+\newcommand{\cap}{\xmlent{cap}\xspace}
+\newcommand{\bigcap}{\cap}
+\newcommand{\cup}{\xmlent{cup}\xspace}
+\newcommand{\bigcup}{\cup}
+\newcommand{\supset}{\xmlent{sup}\xspace}
+\newcommand{\supseteq}{\xmlent{supe}\xspace}
+\newcommand{\nsubset}{\xmlent{nsub}\xspace}
+\newcommand{\nsubseteq}{\nsubset}
+\newcommand{\subset}{\xmlent{sub}\xspace}
+\newcommand{\subseteq}{\xmlent{sube}\xspace}
+\newcommand{\nabla}{\xmlent{nabla}\xspace}
+\newcommand{\prod}{\xmlent{prod}\xspace}
+\newcommand{\cdot}{\xmlent{sdot}\xspace}
+\newcommand{\wedge}{\xmlent{and}\xspace}
+\newcommand{\vee}{\xmlent{or}\xspace}
+\newcommand{\sum}{\xmlent{sum}\xspace}
+\newcommand{\int}{\xmlent{int}\xspace}
+\newcommand{\sim}{\xmlent{sim}\xspace}
+\newcommand{\lceil}{\xmlent{lceil}}
+\newcommand{\rceil}{\xmlent{rceil}\xspace}
+\newcommand{\lfloor}{\xmlent{lfloor}}
+\newcommand{\rfloor}{\xmlent{rfloor}\xspace}
+\newcommand{\perp}{\xmlent{perp}\xspace}
+\newcommand{\neg}{\xmlent{not}\xspace}
+
+
+\newcommand{\aleph}{\xmlent{alefsym}\xspace}
+\newcommand{\wp}{\xmlent{weierp}\xspace}
+\newcommand{\Re}{\xmlent{real}\xspace}
+\newcommand{\Im}{\xmlent{image}\xspace}
+
+% ---------------------------------------------------
+% `work arounds'
+\newcommand{\binom}[2]{(\xml{sub}{#2}\xml{/sub}\xml{sup}{#1}\xml{/sup})}

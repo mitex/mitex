@@ -1,0 +1,67 @@
+<TITLE>html2latex(1)</TITLE>
+<H1>NAME</H1>
+html2latex -- convert HTML markup to LaTeX markup
+<H1>SYNOPSIS</H1>
+<TT>html2latex <I>[opt ...] [file ...]</I></TT>
+<H1>DESCRIPTION</H1>
+For each file argument, <I>html2latex</I> converts the text as
+HTML markup to LaTeX markup.  If no files are specified, a usage
+message is given.  Input will be taken from standard input for files
+named <EM>-</EM>.  Output will to a similarly named file with a
+<B>.tex</B> extension (<I>html2latex</I> recognises
+<B>.html</B> extensions).
+<P>
+Options modify the action of <I>html2latex</I>.  The options are:
+<DL><DT>-n<DD>Number sections.
+<DT>-p<DD>Place page breaks after the title page (if present) and the
+table of contents (if present).
+<DT>-c<DD>Generate a table of contents.
+<DT>-s<DD>Create no files -- LaTeX is output to stdout.
+<DT>-t Title<DD>Generate a title page, with the title ``Title''.
+<DT>-a Author<DD>Generate a title page, with the author ``Author''.
+<DT>-h Header<DD>Place the text ``Header'' after \begin{document}.
+<DT>-f Footer<DD>Place the text ``Footer'' before \end{document}.
+<DT>-o Options<DD>Specify the options to \documentstyle.
+</DL>
+<H1>EXAMPLES</H1>
+An example of use is
+<LISTING>
+html2latex -n - < file.html | less
+</LISTING>
+This converts <B>file.html</B> to LaTeX and pages through the
+output.  The sections (corresponding to heading tags in the HTML
+source) will be numbered.
+<P>
+Another example is
+<LISTING>
+html2latex -t 'Introduction to HTML' -a gnat -p -c -o
+'[bookman]{article}' html-intro
+</LISTING>
+This takes input from the file <B>html-intro</B>, writing to
+<B>html-intro.tex</B>, and adds a title page (with title
+<I>Introduction to HTML</I> and author <I>gnat</I>)
+and table of contents with page-breaks after both.  The sections of
+the document are not numbered.  The LaTeX source includes the line
+\documentstyle[bookman]{article}.
+<H1>SEE ALSO</H1>
+latex(1)
+<H1>BUGS</H1>
+Current the only HTML tags supported are: <B>TITLE, H1, H2, H3, H4, H5,
+H6, UL, OL, DL, DT, DD, LI, B, I, U, EM, STRONG, CODE, SAMP, KBD, VAR,
+DFN, CITE, LISTING</B>.  The only recognised SGML escapes are <B>&amp.amp,
+&amp.lt, &amp.gt</B>.  <B>ADDRESS</B> tags are handled badly.
+<P>
+The <B>COMPACT</B> attribute to a <B>DL</B> tag is not recognised.
+<B>MENU</B> and <B>DIR</B> styles are not handled well.
+<B>TITLE</B> text are ignored.
+<P>
+Currently <B>PRE</B> tags are not handled at all.
+<P>
+The entire file is read into memory.  For long HTML documents on
+machines with little memory, this may cause problems.
+<H1>CREDITS</H1>
+Nathan Torkington adapted the HTML parser from NCSA's Xmosaic package
+(<B>file://ncsa.uiuc.edu/Web/xmosaic</B>) and wrote the conversion
+code.  The HTML parser code is subject to the NCSA restrictions.  The
+conversion code is subject to the VUW restrictions.  Enquiries should
+be sent via e-mail to <TT>Nathan.Torkington@vuw.ac.nz</TT>.

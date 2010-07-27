@@ -1,0 +1,103 @@
+#! /bin/sh
+#
+# Convert Hyperlatex documents to dvi, html, or gif's
+
+if [ -z "$HYPERLATEX_SYS_DIR" ]; then
+
+## Edit the following line to reflect your choice of the
+## Hyperlatex directory:
+
+  HYPERLATEX_SYS_DIR="$HOME/Hyperlatex/Hlx"
+fi
+
+if [ -z "$HYPERLATEX_DIR" ]; then
+  HYPERLATEX_DIR=$HYPERLATEX_SYS_DIR
+else
+  HYPERLATEX_DIR=$HYPERLATEX_DIR:$HYPERLATEX_SYS_DIR
+fi
+
+export HYPERLATEX_DIR
+
+EMACS=/usr/local/bin/emacs
+if [ ! -x $EMACS ]; then
+  EMACS=/usr/bin/emacs
+  if [ ! -x $EMACS ]; then
+    EMACS=/sw/bin/emacs
+    if [ ! -x $EMACS ]; then
+      echo "hyperlatex: cannot find emacs" 1>&2
+    fi
+  fi
+fi
+
+usage() {
+  echo "usage: hyperlatex [ -html | -dvi | -image | -gif | -png] file" 1>&2
+  exit 1
+}
+
+[ $# -lt 1 ] && usage
+
+run_latex=0
+make_images=0
+
+case $1 in
+  -html)
+    shift;;
+  -dvi)
+    run_latex=1
+    latex_flag=
+    make_images=0
+    shift;;
+  -gif)
+    run_latex=1
+    latex_flag='\def\makeimages{}'
+    make_images=1
+    shift;;
+  -png)
+    run_latex=1
+    latex_flag='\def\makeimages{}'
+    make_images=1
+    shift;;
+  -image)
+    run_latex=1
+    latex_flag='\def\makeimages{}'
+    make_images=1
+    shift;;
+  -*)
+    usage
+esac
+
+if [ $# -lt 1 ]; then
+  echo "hyperlatex: no file specified" 1>&2
+  exit 2
+fi
+
+case $1 in
+  *.tex) name=$1;;
+  *.ltx) name=$1;;
+  *)     name=$1.tex
+esac
+
+if [ ! -r $name ]; then
+  echo "hyperlatex: Cannot find file "\"$name\" 1>&2
+  exit 2
+fi
+
+if [ $run_latex -eq 1 ]; then
+  latex "$latex_flag\input{$name}"
+  if [ $? -eq 0 -a $make_images -eq 1 ]; then
+    script=`echo $name | sed -e 's/\.tex$/.makeimage/'`
+    /bin/sh $script
+  fi
+
+else
+
+  HLXEL=$HYPERLATEX_SYS_DIR/hyperlatex.elc
+  if [ ! -r $HLXEL ]; then
+    HLXEL=$HYPERLATEX_SYS_DIR/hyperlatex.el
+  fi
+    
+  $EMACS -batch -no-init-file -no-site-file \
+    -l $HLXEL -funcall batch-hyperlatex-format \
+    $name
+
+fi

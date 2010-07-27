@@ -1,0 +1,727 @@
+%% Escapable special characters
+\def\%{\@print{%}}
+\def\${\@print{$}}%$
+\def\#{\@print{#}}
+\def\&{\@print{&}}
+\def\_{\@print{_}}
+\def\{{\char123}
+\def\}{\char125}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 2: Predefined text-mode commands%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\textasciicircum}{\@print{^}}
+\newcommand{\textasciitilde}{\@print{~}}
+\DeclareSymbolHtml[*]{\textasteriskcentered}{X2217}
+\newcommand{\textbackslash}{\char92}
+\newcommand{\textbar}{|}
+\let\textbraceleft\{
+\let\textbraceright\}
+\DeclareSymbol[*]{\textbullet}{X2022}
+\DeclareSymbol[(c)]{\textcopyright}{XA9}
+\DeclareSymbolHtml{\textdagger}{8224}
+\DeclareSymbolHtml{\textdaggerdbl}{8225}
+\let\textdollar\$
+\DeclareSymbol[...]{\textellipsis}{X2026}
+\DeclareSymbolHtml[\@print{--}]{\textemdash}{X2014}
+\DeclareSymbolHtml[\@print{-}]{\textendash}{X2013}
+\DeclareSymbol{\textexclamdown}{XA1}
+\newcommand{\textgreater}{\@print{>}}
+\newcommand{\textless}{\@print{<}}
+\DeclareSymbol[\textsup{a}]{\textordfeminine}{XAA}
+\DeclareSymbol[\textsup{o}]{\textordmasculine}{XBA}
+\DeclareSymbol{\textparagraph}{XB6}
+\DeclareSymbol{\textperiodcentered}{XB7}
+\DeclareSymbol{\textquestiondown}{XBF}
+\DeclareSymbolHtml[\@print{"}]{\textquotedblleft}{X201C}
+\DeclareSymbolHtml[\@print{"}]{\textquotedblright}{X201D}
+\DeclareSymbolHtml[\@print{'}]{\textquoteleft}{X2018}
+\DeclareSymbolHtml[\@print{'}]{\textquoteright}{X2019}
+\DeclareSymbol[(R)]{\textregistered}{XAE}
+\DeclareSymbol{\textsection}{XA7}
+\DeclareSymbol[pounds]{\textsterling}{XA3}
+\DeclareSymbolHtml[(TM)]{\texttrademark}{X2122}
+\newcommand{\textunderscore}{\@print{_}}
+\DeclareSymbolHtml[\@print{_}]{\textvisiblespace}{X2423}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 3: Commands defined both for math and text%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbol{\P}{XB6}
+\DeclareSymbol{\S}{XA7}
+\DeclareSymbol[(c)]{\copyright}{XA9}
+\DeclareSymbolHtml{\dag}{8224}
+\DeclareSymbolHtml{\ddag}{8225}
+\DeclareSymbolHtml[...]{\dots}{X2026}
+\DeclareSymbol[pounds]{\pounds}{XA3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 5:  Non-ascii letters %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Those belong to latin9
+\DeclareSymbol[oe]{\oe}{X153}
+\DeclareSymbol[OE]{\OE}{X152}
+%%And those to latin1
+\DeclareSymbol[ae]{\ae}{XE6}
+\DeclareSymbol[AE]{\AE}{XC6}
+\DeclareSymbol[aa]{\aa}{XE5}
+\DeclareSymbol[AA]{\AA}{XC5}
+\DeclareSymbol[o]{\o}{XF8}
+\DeclareSymbol[O]{\O}{XD8}
+\DeclareSymbol[ss]{\ss}{XDF}
+\newcommand{\SS}{SS}
+\DeclareSymbol[DH]{\DH}{XD0}
+\DeclareSymbol[dh]{\dh}{XF0}
+\DeclareSymbol[DJ]{\DJ}{X110}
+\DeclareSymbol[dj]{\dj}{X111}
+\DeclareSymbol[TH]{\TH}{XDE}
+\DeclareSymbol[th]{\th}{XFE}
+\DeclareSymbol[ENG]{\NG}{X14A}
+\DeclareSymbol[eng]{\ng}{X14B}
+\DeclareSymbol[L]{\L}{X141}
+\DeclareSymbol[l]{\l}{X142}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Punctuation Marks Not Found in OT1 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbol[<<]{\guillemotleft}{XAB}
+\DeclareSymbol[>>]{\guillemotright}{XBB}
+\DeclareSymbolHtml[<]{\guilsinglleft}{X2039}
+\DeclareSymbolHtml[>]{\guilsinglright}{X203A}
+\DeclareSymbolHtml[,,]{\quotedblbase}{X201E}
+\DeclareSymbolHtml[,]{\quotesinglbase}{X201A}
+\newcommand{\textquotedbl}{\@print{"}}%"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 38: Maths-Mode Versions of Text Symbols %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\mathdollar\$
+\DeclareSymbolHtml[...]{\mathellipsis}{X2026}
+\DeclareSymbol{\mathparagraph}{XB6}
+\DeclareSymbol{\mathsection}{XA7}
+\DeclareSymbol[pounds]{\mathsterling}{XA3}
+\let\mathunderscore\_
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 39 Binary Operators%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml[\mbox{|\_|}]{\amalg}{X2A3F}
+\DeclareSymbolHtml[*]{\ast}{X2217}
+\DeclareSymbolHtml[O]{\bigcirc}{X25EF}
+\DeclareSymbolHtml{\bigtriangledown}{X25BD}
+\DeclareSymbolHtml{\bigtriangleup}{X25B3}
+\DeclareSymbolHtml[*]{\bullet}{X2022}
+\DeclareSymbolHtml{\@cap}{X2229}
+\DeclareSymbolHtml[\mbox{---\@br| |\@br| |}]{\@display@cap}{X22C2}
+\newcommand{\cap}{\ifdisplay\@display@cap\else\@cap\fi}
+\DeclareSymbol{\cdot}{XB7}
+\DeclareSymbolHtml{\circ}{X2218}
+\DeclareSymbolHtml{\@cup}{X222A}
+\DeclareSymbolHtml[\mbox{| |\@br| |\@br---}]{\@display@cup}{X22C3}
+\newcommand{\cup}{\ifdisplay\@display@cup\else\@cup\fi}
+\Let{\dagger}{\dag}
+\Let{\ddagger}{\ddag}
+\DeclareSymbolHtml{\diamond}{X22C4}
+\DeclareSymbol[/]{\div}{XF7}
+\DeclareSymbolHtml[-/+]{\mp}{X2213}
+\DeclareSymbolHtml[(\cdot)]{\odot}{X2299}
+\DeclareSymbolHtml[(-)]{\ominus}{X2296}
+\DeclareSymbolHtml[(+)]{\oplus}{X2295}
+\DeclareSymbolHtml[(\char92)]{\oslash}{X2298}
+\DeclareSymbolHtml[(\times)]{\otimes}{X2297}
+\DeclareSymbol[+/-]{\pm}{XB1}
+\DeclareSymbolHtml[\backslash]{\setminus}{X2216}
+\DeclareSymbolHtml{\sqcap}{X2293}
+\DeclareSymbolHtml[\mbox{|\_|}]{\sqcup}{X2294}
+\DeclareSymbolHtml[*]{\star}{X22C6}
+\DeclareSymbol[X]{\times}{XD7}
+\DeclareSymbolHtml[<|]{\triangleleft}{X25C1}
+\DeclareSymbolHtml[|>]{\triangleright}{X25B7}
+\DeclareSymbolHtml[\mbox{|\pm|}]{\uplus}{X228E}
+\DeclareSymbolHtml[\mbox{OR}]{\vee}{X2228}
+\DeclareSymbolHtml[\mbox{AND}]{\wedge}{X2227}
+\DeclareSymbolHtml{\wr}{X2240}
+%%Miscellaneous LaTeX2e Math Symbols
+\DeclareSymbolHtml[\mbox{aleph}]{\aleph}{X2135}
+\DeclareSymbolHtml{\angle}{X2220}
+\newcommand{\backslash}{\char92}
+\DeclareSymbolHtml{\clubsuit}{X2663}
+\DeclareSymbolHtml{\diamondsuit}{X2666}
+\DeclareSymbolHtml[\O]{\emptyset}{X2205}
+\DeclareSymbolHtml{\flat}{X266D}
+\DeclareSymbolHtml{\heartsuit}{X2665}
+\DeclareSymbolHtml[\mbox{oo}]{\infty}{X221E}
+\DeclareSymbolHtml[\mbox{nabla}]{\nabla}{X2207}
+\DeclareSymbolHtml{\natural}{X266E}
+\DeclareSymbol[\mbox{NOT}]{\neg}{XAC}
+\DeclareSymbol[\@print{'}]{\prime}{X2032}
+\DeclareSymbolHtml[\@print{#}]{\sharp}{X266F}
+\DeclareSymbolHtml{\spadesuit}{X2660}
+\DeclareSymbolHtml{\surd}{X221A}
+\DeclareSymbolHtml{\triangle}{X25B3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 47 Variable-sized math operator %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\MakeBigSymbol{\bigcap}{\@cap}{\@cap}{\@display@cap}
+\MakeBigSymbol{\bigcup}{\@cup}{\@cap}{\@display@cup}
+\MakeBigSymbol{\bigodot}{\odot}{\odot}{\odot}
+\newcommand{\@textdisplayuplus}{\mbox{|~~~|\@br|~+~|\@br-----}}
+\MakeBigSymbol{\biguplus}{\uplus}{\uplus}{\@textdisplayuplus}
+\MakeBigSymbol{\bigoplus}{\oplus}{\oplus}{\oplus}
+\MakeBigSymbol{\bigotimes}{\otimes}{\otimes}{\otimes}
+%\MakeBigSymbol{\bigsqcap}{\@sqcap}{\@sqcap}{\@display@sqcap}
+\newcommand{\@textdisplaysqcup}{|~~|\@br|~~\@br----}
+\MakeBigSymbol{\bigsqcup}{\sqcup}{\sqcup}{\@textdisplaysqcup}
+\newcommand{\@textdisplayvee}{\mbox{\char92{}~~/\@br~\char92/~}}
+\MakeBigSymbol{\bigvee}{\vee}{\vee}{\@textdisplayvee}
+\newcommand{\@textdisplaywedge}{\mbox{~/\char92~\@br/~~\char92}}
+\MakeBigSymbol{\bigwedge}{\wedge}{\wedge}{\@textdisplaywedge}
+\DeclareSymbolHtml[coprod]{\@coprod}{X2210}
+\newcommand{\@textdisplaycoprod}{\mbox{---\@br| |\@br| |}}
+\MakeBigSymbol{\coprod}{\@coprod}{\@coprod}{\@textdisplaycoprod}
+\DeclareSymbolHtml[prod]{\@prod}{X220F}
+\newcommand{\@textdisplayprod}{\mbox{| |\@br| |\@br---}}
+\MakeBigSymbol{\prod}{\@prod}{\@prod}{\@textdisplayprod}
+\DeclareSymbolHtml[sum]{\@sum}{X2211}
+\newcommand{\@textdisplaysum}{\mbox{--\@br\char92\@br/\@br--}}
+\MakeBigSymbol{\sum}{\@sum}{\@sum}{\@textdisplaysum}
+\DeclareSymbolHtml[\mbox{integral}]{\@int}{X222B}
+\newcommand{\@textdisplayint}{\mbox{/\@br|\@br|\@br/}}
+\MakeBigSymbol[\intlimits]{\int}{\@int}{\@int}{\@textdisplayint}
+\DeclareSymbolHtml[\mbox{oint}]{\@oint}{X222E}
+\newcommand{\@textdisplayoint}{\mbox{/\@br|\@br{}o\@br|\@br/}}
+\MakeBigSymbol[\intlimits]{\oint}{\@oint}{\@oint}{\@textdisplayoint}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 54: Binary relations %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml[\mbox{approx}]{\approx}{X2248}
+\DeclareSymbolHtml[\mbox{asymp}]{\asymp}{X224D}
+\DeclareSymbolHtml[\mbox{bowtie}]{\bowtie}{X22C8}
+\DeclareSymbolHtml[\mbox{cong}]{\cong}{X2245}
+\DeclareSymbolHtml[\@print{|-}]{\vdash}{X22A2}
+\DeclareSymbolHtml[\@print{-|}]{\dashv}{X22A3}
+\DeclareSymbolHtml[\stackrel{\cdot}{=}]{\doteq}{X2250}
+\DeclareSymbolHtml[\mbox{equiv}]{\equiv}{X2261}
+\DeclareSymbolHtml[\mbox{frown}]{\frown}{X2040}
+\DeclareSymbolHtml[\mbox{|}]{\mid}{X2223}
+\DeclareSymbolHtml[\mbox{|=}]{\models}{X22A8}
+\DeclareSymbolHtml[\mbox{||}]{\parallel}{X2225}
+\DeclareSymbolHtml[\mbox{\@print{_|_}}]{\perp}{X22A5}
+\DeclareSymbolHtml[\mbox{prec}]{\prec}{X227A}
+\DeclareSymbolHtml[\mbox{preceq}]{\preceq}{X227C}
+\DeclareSymbolHtml[\mbox{oc}]{\propto}{X221D}
+\DeclareSymbolHtml[\@print{~}]{\sim}{X223C}
+\DeclareSymbolHtml[\textunderline{\sim}]{\simeq}{X2243}
+\DeclareSymbolHtml[\mbox{smile}]{\smile}{X203F}
+\DeclareSymbolHtml[\mbox{succ}]{\succ}{X227B}
+\DeclareSymbolHtml[\mbox{succeq}]{\succeq}{X227D}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table 65: Subset and Superset Relations %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\@textdisplaysubset}{\mbox{-\@br|\@br-}}
+\newcommand{\@textdisplaysupset}{\mbox{-\@br~|\@br-}}
+\newcommand{\@textdisplaysubseteq}{\mbox{-\@br|\@br=}}
+\newcommand{\@textdisplaysupseteq}{\mbox{-\@br~|\@br=}}
+\DeclareSymbolHtml[\IfDisplay{\@textdisplysubset}{\mbox{subset}}]
+{\subset}{X2282}
+\DeclareSymbolHtml[\IfDisplay{\@textdisplaysubseteq}{\mbox{subseteq}}]
+{\subseteq}{X2286}
+\DeclareSymbolHtml[\IfDisplay{\@textdisplaysupset}{\mbox{supset}}]
+{\supset}{X2283}
+\DeclareSymbolHtml[\IfDisplay{\@textdisplaysupseteq}{\mbox{supseteq}}]
+{\supseteq}{X2287}
+\DeclareSymbolHtml[\IfDisplay{\@textdisplaysubseteq}{\mbox{sqsubseteq}}]
+{\sqsubseteq}{X2291}
+\DeclareSymbolHtml[\IfDisplay{\@textdisplaysupseteq}{\mbox{sqsupseteq}}]
+{\sqsupseteq}{X2292}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 71: Inequalities %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml[<=]{\leq}{X2264}
+\DeclareSymbolHtml[<<]{\ll}{X226A}
+\DeclareSymbolHtml[>=]{\geq}{X2265}
+\DeclareSymbolHtml[>>]{\gg}{X226B}
+\DeclareSymbolHtml[\mbox{neq}]{\neq}{X2260}
+%%%%%%%%%%%%%%%%%%%%
+% Table 79: Arrows %
+%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml{\Downarrow}{X21D3}
+\DeclareSymbolHtml{\downarrow}{X2193}
+\DeclareSymbolHtml{\hookleftarrow}{X21A9}
+\DeclareSymbolHtml{\hookrightarrow}{X21AA}
+\DeclareSymbolHtml[\mbox{<-}]{\leftarrow}{X2190}
+\DeclareSymbolHtml[\mbox{<=}]{\Leftarrow}{X21D0}
+\DeclareSymbolHtml[\mbox{<=>}]{\Leftrightarrow}{X21D4}
+\DeclareSymbolHtml[\mbox{<->}]{\leftrightarrow}{X2194}
+\DeclareSymbolHtml[\mbox{|->>}]{\mapsto}{X21A6}
+\DeclareSymbolHtml[\mbox{-}]{\relbar}{X23AF}
+%EM DASH (better than arrow extension X23AF)
+\DeclareSymbolHtml[\@print{-}]{\@arrowextension}{X2014}
+%nothing satisfactory
+\newcommand{\Relbar}{=}
+\newcommand{\@Arrowextension}{=}
+\newcommand{\longleftarrow}{\leftarrow\@arrowextension}
+\newcommand{\Longleftarrow}{\Leftarrow\@Arrowextension}
+\newcommand{\longleftrightarrow}{\leftarrow\rightarrow}
+\newcommand{\Longleftrightarrow}{\Leftarrow\Rightarrow}
+\newcommand{\longmapsto}{\vdash\rightarrow}
+\newcommand{\Longrightarrow}{\@Arrowextension\Rightarrow}
+\newcommand{\longrightarrow}{\@arrowextension\rightarrow}
+\DeclareSymbolHtml{\nearrow}{X2197}
+\DeclareSymbolHtml{\nwarrow}{X2196}
+\DeclareSymbolHtml[\mbox{=>}]{\Rightarrow}{X21D2}
+\DeclareSymbolHtml[\mbox{->}]{\rightarrow}{X2192}
+\DeclareSymbolHtml{\searrow}{X2198}
+\DeclareSymbolHtml{\swarrow}{X2199}
+\DeclareSymbolHtml{\uparrow}{X2191}
+\DeclareSymbolHtml{\Uparrow}{X21D1}
+\DeclareSymbolHtml{\updownarrow}{X2195}
+\DeclareSymbolHtml{\@textUpdownarrow}{X21D5}
+\iffalse
+\NewcommandHtml{\@displayUpdownarrow}
+{\@open{TABLE}{CELLSPACING=0 CELLPADDING=0}\@open{TR}{}\@open{TD}{}%
+\Uparrow\@force{TD}\@force{TR}\@open{TR}{}\@open{TD}{}%
+\Downarrow\@force{TD}\@force{TR}\@force{TABLE}}
+\fi
+\NewcommandHtml{\@displayUpdownarrow}
+{\@itemdisplay\Uparrow\@br\Downarrow\@itemdisplay\int@sup@sub{2}}
+\NewcommandHtml{\Updownarrow}{\DisplayChoose{\@displayUpdownarrow}{\@textUpdownarrow}}
+%%%%%%%%%%%%%%%%%%%%%
+%Table 80: Harpoons %
+%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml{\leftharpoondown}{X21BD}
+\DeclareSymbolHtml{\leftharpoonup}{X21BC}
+\DeclareSymbolHtml{\rightharpoondown}{X21C1}
+\DeclareSymbolHtml{\rightharpoonup}{X21C0}
+\DeclareSymbolHtml{\rightleftharpoons}{X21CC}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 98: Greek Letters %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml[alpha]{\alpha}{X03B1}
+\DeclareSymbolHtml[beta]{\beta}{X03B2}
+\DeclareSymbolHtml[gamma]{\gamma}{X03B3}
+\DeclareSymbolHtml[delta]{\delta}{X03B4}
+\DeclareSymbolHtml[epsilon]{\epsilon}{X454}
+\DeclareSymbolHtml[varepsilon]{\varepsilon}{X03B5}
+\DeclareSymbolHtml[zeta]{\zeta}{X03B6}
+\DeclareSymbolHtml[eta]{\eta}{X03B7}
+\DeclareSymbolHtml[theta]{\theta}{X03B8}
+\DeclareSymbolHtml[vartheta]{\vartheta}{X3D1}
+\DeclareSymbolHtml[iota]{\iota}{X3B9}
+\DeclareSymbolHtml[kappa]{\kappa}{X3BA}
+\DeclareSymbolHtml[lambda]{\lambda}{X3BB}
+\DeclareSymbol[mu]{\mu}{XB5}
+\DeclareSymbolHtml[nu]{\nu}{X3BD}
+\DeclareSymbolHtml[xi]{\xi}{X3BE}
+\DeclareSymbolHtml[pi]{\pi}{X3C0}
+\DeclareSymbolHtml[varpi]{\varpi}{X3D6}
+\DeclareSymbolHtml[rho]{\rho}{X3C1}
+\DeclareSymbolHtml[varrho]{\varrho}{X3F1}
+\DeclareSymbolHtml[sigma]{\sigma}{X3C3}
+\DeclareSymbolHtml[varsigma]{\varsigma}{X3C2}
+\DeclareSymbolHtml[tau]{\tau}{X3C4}
+\DeclareSymbolHtml[upsilon]{\upsilon}{X3C5}
+\DeclareSymbolHtml[phi]{\phi}{X3C6}
+\DeclareSymbolHtml[varphi]{\varphi}{X3D5}
+\DeclareSymbolHtml[chi]{\chi}{X3C7}
+\DeclareSymbolHtml[psi]{\psi}{X3C8}
+\DeclareSymbolHtml[omega]{\omega}{X3C9}
+% Capital Greek Letters
+\DeclareSymbolHtml[Gamma]{\Gamma}{X393}
+\DeclareSymbolHtml[Delta]{\Delta}{X394}
+\DeclareSymbolHtml[Theta]{\Theta}{X398}
+\DeclareSymbolHtml[Lambda]{\Lambda}{X39B}
+\DeclareSymbolHtml[Xi]{\Xi}{X39E}
+\DeclareSymbolHtml[Pi]{\Pi}{X3A0}
+\DeclareSymbolHtml[Sigma]{\Sigma}{X3A3}
+\DeclareSymbolHtml[Upsilon]{\Upsilon}{X3A5}
+\DeclareSymbolHtml[Phi]{\Phi}{X3A6}
+\DeclareSymbolHtml[Psi]{\Psi}{X3A8}
+\DeclareSymbolHtml[Omega]{\Omega}{X3A9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 104: Letter-like symbols %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml[\mbox{\@print{_|_}}]{\bot}{X22A5}
+\DeclareSymbolHtml[\mbox{ell}]{\ell}{X2113}
+\DeclareSymbolHtml[\mbox{exists}]{\exists}{X2203}
+\DeclareSymbolHtml[\mbox{forall}]{\forall}{X2200}
+\DeclareSymbolHtml[\mbox{h}]{\hbar}{X210F}
+\DeclareSymbolHtml[\mbox{Im}]{\Im}{X2111}
+\DeclareSymbolHtml[\mbox{in}]{\in}{X2208}
+\DeclareSymbolHtml[\mbox{contains}]{\ni}{X220B}
+\DeclareSymbolHtml{\partial}{X2202}
+\DeclareSymbolHtml[\mbox{Re}]{\Re}{X211C}
+\DeclareSymbolHtml{\top}{X22A4}
+\DeclareSymbolHtml{\wp}{X2118}
+\newcommand{\i}{i}%To have \^{\i} work. (No accent as fct of U-chars yet)
+\let\imath\i
+%\DeclareSymbolHtml[i]{\imath}{X131}
+\newcommand{\j}{j}
+%\DeclareSymbolHtml[j]{\jmath}{X237}
+\let\jmath\j
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 122: Math-mode Accents %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\acute\'
+\let\bar\=
+\let\breve\u
+\let\check\v
+\let\dot\.
+\let\grave\`
+\let\hat\^
+\let\mathring\r
+\let\tilde\~
+\newcommand{\@@vec}[1]{{#1}^{\rightarrow}}
+\newcommand{\@vec}[1]{\mathop{#1}\limits^{\rightarrow}\nolimits}
+\newcommand{\vec}{\DisplayChoose\@vec\@@vec}
+%%%%%%%%%%%%%%%%%%%
+% Table 138: Dots %
+%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml[...]{\ldots}{X2026}
+\newcommand{\text@vdots}
+  {\ifdisplay\mbox{\cdot\\\cdot\\\cdot}\else:\fi}
+\DeclareSymbolHtml[\text@vdots]{\vdots}{X22EE}
+\DeclareSymbolHtml[\cdot\cdot\cdot]{\cdots}{X22EF}
+\newcommand{\text@ddots}{\ifdisplay\mbox{\cdot~~\\~\cdot~\\~~\cdot}\else%
+\hva@warn{\ddots in text}\mbox{ddots}\fi}
+\DeclareSymbolHtml[\text@ddots]{\ddots}{X22F1}
+\let\cdotp\cdot
+\newcommand{\ldotp}{.}
+\DeclareSymbolHtml[:]{\colon}{X2236}
+%%% So called log-like functions
+\newcommand{\@defl}[2]{\newcommand{#1}{\mathop{\mbox{#2}}}}
+\newcommand{\@defnl}[2]{\newcommand{#1}{\mathop{\mbox{#2}}\nolimits}}
+\@defnl\arccos{arccos}
+\@defnl\arcsin{arcsin}
+\@defnl\arctan{arctan}
+\@defnl\arg{arg}
+\@defnl\cos{cos}
+\@defnl\cosh{cosh}
+\@defnl\cot{cot}
+\@defnl\coth{coth}
+\@defnl\csc{csc}
+\@defnl\deg{deg}
+\@defl\det{det}
+\@defnl\dim{dim}
+\@defnl\exp{exp}
+\@defl\gcd{gcd}
+\@defnl\hom{hom}
+\@defl\inf{inf}
+\@defnl\ker{ker}
+\@defnl\lg{lg}
+\@defl\lim{lim}
+\@defl\liminf{liminf}
+\@defl\limsup{limsup}
+\@defnl\ln{ln}
+\@defnl\log{log}
+\@defl\max{max}
+\@defl\min{min}
+\@defl\Pr{Pr}
+\@defnl\sec{sec}
+\@defnl\sin{sin}
+\@defnl\sinh{sinh}
+\@defl\sup{sup}
+\@defnl\tan{tan}
+\@defnl\tanh{tanh}
+\@defnl\bmod{mod}
+%%%%%%%%%%%%%%
+\def\pmod#1{\mbox{(mod }#1{\@anti{\@style{I}} )}}
+\def\tth{\textnormal{||-}}
+\def\frac#1#2{{#1\over #2}}
+\newcommand{\limits}{}
+\newcommand{\nolimits}{}
+%%%TeX definitions
+\let\le\leq
+\let\ge\geq
+%%%%%%%%%%%%%%%%%%
+%%Defaut accents%%
+%%%%%%%%%%%%%%%%%%
+%\<internalname>@default is the default typesetting cmd, when
+%translation to unicode fails.
+%eg by \newcommand{\acute@default}[1]{#1'}, you get postfix accute accents.
+\ifhtml
+\newcommand{\macron@default}[1]{\textoverline{#1}}
+\newcommand{\linebelow@default}[1]{\textunderline{#1}}
+\fi
+\newcommand{\text@accent}[4]
+{\@ifundefined{#1@default}
+  {\hva@warn{Application of '#2' on '#4' failed}#3}
+  {\csname#1@default\endcsname{#3}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Delimiters (Table 113) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\@top@br\@br
+\newcommand{\delim@name}[1]{\string{#1@delimname}}
+\newcommand{\process@delim}[2]
+{\@ifundefined{\delim@name{#1}}
+  {\process@delim@one{#2}{#1}}
+  {\csname\delim@name{#1}\endcsname{#2}}}
+\newcommand{\csname\delim@name{.}\endcsname}[1]{}
+%%Simple replication
+\newcommand{\mid@vert@txt}{\@print@u{X7C}}
+\DeclareSymbolHtml[\mid@vert@txt]{\mid@vert}{X23AA}%curly bracket extension
+\newcommand{\mid@Vert}{\mid@vert\mid@vert}
+%\DeclareSymbolHtml[\mid@Vert@txt]{\mid@Vert}{X2225}
+\newcommand{\vert}{|}
+\newcommand{\|}{||}
+\DeclareSymbolHtml[||]{\Vert}{X2225}
+\newcommand{\csname\delim@name{\vert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@vert}}
+\newcommand{\csname\delim@name{\Vert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@Vert}}
+\newcommand{\csname\delim@name{|}\endcsname}[1]
+{\process@delim@one{#1}{\mid@vert}}
+\newcommand{\csname\delim@name{\|}\endcsname}[1]
+{\process@delim@one{#1}{\mid@Vert}}
+%%Left parenthesis
+\newcommand{\@nbsp}{\@print@u{XA0}}
+\newcommand{\top@parleft@txt}{\@print@u{X2F}\@nbsp}
+\newcommand{\mid@parleft@txt}{\@print@u{X7C}\@nbsp}
+\newcommand{\dow@parleft@txt}{\@print@u{X5C}\@nbsp}
+\DeclareSymbolHtml[\top@parleft@txt]{\top@parleft}{X239B}
+\DeclareSymbolHtml[\mid@parleft@txt]{\mid@parleft}{X239C}
+\DeclareSymbolHtml[\dow@parleft@txt]{\dow@parleft}{X239D}
+\newcommand{\csname\delim@name(\endcsname}[1]
+{\process@delim@three{#1}{\top@parleft}{\mid@parleft}{\dow@parleft}}
+%%Right parenthesis
+\newcommand{\top@parright@txt}{\@nbsp\@print@u{X5C}}
+\newcommand{\mid@parright@txt}{\@nbsp\@print@u{X7C}}
+\newcommand{\dow@parright@txt}{\@nbsp\@print@u{X2F}}
+\DeclareSymbolHtml[\top@parright@txt]{\top@parright}{X239E}
+\DeclareSymbolHtml[\mid@parright@txt]{\mid@parright}{X239F}
+\DeclareSymbolHtml[\dow@parright@txt]{\dow@parright}{X23A0}
+\newcommand{\csname\delim@name)\endcsname}[1]
+{\process@delim@three{#1}{\top@parright}{\mid@parright}{\dow@parright}}
+%%Left square bracket
+\newcommand{\top@sqbraleft@txt}{--}
+\newcommand{\mid@sqbraleft@txt}{\@print@u{X7C}\@nbsp}
+\newcommand{\dow@sqbraleft@txt}{--}
+\DeclareSymbolHtml[\top@sqbraleft@txt]{\top@sqbraleft}{X23A1}
+\DeclareSymbolHtml[\mid@sqbraleft@txt]{\mid@sqbraleft}{X23A2}
+\DeclareSymbolHtml[\dow@sqbraleft@txt]{\dow@sqbraleft}{X23A3}
+\newcommand{\csname\delim@name{[}\endcsname}[1]
+{\process@delim@three{#1}{\top@sqbraleft}{\mid@sqbraleft}{\dow@sqbraleft}}
+%%Right square bracket
+\newcommand{\top@sqbraright@txt}{--}
+\newcommand{\mid@sqbraright@txt}{\@nbsp\@print@u{X7C}}
+\newcommand{\dow@sqbraright@txt}{--}
+\DeclareSymbolHtml[\top@sqbraright@txt]{\top@sqbraright}{X23A4}
+\DeclareSymbolHtml[\mid@sqbraright@txt]{\mid@sqbraright}{X23A5}
+\DeclareSymbolHtml[\dow@sqbraright@txt]{\dow@sqbraright}{X23A6}
+\newcommand{\csname\delim@name{]}\endcsname}[1]
+{\process@delim@three{#1}{\top@sqbraright}{\mid@sqbraright}{\dow@sqbraright}}
+%%Left ceil
+\DeclareSymbolHtml[\mbox{lceil}]{\lceil}{X2308}
+\newcommand{\csname\delim@name{\lceil}\endcsname}[1]
+{\process@delim@top{#1}{\top@sqbraleft}{\mid@sqbraleft}}
+%%Left floor
+\DeclareSymbolHtml[\mbox{lfloor}]{\lfloor}{X230A}
+\newcommand{\csname\delim@name{\lfloor}\endcsname}[1]
+{\process@delim@dow{#1}{\mid@sqbraleft}{\dow@sqbraleft}}
+%%Right ceil
+\DeclareSymbolHtml[\mbox{rceil}]{\rceil}{X2309}
+\newcommand{\csname\delim@name{\rceil}\endcsname}[1]
+{\process@delim@top{#1}{\top@sqbraright}{\mid@sqbraright}}
+%%Right floor
+\DeclareSymbolHtml[\mbox{rfloor}]{\rfloor}{X230B}
+\newcommand{\csname\delim@name{\rfloor}\endcsname}[1]
+{\process@delim@dow{#1}{\mid@sqbraright}{\dow@sqbraright}}
+%%Left curly bracket
+\newcommand{\curlybra@ext@txt}{\@print@u{X7C}}
+\newcommand{\leftcurlybra@ext@txt}{\@nbsp\@print@u{X7C}\@nbsp}
+\newcommand{\leftcurlybra@top@txt}{\@nbsp\@print@u{X2F}\@nbsp}
+\newcommand{\leftcurlybra@mid@txt}{<\@nbsp}
+\newcommand{\leftcurlybra@dow@txt}{\@nbsp\@print@u{X5C}\@nbsp}
+\DeclareSymbolHtml[\curlybra@ext@txt]{\curlybra@ext}{X23AA}
+\DeclareSymbolHtml[\leftcurlybra@ext@txt]{\leftcurlybra@ext}{X23AA}
+\DeclareSymbolHtml[\leftcurlybra@top@txt]{\leftcurlybra@top}{X23A7}
+\DeclareSymbolHtml[\leftcurlybra@mid@txt]{\leftcurlybra@mid}{X23A8}
+\DeclareSymbolHtml[\leftcurlybra@dow@txt]{\leftcurlybra@dow}{X23A9}
+\newcommand{\csname\delim@name{\{}\endcsname}[1]
+{\process@delim@four{#1}
+{\leftcurlybra@ext}{\leftcurlybra@top}{\leftcurlybra@mid}{\leftcurlybra@dow}}
+%%Right curly bracket
+\newcommand{\rightcurlybra@ext@txt}{\@nbsp\@print@u{X7C}}
+\newcommand{\rightcurlybra@top@txt}{\@nbsp\@print@u{X5C}}
+\newcommand{\rightcurlybra@mid@txt}{\@nbsp>}
+\newcommand{\rightcurlybra@dow@txt}{\@nbsp\@print@u{X2F}}
+\DeclareSymbolHtml[\rightcurlybra@ext@txt]{\rightcurlybra@ext}{X23AA}
+\DeclareSymbolHtml[\rightcurlybra@top@txt]{\rightcurlybra@top}{X23AB}
+\DeclareSymbolHtml[\rightcurlybra@mid@txt]{\rightcurlybra@mid}{X23AC}
+\DeclareSymbolHtml[\rightcurlybra@dow@txt]{\rightcurlybra@dow}{X23AD}
+\newcommand{\csname\delim@name{\}}\endcsname}[1]
+{\process@delim@four{#1}
+{\rightcurlybra@ext}{\rightcurlybra@top}
+{\rightcurlybra@mid}{\rightcurlybra@dow}}
+%%Arrows
+\DeclareSymbolHtml[|]{\arr@mid}{X23AA}%curly bracket extension
+\newcommand{\csname\delim@name{\uparrow}\endcsname}[1]
+{\process@delim@top{#1}{\uparrow}{\arr@mid}}
+\newcommand{\csname\delim@name{\downarrow}\endcsname}[1]
+{\process@delim@dow{#1}{\arr@mid}{\downarrow}}
+\newcommand{\csname\delim@name{\updownarrow}\endcsname}[1]
+{\process@delim@three{#1}{\uparrow}{\arr@mid}{\downarrow}}
+%%Arrows
+\DeclareSymbolHtml[||]{\Arr@mid}{X2225}
+\newcommand{\csname\delim@name{\Uparrow}\endcsname}[1]
+{\process@delim@top{#1}{\Uparrow}{\Arr@mid}}
+\newcommand{\csname\delim@name{\Downarrow}\endcsname}[1]
+{\process@delim@dow{#1}{\Arr@mid}{\Downarrow}}
+\newcommand{\csname\delim@name{\Updownarrow}\endcsname}[1]
+{\process@delim@three{#1}{\Uparrow}{\Arr@mid}{\Downarrow}}
+%%Those get replicated in \left\right
+\DeclareSymbolHtml[\mbox{<bra~}]{\langle}{X27E8}
+\DeclareSymbolHtml[\mbox{~ket>}]{\rangle}{X27E9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Large Delimiters (Table 113) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareSymbolHtml{\lmoustache}{X23B0}%does noyt really exist in latex...
+\newcommand{\lmous@top@txt}{\@print@u{X2F}\@nbsp}
+\newcommand{\lmous@mid@txt}{\@print@u{X7C}\@nbsp}
+\newcommand{\lmous@dow@txt}{\@print@u{X2F}\@nbsp}
+\DeclareSymbolHtml[\lmous@top@txt]{\lmous@top}{X23A7}
+\DeclareSymbolHtml[\lmous@mid@txt]{\lmous@mid}{X23AA}
+\DeclareSymbolHtml[\lmous@dow@txt]{\lmous@dow}{X23AD}
+\newcommand{\csname\delim@name{\lmoustache}\endcsname}[1]
+{\process@delim@three{#1}
+  {\lmous@top}{\lmous@mid}{\lmous@dow}}
+\DeclareSymbolHtml{\rmoustache}{X23B1}%does noyt really exist in latex...
+\newcommand{\rmous@top@txt}{\@nbsp\@print@u{X5C}}
+\newcommand{\rmous@mid@txt}{\@nbsp\@print@u{X7C}}
+\newcommand{\rmous@dow@txt}{\@nbsp\@print@u{X5C}}
+\DeclareSymbolHtml[\rmous@top@txt]{\rmous@top}{X23AB}
+\DeclareSymbolHtml[\rmous@mid@txt]{\rmous@mid}{X23AA}
+\DeclareSymbolHtml[\rmous@dow@txt]{\rmous@dow}{X23A9}
+\newcommand{\csname\delim@name{\rmoustache}\endcsname}[1]
+{\process@delim@three{#1}
+  {\rmous@top}{\rmous@mid}{\rmous@dow}}
+\newcommand{\lgroup}{(}
+\newcommand{\csname\delim@name\lgroup\endcsname}[1]
+{\process@delim@three{#1}{\top@parleft}{\mid@parleft}{\dow@parleft}}
+\newcommand{\rgroup}{)}
+\newcommand{\csname\delim@name\rgroup\endcsname}[1]
+{\process@delim@three{#1}{\top@parright}{\mid@parright}{\dow@parright}}
+\newcommand{\arrowvert}{|}
+\Let\Arrowvert\Vert
+\newcommand{\bracevert}{\textbf{|}}
+\newcommand{\csname\delim@name{\arrowvert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@vert}}
+\newcommand{\csname\delim@name{\Arrowvert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@Vert}}
+\newcommand{\csname\delim@name{\bracevert}\endcsname}[1]
+{\process@delim@one{#1}{\textbf{\mid@vert}}}
+%%%%%%%%%%%%%%%%%%%%%
+% Explicit \big etc.%
+%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\@big}[1]
+{\@itemdisplay\process@delim{#1}{2}\@itemdisplay\int@sup@sub{2}}
+\NewcommandHtml{\@@big}[1]{\hva@warn{\big in text mode}#1}
+\NewcommandHtml{\big}{\DisplayChoose\@big\@@big}
+\NewcommandHtml{\@Big}[1]
+{\@itemdisplay\process@delim{#1}{3}\@itemdisplay\int@sup@sub{3}}
+\NewcommandHtml{\@@Big}[1]{\hva@warn{\Big in text mode}#1}
+\NewcommandHtml{\Big}{\DisplayChoose\@Big\@@Big}
+\NewcommandHtml{\@bigg}[1]
+{\@itemdisplay\process@delim{#1}{4}\@itemdisplay\int@sup@sub{4}}
+\NewcommandHtml{\@@bigg}[1]{\hva@warn{\bigg in text mode}#1}
+\NewcommandHtml{\bigg}{\DisplayChoose\@bigg\@@bigg}
+\NewcommandHtml{\@Bigg}[1]
+{\@itemdisplay\process@delim{#1}{5}\@itemdisplay\int@sup@sub{5}}
+\NewcommandHtml{\@@Bigg}[1]{\hva@warn{\Bigg in text mode}#1}
+\NewcommandHtml{\Bigg}{\DisplayChoose\@Bigg\@@Bigg}
+\Let\bigl\big\Let\bigm\big\Let\bigr\big
+\Let\Bigl\Big\Let\Bigm\Big\Let\Bigr\Big
+\Let\biggl\bigg\Let\biggm\bigg\Let\biggr\bigg
+\Let\Biggl\Bigg\Let\Biggm\Bigg\Let\Biggr\Bigg
+%%%%%%%%%%%%%%%
+% Square root %
+%%%%%%%%%%%%%%%
+\newcounter{@c}
+\NewcommandHtml{\@surd}[2]
+{\ifthenelse{#1 < 5}{{\Large#2}}
+{\setcounter{@c}{(#1-5)*2}%
+\@open{TABLE}{CELLSPACING=0 CELLPADDING=0}%
+\@open{TR}{}\@open{TD}{ALIGN="right"}%
+\@open{DIV}{CLASS="vbar" STYLE="height:\arabic{@c}em;"}\@force{DIV}%
+\@close{TD}\@close{TR}%
+\@open{TR}{}\@open{TD}{}%
+{\Huge#2}%
+\@close{TD}\@close{TR}\@close{TABLE}}}
+\NewcommandHtml{\csname\delim@name{\surd}\endcsname}[1]{\@surd{#1}{\surd}}
+\DeclareSymbolHtml{\surd@four}{X221C}
+\NewcommandHtml{\csname\delim@name{\surd@four}\endcsname}[1]
+  {\@surd{#1}{\surd@four}}
+\DeclareSymbolHtml{\surd@three}{X221B}
+\NewcommandHtml{\csname\delim@name{\surd@three}\endcsname}[1]
+  {\@surd{#1}{\surd@three}}
+\NewcommandHtml{\@sqrt}[2][2]
+{\ifthenelse{\equal{#1}{2}}{\left\surd\overline{#2}\right.}{%
+\ifthenelse{\equal{#1}{3}}{\left\surd@three\overline{#2}\right.}{%
+\ifthenelse{\equal{#1}{4}}{\left\surd@four\overline{#2}\right.}{%
+{\left(#2\right)^{\frac{1}{#1}}}}}}}
+\NewcommandHtml{\@@sqrt}[2][2]
+{\ifthenelse{\equal{#1}{2}}{\surd\overlinedbox{#2}}{%
+\ifthenelse{\equal{#1}{3}}{\surd@three\overlinedbox{#2}}{%
+\ifthenelse{\equal{#1}{4}}{\surd@four\overlinedbox{#2}}{%
+{(#2)^{\frac{1}{#1}}}}}}}
+\NewcommandHtml{\sqrt}{\DisplayChoose\@sqrt\@@sqrt}
+\NewcommandText{\sqrt}[2][2]{\left(#2\right)^{1/#1}}
+%%%%%%%%%%%%%%%%%%%%%
+% Negated relations %
+%%%%%%%%%%%%%%%%%%%%%
+% Table 8, p. 436 in TeX book
+\newcommand{\not@name}[1]{\string{#1@not}}
+\newcommand{\DeclareNot}[3][\@empty]
+{\ifu\csname\not@name{#2}\endcsname
+\DeclareSymbolHtml[\mbox{\neg(#2)}]{\csname\not@name{#2}\endcsname}{#3}\fi}
+\newcommand{\not}[1]
+{\@ifundefined{\not@name{#1}}
+{\hva@warn{Cannot apply '\not' to '#1'}\neg{}#1}%
+{\csname\not@name{#1}\endcsname}}
+%%
+\DeclareSymbolHtml[\mbox{notin}]{\notin}{X2209}
+\DeclareNot[\mbox{notin}]{\in}{X2209}
+%%
+\DeclareNot{<}{X226E}
+\DeclareNot{>}{X226F}
+\DeclareNot{=}{X2260}
+\DeclareNot{\leq}{X2270}
+\DeclareNot{\geq}{X2271}
+\DeclareNot{\equiv}{X2262}
+\DeclareNot{\prec}{X2280}
+\DeclareNot{\succ}{X2281}
+\DeclareNot{\sim}{X2241}
+\DeclareNot{\preceq}{X22E0}
+\DeclareNot{\succeq}{X22E1}
+\DeclareNot{\simeq}{X2244}
+\DeclareNot{\subset}{X2284}
+\DeclareNot{\supset}{X2285}
+\DeclareNot{\approx}{X2249}
+\DeclareNot{\subseteq}{X2288}
+\DeclareNot{\supseteq}{X2289}
+\DeclareNot{\cong}{X2247}
+\DeclareNot{\sqsubseteq}{X22E2}
+\DeclareNot{\sqsupseteq}{X22E3}
+\DeclareNot{\asymp}{X226D}
+\DeclareNot{\ni}{X220C}
+\DeclareNot{\vdash}{X22AC}
+\DeclareNot{\Leftarrow}{X21CD}
+\DeclareNot{\leftarrow}{X219A}
+\DeclareNot{\Leftrightarrow}{X21CE}
+\DeclareNot{\leftrightarrow}{X21AE}
+\DeclareNot{\rightarrow}{X219B}
+\DeclareNot{\Rightarrow}{X21CF}
+\DeclareNot{\exists}{X2204}
+\DeclareNot{\mid}{X2224}
+\DeclareNot{\parallel}{X2226}
+\DeclareNot{\models}{X22AD}
+%%%%%%%%%%%%%%%%%%
+% TeX synomyms   %
+%%%%%%%%%%%%%%%%%%
+\Let\le\leq
+\Let\ge\geq
+\Let\ne\neq
+\Let\to\rightarrow
+\Let\land\wedge
+\newcommand{\iff}{\;\Longleftrightarrow\;}
+\Let\gets\leftarrow
+\Let\lor\vee
+\Let\owns\ni
+\Let\lnot\neg
+%%%%%%%%%%%%%%%%%%%%
+%Needed internally %
+%%%%%%%%%%%%%%%%%%%%

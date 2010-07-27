@@ -1,0 +1,10 @@
+\usepackage{commongraphic}
+%%% Graphicx specific part
+\usepackage{keyval}
+\@imagecommand{\includegraphics}
+  {\execafter\imageflush\execafter\@imagearg\@imageopt}
+\@imagecommand{\includegraphics*}
+  {\execafter\imageflush\execafter\@imagearg\@imageopt}
+\@imagecommand{\rotatebox}
+  {\execafter\imageflush\execafter\@imagearg\execafter\@imagearg\@imageopt}
+

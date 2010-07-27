@@ -1,0 +1,12 @@
+%% -*-latex-*-
+%%
+%% Support for `tabularx' package in Hyperlatex
+%%
+%% (C) 1997, Eric Delaunay <delaunay@lix.polytechnique.fr>
+%%
+%% For Hyperlatex, tabularx is really the same as tabular
+%% since cells can already be layed-out like paragraphs.
+
+\newenvironment{tabularx}[1]{\begin{tabular}}{\end{tabular}}
+\newcolumntype{X}{l}
+

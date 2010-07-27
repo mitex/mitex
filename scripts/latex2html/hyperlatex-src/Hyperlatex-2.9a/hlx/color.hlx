@@ -1,0 +1,123 @@
+%% -*- emacs-lisp -*-
+%%
+%% Support for `color' package in Hyperlatex
+%%
+%% (C) 1997, Eric Delaunay <delaunay@lix.polytechnique.fr>
+
+\newcommand{\color}[2][]{\hyperlatexcolor[#1]{#2}\hyperlatexcolorend}
+\newcommand{\hyperlatexcolorend}{\aftergroup{\xml{/font}}}
+
+\HlxEval{
+  (put 'hyperlatexcolor 'hyperlatex 'hyperlatex-format-hycolor)
+  (put 'textcolor 'hyperlatex 'hyperlatex-format-textcolor)
+  (put 'pagecolor 'hyperlatex 'hyperlatex-format-pagecolor)
+  (put 'definecolor 'hyperlatex 'hyperlatex-format-definecolor)
+  (put 'DefineNamedColor 'hyperlatex 'hyperlatex-format-DefineNamedColor)
+
+  (defvar hyperlatex-color-list nil)
+  (defvar hyperlatex-current-color nil)
+
+  (defun hyperlatex-format-hycolor ()
+    (let ((model (hyperlatex-parse-optional-argument))
+	  (color (hyperlatex-parse-required-argument)))
+      (setq hyperlatex-current-color (hyperlatex-color-translate model color))
+      (hyperlatex-gen
+       (concat "font color=" hyperlatex-meta-dq
+	       (hyperlatex-color-value color) hyperlatex-meta-dq))))
+
+  (defun hyperlatex-format-textcolor ()
+    (let ((model (hyperlatex-parse-optional-argument))
+		  (color (hyperlatex-parse-required-argument))
+		  (text (hyperlatex-parse-required-argument)))
+      (hyperlatex-gen
+       (concat "font color=" hyperlatex-meta-dq
+	       (hyperlatex-color-translate model color) hyperlatex-meta-dq))
+      (insert text)
+      (hyperlatex-gen "/font")
+      (goto-char hyperlatex-command-start)))
+
+(defun hyperlatex-format-definecolor ()
+  (let ((name (hyperlatex-parse-required-argument))
+	(space (hyperlatex-parse-required-argument))
+	(value (hyperlatex-parse-required-argument)))
+    (hyperlatex-color-define name space value)))
+
+(defun hyperlatex-color-define (name space value)
+  (let ((key (assoc name hyperlatex-color-list)))
+    (if key
+	;; replacing an already defined color
+	(setcdr key (hyperlatex-color-translate space value))
+      ;; adding a new color
+      (setq hyperlatex-color-list
+	    (cons (cons name (hyperlatex-color-translate space value))
+		  hyperlatex-color-list)))))
+
+(defun hyperlatex-color-value (name)
+  (let ((value (assoc name hyperlatex-color-list)))
+    (if value
+	(cdr value)
+      (error (format "unknown color: %s" name)))))
+
+(defun hyperlatex-color-translate (space value)
+  (cond
+   ((or (not space) (string= space ""))
+    (hyperlatex-color-value value))
+   ((string= space "gray")
+    (hyperlatex-color-to-gray value))
+   ((string= space "rgb")
+    (hyperlatex-color-to-rgb value))
+   ((string= space "cmyk")
+    (hyperlatex-color-to-cmyk value))
+   (t
+    (error (format "bad color model name: %s" space)))))
+
+(defun hyperlatex-color-to-gray (level)
+  (let ((x (* 255 (string-to-number level))))
+    (format "#%02x%02x%02x" x x x)))
+
+(defun hyperlatex-color-to-rgb (rgb)
+  (string-match "\\(.*\\)[, ]\\(.*\\)[, ]\\(.*\\)" rgb)
+  (let ((r (* 255 (string-to-number (match-string 1 rgb))))
+	(g (* 255 (string-to-number (match-string 2 rgb))))
+	(b (* 255 (string-to-number (match-string 3 rgb)))))
+    (format "#%02x%02x%02x" r g b)))
+
+(defun hyperlatex-color-to-cmyk (cmyk)
+  ;; compatibility with pstcol package (commas are replaced by blanks)
+  (string-match "\\(.*\\)[, ]\\(.*\\)[, ]\\(.*\\)[, ]\\(.*\\)" cmyk)
+  (let* ((c (string-to-number (match-string 1 cmyk)))
+	 (m (string-to-number (match-string 2 cmyk)))
+	 (y (string-to-number (match-string 3 cmyk)))
+	 (k (string-to-number (match-string 4 cmyk)))
+	 (r (* 255 (- 1 c) (- 1 k)))
+	 (g (* 255 (- 1 m) (- 1 k)))
+	 (b (* 255 (- 1 y) (- 1 k))))
+    (format "#%02x%02x%02x" r g b)))
+
+}
+
+% default colors defined in color.sty
+\definecolor{black}{gray}{0}
+\definecolor{white}{gray}{1}
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{green}{rgb}{0,1,0}
+\definecolor{blue}{rgb}{0,0,1}
+\definecolor{cyan}{cmyk}{1,0,0,0}
+\definecolor{magenta}{cmyk}{0,1,0,0}
+\definecolor{yellow}{cmyk}{0,0,1,0}
+
+\HlxEval{
+(defun hyperlatex-format-pagecolor ()
+  (let ((model (hyperlatex-parse-optional-argument))
+	(color (hyperlatex-parse-required-argument)))
+    (let* ((body "body")
+	   (attr (concat "bgcolor=" hyperlatex-meta-dq
+			 (hyperlatex-color-translate model color)
+			 hyperlatex-meta-dq))
+	   (match (assoc body hyperlatex-attributes)))
+      (if match
+	  (setcdr match (list nil attr))
+	(setq hyperlatex-attributes
+	      (cons (list body nil attr)
+		    hyperlatex-attributes))))))
+}

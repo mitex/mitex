@@ -1,0 +1,73 @@
+%% Inputencodings are simple minded, and also impacts on the output
+%% document charset
+%%  - The 'input' translator is changed to accept chars on 8-bits
+%%    and to translate them to the appropriate unicode chars.
+%%  - Numerical entities given by \@print@u{NUM} are translated
+%%    to chars when possible (through 'output' translator)
+%%    output translator and document charset must of course agree,
+%%  - \usepackage[enc]{inputenc} affects both input and
+%%     output translators and doc charset.
+%%  - Later, one can desynchronize the translators
+%%    For instance, to interpret input as latin1 and to output
+%%    asciii only, one should perform:
+%%     \usepackage[latin1]{inputenc}
+%%     \@def@charset{US-ASCII}
+%%   
+%%    Or, to change input translator alone : \inputencoding{enc}
+
+\ProvidesPackage{inputenc}
+\def\ic@mk@map#1{ic@#1@map}
+\def\def@ic@map#1#2{\def\csname\ic@mk@map{#1}\endcsname{#2}}
+%%%Direct setting of inputencoding
+\newcommand{\ic@restore}
+{\@set@in@translator
+  {mappings/\csname\ic@mk@map{\inputencodingname}\endcsname.map}}%
+%%
+\newcommand{\inputencoding}[1]
+{\@ifundefined{\ic@mk@map{#1}}
+  {\hva@warn{Unknown input encoding: '#1'}}
+  {\def\inputencodingname{#1}%
+  \@set@in@translator{mappings/\csname\ic@mk@map{#1}\endcsname.map}%
+  \@funregister{\ic@restore}}}
+%%%Seting inputencoding as package option also sets output encoding
+\newcommand{\ic@set}[1]
+{\def\inputencodingname{#1}%
+\def\@charset{\csname\ic@mk@map{#1}\endcsname}%
+\@set@translators{mappings/\csname\ic@mk@map{#1}\endcsname.map}}
+\newcommand{\ic@set@bis}[1]
+{\def\inputencodingname{#1}%
+\@set@in@translator{mappings/\csname\ic@mk@map{#1}\endcsname.map}}
+\newcommand{\ic@option}[2]
+{\def@ic@map{#1}{#2}%
+\DeclareOption{#1}{\ic@set{#1}}}%
+\newcommand{\ic@option@bis}[2]
+{\def@ic@map{#1}{#2}%
+\DeclareOption{#1}{\ic@set@bis{#1}}}%
+%%%
+\ic@option{ascii}{US-ASCII}%
+%%%
+\ic@option{latin1}{ISO-8859-1}%
+\ic@option{latin2}{ISO-8859-2}%
+\ic@option{latin3}{ISO-8859-3}%
+\ic@option{latin4}{ISO-8859-4}%
+\ic@option{latin5}{ISO-8859-9}%
+\ic@option{latin6}{ISO-8859-10}%
+\ic@option{latin7}{ISO-8859-13}%
+\ic@option{latin8}{ISO-8859-14}%
+\ic@option{latin9}{ISO-8859-15}%
+\ic@option{latin10}{ISO-8859-16}%
+\ic@option{tis-620}{ISO-8859-11}%
+\ic@option@bis{thai}{ISO-8859-11}%
+%%%
+\ic@option{cp1250}{windows-1250}%
+\ic@option{cp1251}{windows-1251}%
+\ic@option{cp1252}{windows-1252}%
+\ic@option{cp1257}{windows-1257}%
+\ic@option{ansinew}{windows-1252}%
+%%%
+\ic@option{applemac}{macintosh}%
+%%%
+\ic@option{koi8-r}{KOI8-R}%
+\ic@option{utf8}{UTF-8}%
+%%%
+\ProcessOptions*%

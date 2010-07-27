@@ -1,0 +1,61 @@
+%%
+%% Hyperlatex babel support for Italian language
+%%
+%% 1999 Adelchi Azzalini <azzalini@stat.unipd.it>
+
+\newcommand{\captionsitalian}{ 
+  \newcommand\refname{Riferimenti bibliografici}%
+  \newcommand\abstractname{Sommario}%
+  \newcommand\bibname{Bibliografia}%
+  \newcommand{\prefacename}{Prefazione}
+  \newcommand\chaptername{Capitolo}%
+  \newcommand\appendixname{Appendice}%
+  \newcommand\contentsname{Indice}%
+  \newcommand\listfigurename{Elenco delle figure}%
+  \newcommand\listtablename{Elenco delle tabelle}%
+  \newcommand\indexname{Indice analitico}%
+  \newcommand\figurename{Figura}%
+  \newcommand\tablename{Tabella}%
+  \newcommand\partname{Parte}%
+  \newcommand\enclname{Allegati}%
+  \newcommand\ccname{e~p.~c.}%
+  \newcommand\headtoname{Per}%
+  \newcommand\pagename{Pag.}%  
+  \newcommand\seename{vedi}%
+  \newcommand\alsoname{vedi anche}%
+  \newcommand\proofname{Dimostrazione}%
+}
+
+\newcommand{\dateitalian}{\newcommand{\today}{\HlxTodayItalian}}
+
+\newcommand{\extrasitalian}{}
+\newcommand{\noextrasitalian}{}
+
+\HlxEval{
+  (put 'HlxTodayItalian 'hyperlatex 'hyperlatex-format-hlxtodayitalian)
+
+(defun hyperlatex-format-hlxtodayitalian ()
+   (let* ((date (decode-time))
+	  (day (elt date 3))
+	  (month (elt date 4))
+	  (year (elt date 5))
+	  (month-list '("gennaio" "febbraio" "marzo" "aprile" 
+		        "maggio" "giugno" "luglio"
+			"agosto" "settembre" "ottobre" 
+			"novembre" "dicembre")))
+    (insert
+     (concat (elt month-list (1- month))
+	     " " (int-to-string day)
+	     ", " (int-to-string year)))))
+}
+
+
+\newcommand{\htmlpanelitalian}{
+  \renewcommand{\HlxGoBackName}{Indietro:}
+  \renewcommand{\HlxGoUpName}{Su:}
+  \renewcommand{\HlxGoForwardName}{Avanti:}
+}
+
+\htmltopname{Indice}
+\htmlpanelitalian
+\dateitalian

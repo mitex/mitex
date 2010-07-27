@@ -1,0 +1,4 @@
+#! /bin/sh
+cat <<EOF
+\@def@charset{`locale charmap`}
+EOF

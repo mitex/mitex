@@ -1,0 +1,509 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%--
+%-- Documentation of the Hyperlatex 2.6 extensions rhxxname.hlx and
+%-- rhxpanel.hlx.
+%--
+%-- Copyright (C) 2002 Ralf Hemmecke <ralf@hemmecke.de>
+%--
+%-- $Id: rh-hyperlatex.tex,v 1.2 2006/11/20 02:31:51 tomfool Exp $
+%--
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xname{hindex}
+\section{Hyperlatex}\label{sec:Hyperlatex}
+\newcommand{\HlxURL}{http://www.cs.uni-magdeburg.de/docs/hyperlatex/}
+\newcommand{\HLX}{\Xlink{Hyperlatex}{\HlxURL}}
+
+Recently I rediscovered \HLX{} for me.
+%
+Since I am fluent in \LaTeX{}, I don't want to bother myself with all
+the details in HTML. If I can do my few pages in \LaTeX{} this would
+be terrific. So \HLX{} seemed the right tool for me, but not quite.
+That is why I offer here two packages for \HLX{} 2.6 and hope someone
+finds them useful.
+
+\htmlmenu{1}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xname{history}
+\subsection{History}
+
+My first web-pages I wrote in plain HTML, and they are/were certainly
+not very advanced. But now, in order to transfer all my pages into
+\HLX{}, I wanted to keep my directory structure (or at least part of
+it).
+%
+Well the first solution one could think of is to replace each of my
+HTML files by a corresponding \HLX{} file and add some Makefiles to
+generate everything (including subdirectories).
+%
+Yes, I could have certainly done this way.
+%
+But then I discovered that \HLX{} offered me (with the \verb'\xname'
+macro) a way to choose the target name for the files of each section.
+That was fine, so I could put all the files in each of my
+subdirectories together into one single file.
+%
+Additionally, I get the advantage of not having to bother with the
+links between the files in one directory anymore because this is now
+done in a \LaTeX-like fashion.
+
+So, but why shouldn't I put ALL my web-pages into ONE single \LaTeX{}
+file and generate everything just by calling \HLX{}?
+%
+Wouldn't it be nice to produce all the relative links from one of your
+private pages to another using \LaTeX's \verb'\label' mechanism?
+%
+Further, I know a lot of people who are fluent in \LaTeX{} but are
+rather weak in writing Makefiles. Why not offering them an extension
+of \HLX{}?
+
+When I started with \HLX{}, I experimented a bit with the
+\verb'\xname' command and found out that I could write something like
+\verb'\xname{hindex}' and \HLX{} would not complain. Well,
+nearly, I had to produce the directory \file{hyperlatex} by hand in
+order to produce the \file{index.html} file.
+%
+I was a bit disappointed and asked at the Hyperlatex
+\xlink{mailinglist}{mailto:hyperlatex@cs.uni-magdeburg.de}.
+
+One day later Tom Sgouros sent me the following piece of code.
+\begin{verbatim}
+(defun hyperlatex-format-xname ()
+  (if hyperlatex-final-pass
+      (hyperlatex-parse-required-argument)
+    (let ((node-name (hyperlatex-parse-required-argument)))
+      (if (file-name-directory node-name)
+          (make-directory (file-name-directory node-name) t))
+      (setq hyperlatex-node-names
+            (cons (cons (1+ hyperlatex-node-number)
+                        (format "%s%s" node-name hyperlatex-html-ext))
+                  hyperlatex-node-names)))))
+\end{verbatim}
+It worked immediately. Directories are then produced automatically.
+Thank you Tom.
+
+Eventually, I had to add also a reference to
+\verb'hyperlatex-html-directory' so that the directory is generated in
+the right place even if someone sets \verb'\htmldirectory' to
+something different from the current directory.
+
+Unfortunately, my goal had not yet been achieved completely. The links
+that \HLX{} produces are not correct if one generates a whole tree of
+subdirectories. The idea how to correct this is simple, but how to
+achieve it in Emacs Lisp? My knowledge of Lisp is/was quite limited.
+
+Here I must give my gratitude to Otfried Cheong and all the others who
+contributed to \HLX{}. Most things I know now, I have learned from the
+code in \file{hyperlatex.el} and \file{siteinit.hlx}.
+
+My contribution (including this documentation) is packaged into
+\file{\xxlink{rhxhlx.tgz}{hyperlatex}{rhxhlx.tgz}}. It consists of the
+four files \file{rhxxname.hlx}, \file{rhxpanel.hlx},
+\file{rhxdoc.tex}, and \file{rh-hyperlatex.tex}.
+
+There are also some PNG buttons in the archive.
+%
+\textbf{THEY ARE NOT MADE BY ME.}
+%
+The \file{home.png} icon is a \Xlink{KDE}{http://www.kde.org} button,
+but I cannot remember where I found the other pictures. Anyway, I just
+provide these icons for demonstration. With a bit of effort everyone
+can produce (or find on the Internet) any button he/she likes.
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xname{download}
+\subsection{Download and Installation}
+
+Everything is packaged into
+\file{\xxlink{rhxhlx.tgz}{hyperlatex}{rhxhlx.tgz}} (including the
+documentation).
+
+Put the \file{.hlx} files into a place where \HLX{} finds them. Maybe
+your directory \file{{\~{}}/.hyperlatex} is a good place.
+%
+The buttons should be either placed into a fixed directory
+corresponding to a certain URL or into the directory of your web-site.
+If \file{/home/www/myname} is your top entry point of your home page
+(this corresponds to \verb'\htmldirectory'), put the pictures there.
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xname{copyright}
+\subsection{Copyright}
+
+The files \file{rhxxname.hlx}, \file{rhxpanel.hlx},
+\file{rhxdoc.tex}, and \file{rh-hyperlatex.tex} are ``free'' in the sense
+that everyone is free to use and free to redistribute it under certain
+conditions. 
+
+Copyright \copyright{} 2002 \xlink{Ralf Hemmecke}{mailto:ralf@hemmecke.de}
+
+These programs (including documentation) are free software; you can
+redistribute it and/or modify it under the terms of the \Xlink{GNU
+  General Public License}{http://www.gnu.org/copyleft/gpl.html} as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+These programs are distributed in the hope that they will be useful,
+but \emph{without any warranty}; without even the implied warranty of
+\emph{merchantability} or \emph{fitness for a particular purpose}.
+%
+See the
+%
+\Xlink{GNU General Public
+  License}{http://www.gnu.org/copyleft/gpl.html}
+%
+for more details.
+\begin{iftex}
+  A copy of the GNU General Public License is available on
+  the World Wide web at \texttt{http://www.gnu.org/copyleft/gpl.html}.
+%
+  You can also obtain it by writing to the Free Software Foundation,
+  Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+\end{iftex}
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xname{rhxxname}
+\subsection{The xname Extension}
+
+The package is loaded after \verb'\usepackage{hyperlatex}' by putting 
+\begin{verbatim}
+\W\usepackage{rhxxname}
+\end{verbatim}
+into the preample of your \LaTeX{} file or simply write the above
+command (the \verb'\W' is then not necessary) into your
+\file{init.hlx} file.
+
+The package extends \HLX{} in such a way that it becomes possible to
+generate subdirectories by writing something like
+\verb'\xname{DirA/DirB/File}' just before the section that should go
+to a separate file. The links from and to all elements in your whole
+document will be generated correctly by \HLX{}.
+
+Well, there are a few commands that could perhaps be interesting, but
+I don't want to make them generally available to a normal user because
+then I would have to rename them or additionally provide an
+\file{rhxxname.sty} file.
+
+My hope is that this package becomes redundant in the next version of
+\HLX{}.
+
+A great advantage of this extension is that it then becomes possible
+to generate all of your web pages from one single \LaTeX{} file
+without the need to write Makefiles.
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xname{rhxpanel}
+\subsection{Documentation of rhxpanel.hlx}
+
+This package controls the panel generation of \HLX{}.
+
+\htmlmenu{1}
+
+\xname{load}
+\subsubsection{How To Load The Package}
+The package is loaded after \verb'\usepackage{hyperlatex}' by putting 
+\begin{verbatim}
+\W\usepackage{rhxpanel}
+\end{verbatim}
+into the preample of your \LaTeX{} file.
+
+I would, however suggest to work with
+\begin{verbatim}
+\usepackage{color}
+\W\usepackage{frames}
+\W\usepackage{rhxpanel}
+\W\usepackage{rhxxname}
+\end{verbatim}
+in this order. You are, of course, free to put these commands into
+your \file{init.hlx} file.
+
+The \file{color} package will be automatically loaded in
+\file{rhxpanel.hlx}, but you might want to set colours yourself for
+your web-pages.
+
+
+
+
+
+
+\xname{bluepanels}
+\subsubsection{bluepanels.hlx}
+The package \file{rhxpanel.hlx} can be thought of as a replacement for
+the \file{bluepanels.hlx} package. In fact, the latter can be simulated
+as follows.
+\begin{verbatim}
+\definecolor{panelcolor}{rgb}{0.7,0.8,1}
+\definecolor{paneltextcolor}{gray}{0}
+\newcommand{\HlxIcons}{http://www.cs.uu.nl/{\~{}}otfried/img/}
+\newcommand{\HlxIconExtension}{gif}
+\newcommand{\HlxPanelHome}{0}
+\newcommand{\HlxPanelShade}{0}
+\newcommand{\HlxPanelPreviousBeforeNext}{0}
+\end{verbatim}
+
+
+
+
+
+
+
+
+\xname{color}
+\subsubsection{Colour Control}
+The colour of the panel can be customised by defining the colours
+\emph{panelcolor} and \emph{paneltextcolor} like this which is the
+default.
+\begin{verbatim}
+\definecolor{panelcolor}{gray}{0.7}
+\definecolor{paneltextcolor}{gray}{0}
+\end{verbatim}
+See the color package for more details.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\xname{buttons}
+\subsubsection{The Buttons}
+Although this panel is intended to show 4 buttons at the top and
+the bottom of each page (the default behaviour), it can be
+customised to other styles, see below.
+
+\begin{ifset}{rhxpanelloaded}
+The buttons are as follows.
+\begin{enumerate}
+\item The HOME button \htmlicon{home.\HlxIconExtension}{HOME}.
+%
+  Go immediately back to the initial page.
+%
+\item The PREV button \htmlicon{previous.\HlxIconExtension}{PREV}.
+%
+  Go one page back.
+%
+\item The UP button \htmlicon{up.\HlxIconExtension}{UP}.
+%
+  Go up one hierarchy.
+%
+\item The NEXT button \htmlicon{next.\HlxIconExtension}{NEXT}.
+%
+  Go one page forward.
+\end{enumerate}
+\end{ifset}
+The behaviour of the PREV and NEXT buttons can be controlled with the
+standard \file{sequential.hlx} package of Hyperlatex.
+
+Panel fields can be added like in bluepanels.hlx using the command
+\verb'\htmlpanelfield{TEXT}{LABEL}'.
+%
+To add icons instead of TEXT, use a command similar to what follows.
+\begin{verbatim}  
+  \htmlpanelfield{\HlxPanelIcon{icon.png}{ALTTEXT}}{LABEL}
+\end{verbatim}
+This then shows the icon \file{icon.png} which should be in the same
+place as the files for the other navigation buttons.
+%
+Note that \verb'\HlxPanelIcon' is an \verb'\Hlx...' style command and
+should be hidden from \LaTeX{}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+The place of the panel buttons is controlled by defining the
+command
+\begin{verbatim}
+  \newcommand{\HlxIcons}{http://www.cs.uu.nl/{\~{}}otfried/img/}
+\end{verbatim}
+The following setting is the default.
+\begin{verbatim}
+  \newcommand{\HlxIcons}{}
+\end{verbatim}
+Whereas the first specifies a fixed place in the Internet, the second
+form describes a local directory starting at \verb'\htmldirectory'. A
+slash will be added automatically to the path if it is not provided.
+
+The default extension of the button icons is \file{.png}, but you can
+change this by defining
+\begin{verbatim}
+ \newcommand{\HlxIconExtension}{gif}
+\end{verbatim}
+
+There are several commands to control the generation of buttons.
+Here is a list of commands that you can put into your LaTeX file.
+\begin{itemize}
+\item \verb'\newcommand{\HlxPanelHome}{0}'\\
+  Don't generate the HOME button.
+%  
+\item \verb'\newcommand{\HlxPanelHome}{1}' (default)\\
+  Generate a HOME button.
+%  
+\item \verb'\newcommand{\HlxPanelShade}{0}'\\
+  Inactive buttons are not shown.
+%  
+\item \verb'\newcommand{\HlxPanelShade}{1}'  (default)\\
+  Inactive buttons appear shaded. (The buttons noprevious.png,
+  noup.png, nonext.png are used.)
+%  
+\item \verb'\newcommand{\HlxPanelPreviousBeforeNext}{0}'\\
+  The order of the navigation buttons is NEXT, UP, PREVIOUS.
+%  
+\item \verb'\newcommand{\HlxPanelPreviousBeforeNext}{1}' (default)\\
+  The order of the navigation buttons is PREVIOUS, UP, NEXT.
+\end{itemize}
+
+The icon images are not part of the package. They are just packaged as
+examples. One should provide 7 buttons, home.png, blank.png,
+previous.png, up.png, next.png, noprevious.png, noup.png, nonext.png.
+The filename extension depends on what you define in
+\verb'\HlxIconExtension'.
+
+
+
+
+
+
+
+
+
+\xname{navigationpanel}
+\subsubsection{Navigation Panel}
+This package also contains some code to control the appearance of
+the navigation panel. If you load the frames package before
+rhxpanel.hlx then you will have a slightly different appearance
+than in the case that you first load rhxpanel.hlx and then
+frames.hxl. I suggest the following:
+\begin{verbatim}
+  \usepackage{color}
+  \W\usepackage{frames}
+  \W\usepackage{rhxpanel}
+  \W\usepackage{rhxxname}
+\end{verbatim}
+Try it out what you like more or even define your own navigation
+panel.
+
+
+
+
+
+
+
+
+
+
+
+
+\xname{addons}
+\subsubsection{Additional Commands}
+
+There are two commands that might be useful for navigation.
+\begin{itemize}
+\item \verb'\HlxTopNodeUrl'\\
+  This points to the topnode of the (hyper-)\LaTeX{} file you are
+  translating. It corresponds to the top entry point of your file.
+\item \verb'\HlxHomeUrl'\\
+  By default this is the same as \verb'\HlxTopNodeUrl'. So this
+  corresponds to your HOME. If you decide to have separate files and
+  you want to let the HOME be something else and still have the home
+  button of the panel correctly pointing to your HOME, you should
+  redefine this command as follows.\\
+\begin{verbatim}
+  \newcommand{\HlxHomeUrl}{http://www.my.home.org/my/dir}
+\end{verbatim}
+\item \verb'\HlxNavigationPanelTitle'\\
+  By default this is empty, but you can set this to anything you like
+  by saying something like this.
+\begin{verbatim}
+  \newcommand{\HlxNavigationPanelTitle}{MY TITLE}
+\end{verbatim}
+\end{itemize}
+
+\xname{addonsa}
+\subsubsection{Additional Commands}
+
+There are two commands that might be useful for navigation.
+\begin{itemize}
+\item \verb'\HlxTopNodeUrl'\\
+  This points to the topnode of the (hyper-)\LaTeX{} file you are
+  translating. It corresponds to the top entry point of your file.
+\item \verb'\HlxHomeUrl'\\
+  By default this is the same as \verb'\HlxTopNodeUrl'. So this
+  corresponds to your HOME. If you decide to have separate files and
+  you want to let the HOME be something else and still have the home
+  button of the panel correctly pointing to your HOME, you should
+  redefine this command as follows.\\
+\begin{verbatim}
+  \newcommand{\HlxHomeUrl}{http://www.my.home.org/my/dir}
+\end{verbatim}
+\item \verb'\HlxNavigationPanelTitle'\\
+  By default this is empty, but you can set this to anything you like
+  by saying something like this.
+\begin{verbatim}
+  \newcommand{\HlxNavigationPanelTitle}{MY TITLE}
+\end{verbatim}
+\end{itemize}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

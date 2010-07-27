@@ -1,0 +1,280 @@
+\let\numberwithin\@addtoreset
+\let\text\mbox
+%% Equation tags
+\renewcommand{\theequation}{\arabic{equation}}
+\newif\ifams@star
+\newcommand{\ams@yesnumber}
+  {\@yesnumber\gdef\ams@currentlabel{\theequation}}
+\newcommand{\ams@nonumber}{\global\let\@number\@empty}
+\def\tag#1{\gdef\@number{\eqno{\text{(#1)}}}\gdef\ams@currentlabel{\text{#1}}%
+\ifams@star\else\addtocounter{equation}{-1}\fi}%
+\def\tag*#1{\gdef\@number{\eqno{\text{#1}}}\gdef\ams@currentlabel{\text{#1}}%
+\ifams@star\else\addtocounter{equation}{-1}\fi}%
+\def\notag
+  {\ams@nonumber
+  \ifams@star\else\addtocounter{equation}{-1}}%
+\let\nonumber\notag%
+%%%%% AMS equations
+\newenvironment{ams@equation}[1]
+  {\[\def\@currentlabel{\ams@currentlabel}#1}
+  {\@number\]}
+\newenvironment{equation*}
+  {\ams@startrue\begin{ams@equation}{\ams@nonumber}}
+  {\end{ams@equation}}
+\renewenvironment{equation}
+  {\ams@starfalse\begin{ams@equation}{\ams@yesnumber\stepcounter{equation}}}
+  {\end{ams@equation}}
+%%%%AMS align
+\newcounter{@align@col}
+\newcounter{@align@limit}
+\newenvironment{ams@alignat}[2]
+{\setcounter{@align@limit}{2*#1-1}%
+\@ifundefined{@align@inside}{\def\@align@inside{}}{\hva@warn{Nested align}}%
+\[\@changelabel\def\@currentlabel{\ams@currentlabel}%
+\setcounter{@align@col}{0}%
+#2%
+\def\@extra{\quad\quad}%
+\let\@PBS=\@HEVEA@bsbs
+\let\@PAM=\@HEVEA@amper
+\newcommand{\@eqna@complete}
+  {\whiledo{\value{@align@col}<\value{@align@limit}}{\def\@extra{}&}}
+\renewcommand{\@hevea@amper}
+  {\ifthenelse{\value{@align@col}<\value{@align@limit}}
+    {\stepcounter{@align@col}%
+    \ifthenelse{\isodd{\value{@align@col}}}{}{\@extra}%
+    \@PAM}
+    {\hva@warn{Extra column in eqnarray}}}     
+\renewcommand{\\}[1][]
+  {\@eqna@complete% End line
+  \@PAM\@number\@PBS% format equation number
+  #2%step equation number
+  \setcounter{@align@col}{0}}
+\@array{*{#1}{rl}r}}
+  {\\{}\end@array\]}
+\newenvironment{alignat}[1]
+  {\ams@starfalse\begin{ams@alignat}
+     {#1}
+     {\ams@yesnumber\stepcounter{equation}}}
+  {\end{ams@alignat}\addtocounter{equation}{-1}}
+\newenvironment{alignat*}[1]
+  {\ams@startrue\begin{ams@alignat}{#1}{\ams@nonumber}}
+  {\end{ams@alignat}}
+\newenvironment{align}{\begin{alignat}{5}}{\end{alignat}}
+\newenvironment{align*}{\begin{alignat*}{5}}{\end{alignat*}}
+%%%%%%%%AMS gather
+\newenvironment{ams@gather}[1]
+  {\[\@changelabel\def\@currentlabel{\ams@currentlabel}%
+  \@array{@{#1}c@{\@number}}}
+  {\end@array\]}
+\newenvironment{gather}
+  {\ams@starfalse\begin{ams@gather}{\ams@yesnumber\stepcounter{equation}}}
+  {\end{ams@gather}}
+\newenvironment{gather*}
+  {\ams@startrue\begin{ams@gather}{\ams@nonumber}}
+  {\end{ams@gather}}
+%%%%%%%AMS multline
+\newcounter{ams@line}
+\newenvironment{ams@multline}[1]
+  {\@changelabel\def\@currentlabel{\ams@currentlabel}%
+  #1%
+  \setcounter{ams@line}{0}%
+  \let\@PBS=\\%
+  \renewcommand{\\}[1][]
+     {\@close{DISPLAY}%
+     \ifthenelse{\value{ams@line}>0}{\centering}{\raggedright}\)\endgroup\stepcounter{ams@line}\begingroup\(\@open{DISPLAY}{}}%
+  \begingroup\(\@open{DISPLAY}{}}
+  {\@close{DISPLAY}\)\raggedleft\@number\endgroup}
+\newenvironment{multline}
+  {\ams@starfalse\begin{ams@multline}{\ams@yesnumber\stepcounter{equation}}}
+  {\end{ams@multline}}
+\newenvironment{multline*}
+  {\ams@startrue\begin{ams@multline}{\ams@nonumber}}
+  {\end{ams@multline}}
+%AMS split
+\newenvironment{split}{\begin{array}{r}}{\end{array}}%
+\renewenvironment{cases}{\left\{\begin{array}{ll}}{\end{array}\right.}%
+\newcommand{\intertext}[1]{\qquad\mbox{#1}\\}%
+%%Matrices
+\newcounter{MaxMatrixCols}\setcounter{MaxMatrixCols}{10}%
+\newenvironment{matrix}{\begin{array}{*{\value{MaxMatrixCols}}{c}}}{\end{array}}%
+\newenvironment{pmatrix}{\left(\begin{array}{*{\value{MaxMatrixCols}}{c}}}{\end{array}\right)}%
+\newenvironment{bmatrix}{\left[\begin{array}{*{\value{MaxMatrixCols}}{c}}}{\end{array}\right]}%
+\newenvironment{vmatrix}{\left|\begin{array}{*{\value{MaxMatrixCols}}{c}}}{\end{array}\right|}%
+\newenvironment{Vmatrix}{\left|\left|\begin{array}{*{\value{MaxMatrixCols}}{c}}}{\end{array}\right|\right|}%
+\newcounter{@hdots}%
+\newcommand{\hdotsfor}[2][]{%
+\setcounter{@hdots}{#2}%
+\whiledo{\value{@hdots}>1}{\ldots &\addtocounter{@hdots}{-1}}%
+\ldots}%
+\newenvironment{smallmatrix}{\begin{matrix}}{\end{matrix}}
+%%%%%%%%%%%% Some commands by B. Salvy
+\newcommand{\binom}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\boldmath}{\bf}
+%%%%%%%%%% AMS extra variable size delimiters
+\newcommand{\lvert}{|}
+\newcommand{\csname\delim@name{\lvert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@vert}}
+\newcommand{\rvert}{|}
+\newcommand{\csname\delim@name{\rvert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@vert}}
+%%%
+\DeclareSymbolHtml[||]{\lVert}{X2225}
+\newcommand{\csname\delim@name{\lVert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@Vert}}
+\DeclareSymbolHtml[||]{\rVert}{X2225}
+\newcommand{\csname\delim@name{\rVert}\endcsname}[1]
+{\process@delim@one{#1}{\mid@Vert}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Other variants of \frac					%
+%      	\dfrac makes no estimate of display-style in HEVEA	%
+%       \tfrac makes no estimate of text-style in HEVEA         %
+%       \cfrac takes an optional argument as well		%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\dfrac\frac
+\newcommand{\tfrac}[2]{{#1/#2}}
+\let\hva@frac\frac
+\NewcommandHtml{\textfrac}[3][]{\hva@frac{#2}{#3}}
+\NewcommandHtml{\@frac}[3][]
+{\@open@display\d@cell{#2}%
+\@close{TR}\@open{TR}{}%
+\@open@dcell{}%
+{\def\@tmp{#1}\ifx\@tmp\@empty\@hbar\else
+\@hbar[STYLE="height:\@getlength{#1}px;"]\fi}%
+\@close@dcell%
+\@close{TR}\@open{TR}{CLASS="bot"}%
+\d@cell[STYLE="background-color:lime;"]{#3}%
+\@close@display}
+\NewcommandHtml{\gfrac}{\DisplayChoose\@frac\textfrac}
+%%%\cfrac -> vertical alignement on top in denominator
+\NewcommandHtml{\@@cfrac}[3][]
+{\@open@display%
+\d@cell[#1]{#2}%
+\@close{TR}\@open{TR}{}%
+\d@cell{\@hbar}\@addvsize{-1}%
+\@close{TR}\@open{TR}{}%
+\@open@dcell{}\@open{DISPLAY}{VALIGN="top"}#3\@close{DISPLAY}\@close@dcell%
+\@close@display}
+\NewcommandHtml{\@lcfrac}[2]{\@@cfrac[STYLE="text-align:left;"]{#1}{#2}}
+\NewcommandHtml{\@rcfrac}[2]{\@@cfrac[STYLE="text-align:right;"]{#1}{#2}}
+\newcommand{\@cfrac}[3][c]
+{\ifthenelse{\equal{#1}{c}}{\@@cfrac{#2}{#3}}
+{\ifthenelse{\equal{#1}{l}}{\@lcfrac{#2}{#3}}
+{\ifthenelse{\equal{#1}{r}}{\@rcfrac{#2}{#3}}
+{\hva@warn{Invalid Argument To \cfrac: '#1', ignored}{\@@cfrac{#2}{#3}}}}}}
+\NewcommandHtml{\textcfrac}[3]{\frac{#2}{#3}}
+\NewcommandHtml{\cfrac}{\DisplayChoose\@cfrac\textcfrac}
+\NewcommandHtml{\lcfrac}{\DisplayChoose\@lcfrac\frac}
+\NewcommandHtml{\rcfrac}{\DisplayChoose\@rcfrac\frac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\eqref}[1]{(\ref{#1})}
+%\newcommand{\mathbb}[1]{{\bf #1}}
+%\newcommand{\mathfrak}[1]{{\green #1}}
+\newcommand{\mathnormal}[1]{#1}
+\newcommand{\mod}{\text{mod}}
+\newcommand{\operatorname}[1]{\text{#1}}
+\newcommand{\smallint}{\int}
+\newenvironment{proof}{\par\noindent{\bf Proof.}}{\par\medskip}
+%%%%%%%%%%%%%%%%%
+% \boxed command%
+%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\boxed}{\DisplayChoose\@@boxed\@boxed}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 48: AMS Variable-sized Math Operators %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\MakeInt}[2]{\MakeBigSymbolHtml[\intlimits]{#1}{#2}}
+\DeclareSymbolHtml{\@iint}{X222C}\MakeInt{\iint}{\@iint}
+\DeclareSymbolHtml{\@iiint}{X222D}\MakeInt{\iiint}{\@iiint}
+\DeclareSymbolHtml{\@iiiint}{X2A0C}\MakeInt{\iiiint}{\@iiiint}
+\NewcommandHtml{\idotsint}{\int\cdots\int}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 97: AMS Log-Like symbols %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\@defl\injlim{inj lim}
+\@defl\projlim{proj lim}
+\@defl\varliminf{\underline{lim}}
+\@defl\varlimsup{\overline{lim}}
+%%%%%%%%%%%%%%%%%%%%%%
+% Table 39: AMS Dots %
+%%%%%%%%%%%%%%%%%%%%%%
+\Let\dotsb\cdots
+\Let\dotsi\cdots
+\Let\dotso\ldots
+\Let\dotsc\ldots
+\Let\dotsm\cdots
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table 129: AMS Extensible Accents %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\textoverleftrightarrow}[1]
+{\hva@warn{\overleftrightarrow outside display mode}#1}
+\NewcommandHtml{\@overleftrightarrow}[1]
+{\mathop{\@over@arrow[3]
+  {\d@cell[STYLE="width:1\%;"]{\hva@lefthead}%
+   \d@cell[STYLE="width:98\%;"]{\@hbar}%
+   \d@cell[STYLE="width:1\%;"]{\hva@righthead}}
+  {#1}}\intlimits}
+\NewcommandHtml{\overleftrightarrow}
+{\DisplayChoose\@overleftrightarrow\textoverleftrightarrow}
+%%%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\textunderleftrightarrow}[1]
+{\hva@warn{\underleftrightarrow outside display mode}#1}
+\NewcommandHtml{\@underleftrightarrow}[1]
+{\mathop{\@under@arrow[3]
+  {\d@cell[STYLE="width:1\%;"]{\hva@lefthead}%
+   \d@cell[STYLE="width:98\%;"]{\@hbar}%
+   \d@cell[STYLE="width:1\%;"]{\hva@righthead}}{#1}}\intlimits}
+\NewcommandHtml{\underleftrightarrow}
+{\DisplayChoose\@underleftrightarrow\textunderleftrightarrow}
+%%%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\textunderrightarrow}[1]
+{\hva@warn{\underrightarrow outside display mode}#1}
+\NewcommandHtml{\@underrightarrow}[1]
+{\mathop{\@under@arrow[2]
+  {\d@cell[STYLE="width:99\%;"]{\@hbar}%
+   \d@cell[STYLE="width:1\%;"]{\hva@righthead}}{#1}}\intlimits}
+\NewcommandHtml{\underrightarrow}
+{\DisplayChoose\@underrightarrow\textunderrightarrow}
+%%%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\textunderleftarrow}[1]
+{\hva@warn{\underleftarrow outside display mode}#1}
+\NewcommandHtml{\@underleftarrow}[1]
+{\mathop{\@under@arrow[2]
+  {\d@cell[STYLE="width:1\%;"]{\hva@lefthead}%
+   \d@cell[STYLE="width:100\%;"]{\@hbar}}{#1}}\intlimits}
+\NewcommandHtml{\underleftarrow}
+{\DisplayChoose\@underleftarrow\textunderleftarrow}
+%%%%%%%%%%%%%% New generic function for accents both below and above
+\NewcommandHtml{\@both@arrow}[4][2]
+{\@open@sizer\@open@display%
+\d@cell[COLSPAN="#1" STYLE="font-size:smaller;"]{#2}%
+\@close{TR}\@open{TR}{}%
+#3%
+\@close{TR}\@open{TR}{}%
+\d@cell[COLSPAN="#1" STYLE="font-size:smaller;"]{#4}%
+\@close@display\@close@sizer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\textxleftarrow}[2][]
+{\hva@warn{\xleftarrow outside display mode}\leftarrow^{#2}_{#1}}
+\NewcommandHtml{\@xleftarrow}[2][~]
+{\mathop
+  {\@both@arrow[2]{\quad{}#2\quad}
+    {\d@cell[STYLE="width:1\%;"]{\hva@lefthead}%
+     \d@cell[STYLE="width:99\%;"]{\@hbar}}
+    {\quad{}#1\quad}%
+  }\intlimits}
+\NewcommandHtml{\xleftarrow}{\DisplayChoose\@xleftarrow\textxleftarrow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NewcommandHtml{\textxrightarrow}[2][]
+{\hva@warn{\xrightarrow outside display mode}\rightarrow^{#2}_{#1}}
+\NewcommandHtml{\@xrightarrow}[2][~]
+{\mathop
+{\@both@arrow[2]{\quad{}#2\quad}
+{\d@cell[STYLE="width:99\%;"]{\@hbar}%
+ \d@cell[STYLE="width:1\%;"]{\hva@righthead}}
+{\quad{}#1\quad}}\intlimits}
+\NewcommandHtml{\xrightarrow}{\DisplayChoose\@xrightarrow\textxrightarrow}
+%%% subarray/substack
+\NewcommandHtml{\@smaller}{\@span{STYLE="font-size:smaller;"}}
+\NewcommandText{\@smaller}{}
+\NewcommandText{\@dclass}{}
+\newenvironment{subarray}[1]{\@smaller\begin{Array}[\@dclass]{#1}}{\end{Array}}
+\newcommand{\substack}[1]{\begin{subarray}{c}#1\end{subarray}}

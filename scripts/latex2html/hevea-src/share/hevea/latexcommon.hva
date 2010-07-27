@@ -1,0 +1,638 @@
+\newif\ifhevea\heveatrue
+\let\ifimage\iffalse
+\newenvironment{htmlonly}{}{}
+\newcommand{\home}[1]{\~{}#1}
+%%%%%%%%%%%%%%%% Maths environments and TeXisms
+\newcommand{\@dot}{.}
+\newcommand{\textright}[1]{\def\@tmp{#1}\ifx\@tmp\@dot\else#1\fi}
+\newcommand{\textleft}[1]{\def\@tmp{#1}\ifx\@tmp\@dot\else#1\fi}
+\def\mathord#1{#1}
+\def\mathrel#1{#1}
+\def\mathbin#1{#1}
+\def\mathopen#1{#1}
+\def\mathclose#1{#1}
+\def\mathchardef#1#2{}
+\newenvironment{math}{$}{$}
+\newcommand{\(}{$}\newcommand{\)}{$}
+\newcommand{\[}{$$\@skip@blanks}\newcommand{\]}{$$}
+\newcommand{\sp}[1]{^{#1}}\newcommand{\sb}[1]{_{#1}}
+\newcommand{\ensuremath}[1]{\ifmmode#1\else\(#1\)\fi}
+\newcommand{\@edm@act}{}
+\newenvironment{ensuredisplaymath}
+  {\ifdisplay\ifmmode\def\@edm@act{NO}\else\let\@edm@act\relax\fi\else\let\@edm@act\relax\fi%
+  \ifx\@edm@act\relax$$\fi}
+  {\ifx\@edm@act\relax$$\fi}
+\newcommand{\to}{\rightarrow}
+%%%
+\newcommand{\\*}{\\}
+%%% Arrays
+\let\arraystretch\@empty
+\newenvironment{array}
+  {\let\\=\@HEVEA@bsbs\let\@hevea@amper=\@HEVEA@amper\@array}
+  {\end@array}
+\newenvironment{tabular}
+  {\let\\=\@HEVEA@bsbs\let\@hevea@amper=\@HEVEA@amper\@tabular}
+  {\end@tabular}
+\newenvironment{tabular*}
+  {\let\\=\@HEVEA@bsbs\let\@hevea@amper=\@HEVEA@amper\@tabular*}
+  {\end@tabular*}
+%%%%% Arrays with attribute argument
+\newenvironment{Array}
+  {\let\\=\@HEVEA@bsbs\let\@hevea@amper=\@HEVEA@amper\@Array}
+  {\end@Array}
+\newenvironment{Tabular}
+  {\let\\=\@HEVEA@bsbs\let\@hevea@amper=\@HEVEA@amper\@Tabular}
+  {\end@Tabular}
+\newenvironment{Tabular*}
+  {\let\\=\@HEVEA@bsbs\let\@hevea@amper=\@HEVEA@amper\@Tabular*}
+  {\end@Tabular*}
+%%% Equations
+\def\@changelabel
+  {\let\@oldlabel\label%
+  \renewcommand{\label}[1]{\@oldlabel[~]{##1}}}
+\newcommand{\eqno}[1]{\qquad#1}
+\newenvironment{equation}{\[\@changelabel\refstepcounter{equation}}{\eqno{(\theequation)}\]}
+\newenvironment{eqnarray*}{$$\begin{array}{rcl}}{\end{array}$$}
+\gdef\@yes@number{\eqno{(\theequation)}}
+\gdef\@no@number{\addtocounter{equation}{-1}}
+\newcommand{\@nonumber}{\global\let\@number\@no@number}
+\newcommand{\@yesnumber}{\global\let\@number\@yes@number}
+\let\nonumber\@nonumber
+\newcounter{@eqna@col}
+\newcommand{\lefteqn}[1]{\begin{ensuredisplaymath}\raggedright#1\end{ensuredisplaymath}}
+\let\@HEVEA@lefteqn\lefteqn
+\newenvironment{eqnarray}
+{\@ifundefined{@eqna@inside}{\def\@eqna@inside{}}{\hva@warn{Nested eqnarray}}%
+\[\@changelabel\def\@currentlabel{\theequation}%
+\setcounter{@eqna@col}{0}\@yesnumber\stepcounter{equation}
+\let\@PBS=\@HEVEA@bsbs
+\let\@PAM=\@HEVEA@amper
+\renewcommand{\lefteqn}[1]{\let\lefteqn\@HEVEA@lefteqn\multicolumn{3-\value{@eqna@col}}{l}{\ifthenelse{\value{@eqna@col}=0}{\qquad}{}##1}\setcounter{@eqna@col}{2}}
+\newcommand{\@eqna@complete}
+  {\whiledo{\value{@eqna@col}<2}{&}}
+\renewcommand{\@hevea@amper}
+  {\ifthenelse{\value{@eqna@col}<2}
+    {\stepcounter{@eqna@col}\@PAM}
+    {\hva@warn{Extra column in eqnarray}}}     
+\renewcommand{\\}[1][]{\@eqna@complete\@PAM\@number\setcounter{@eqna@col}{0}\@yesnumber\stepcounter{equation}\@PBS}
+\@array{rclr}}
+{\\{}\addtocounter{equation}{-1}\end@array\]}
+\def\mathrm#1{{\rm#1}}
+\def\mathtt#1{{\tt#1}}
+\def\mathit#1{{\it#1}}
+\def\mathbf#1{{\bf#1}}
+\def\mathcal#1{{\cal#1}}
+\def\mathsf#1{{\sf#1}}
+\def\scriptstyle{\ifmathml{\scriptsize}\else\scriptsize\fi}
+\def\scriptscriptstyle{\ifmathml{\scriptsize\@incsize{-1}}\else\scriptsize\@incsize{-1}\fi}
+\def\textstyle{\ifmathml\@style{mtext}\fi}
+\def\textsuperscript#1{\ensuremath{^{\mbox{#1}}}}
+%\def\textsubscript#1{\ensuremath{_{\mbox{#1}}}}%existe pas!
+%%%%% Figures and tables
+\setenvclass{figure}{figure}
+%%General \caption command: #1 -> env name, #2 -> \caption arg
+\newcommand{\hva@caption}[2]
+{\refstepcounter{#1}\begin{hva@capted}\csname #1name\endcsname{} \csname the#1\endcsname: #2\end{hva@capted}}
+\newcommand{\@figrule}{\begin{center}\@hr{.8\linewidth}{2pt}\end{center}}
+\newenvironment{figure}[1][]
+{\@forcecommand{\caption}[2][]{\hva@caption{figure}{##2}}%
+\@open{BLOCKQUOTE}{\envclass@attr{figure}}\@figrule}
+{\@figrule\@close{BLOCKQUOTE}}
+\newenvironment{figure*}[1][]{\begin{figure}[#1]}{\end{figure}}
+\setenvclass{table}{table}
+\newenvironment{table}[1][]
+{\@forcecommand{\caption}[2][]{\hva@caption{table}{##2}}%
+\@open{BLOCKQUOTE}{\envclass@attr{table}}\@figrule%
+}{\@figrule\@close{BLOCKQUOTE}}
+\newenvironment{table*}[1][]{\begin{table}[#1]}{\end{table}}
+\@forcecommand{\suppressfloats}[1][]{}
+\newcounter{topnumber}
+\newcounter{bottomnumber}
+\newcounter{totalnumber}
+\newcounter{dbltopnumber}
+%% Page Styles
+\def\pagestyle#1{}
+\def\thispagestyle#1{}
+%%% No table of figures/tables
+\def\listoffigures{}
+\def\listoftables{}
+\newcommand{\contentsline}[3]{}
+\newcommand{\numberline}[2]{}
+\newcommand{\addtocontents}[2]{}
+\newcommand{\markright}[1]{}
+\newcommand{\markboth}[2]{}
+\newcommand{\pagenumbering}[1]{}
+\newcommand{\twocolumn}[1][]{}
+\newcommand{\onecolumn}{}
+%%% Stackrel et compagine
+\newcommand{\stackrel}[2]{\mathop{#2}\limits^{\scriptsize{}#1}\nolimits}
+\def\space@varray{1}
+\newenvironment{@varray}
+  {\prim@def{\@table@attributes}{border=0 cellspacing=\space@varray{} cellpadding=0}\def\space@varray{0}%
+  \begin{array}{c}}
+  {\end{array}}
+%%% OLD DEFINITIONS : rediscovered, only \textoverline redefined in hevea.hva
+%%%
+\newcommand{\textoverline}[1]{\hva@warn{overline ignored in text mode}#1}
+\def\overline#1{\ifdisplay
+\begin{@varray}\hline #1\end{@varray}\else\textoverline{#1}\fi}
+\newcommand{\textunderline}[1]{{\@style{U}#1}}
+\def\underline#1{\ifdisplay
+\begin{@varray}#1\\\hline\end{@varray}\else\textunderline{#1}\fi}
+%%%Miscleanous, title stuff
+%\input{common-math.hva}
+\newcommand{\thanks}[1]{\footnote{#1}}
+\newenvironment{titlepage}{}{}
+\newcommand{\and}{\quad}
+\newcommand{\title}[1]{\gdef{\@title}{#1}\global\let\@@title\relax}
+\newcommand{\@titlebis}[1]
+{\ifu\@@title\gdef{\@title}{#1}\title@tohaux{#1}\fi}
+\newcommand{\@titleaux}[1]{\gdef{\@title}{#1}}
+\newcommand{\author}[1]{\gdef{\@author}{#1}\global\let\author\@gooble}
+\newcommand{\date}[1]{\gdef{\@date}{#1}\global\let\date\@gooble}
+%% Lists
+\setenvclass{li-itemize}{li-itemize}
+\newstyle{.li-itemize}{margin:1ex 0ex;}
+\newcommand{\item}[1][]{\hva@warn{\item outside a list-making environment}}
+\newcommand{\@itemitemize}[1][!*!]
+{\@itemize@li{\envclass@attr{li-itemize}}\ifthenelse{\equal{#1}{!*!}}{}{\hva@warn{Optional argument to \item in itemize environment}{#1}}}
+\setenvclass{li-enumerate}{li-enumerate}
+\newstyle{.li-enumerate}{margin:1ex 0ex;}
+\newcommand{\@itemenumerate}[1][!*!]
+{\let\@currentlabel\csname the\@enumcitem\endcsname%
+\stepcounter{\@itemcount}\@enumerate@linum{\envclass@attr{li-enumerate}}\ifthenelse{\equal{#1}{!*!}}{}{\hva@warn{Ignored optional argument to \item in enumerate enironment}}}
+%environement itemize
+\setenvclass{itemize}{itemize}
+\newenvironment{itemize}
+  {\@open{UL}{\envclass@attr{itemize}}\let\item\@itemitemize}
+  {\@close{UL}}
+\newcounter{enumcount}
+\newcommand{\@enumstyle}
+{\ifthenelse{\value{enumcount}=1}{type=1}{}%
+\ifthenelse{\value{enumcount}=2}{type=a}{}%
+\ifthenelse{\value{enumcount}=3}{type=i}{}%
+\ifthenelse{\value{enumcount}=4}{type=A}{}}
+\newcommand{\@enumcitem}
+{\ifthenelse{\value{enumcount}=1}{itemi}{}%
+\ifthenelse{\value{enumcount}=2}{itemii}{}%
+\ifthenelse{\value{enumcount}=3}{itemiii}{}%
+\ifthenelse{\value{enumcount}=4}{itemiiii}{}%
+\ifthenelse{\value{enumcount}>4}{itemv}{}}
+\newcounter{itemi}
+\newcounter{itemii}
+\renewcommand{\theitemii}{\theitemi(\alph{itemii})}
+\newcounter{itemiii}
+\renewcommand{\theitemiii}{\theitemii\roman{itemiii}}
+\newcounter{itemiiii}
+\renewcommand{\theitemiiii}{\theitemiii(\Alph{itemiiii})}
+\newcounter{itemv}
+\renewcommand{\theitemv}{\theitemiiii}
+\newcommand{\itemi}{itemi}
+\newcommand{\itemii}{itemii}
+\newcommand{\itemiii}{itemiii}
+\newcommand{\itemiiii}{itemiiii}
+\newcommand{\itemv}{itemv}
+%environment enumerate
+\setenvclass{enumerate}{enumerate}
+\newenvironment{enumerate}
+  {\stepcounter{enumcount}%
+  \@open{OL}{\envclass@attr[ ]{enumerate}\@enumstyle}%
+  \let\item\@itemenumerate%
+  \let\@itemcount\csname\@enumcitem\endcsname%
+  \setcounter{\@itemcount}{0}}
+  {\@close{OL}\addtocounter{enumcount}{-1}}
+%
+%% Modified to support styles e.g. 
+%%                <DL CLASS=list>,
+%%                <DT CLASS=dt-list>
+%% ONLY CHANGES : 1) CLASS=list added to \@open{DL} argument
+%%                2) \@dt replaced by \@list@dtdd 
+%% Remove these to get original behaviour
+%
+\newcommand{\setlistclass}[1]
+{\setenvclass{list}{\getenvclass{#1}}%
+\setenvclass{dt-list}{\getenvclass{dt-#1}}%
+\setenvclass{dd-list}{\getenvclass{dd-#1}}}
+\setenvclass{list}{list}
+\setenvclass{dt-list}{dt-list}
+\setenvclass{dd-list}{dd-list}
+\newenvironment{list}[2]
+  {\@open{DL}{\envclass@attr{list}}
+  \renewcommand{\item}[1][#1]{\@dtdd{##1}{\envclass@attr{dt-list}}{\envclass@attr{dd-list}}}%
+  \@forcecommand{\makelabel}[1]{##1}%
+  #2%exec
+}{\@close{DL}}
+\setenvclass{description}{description}
+\setenvclass{dt-description}{dt-description}
+\setenvclass{dd-description}{dd-description}
+\newstyle{.dd-description}{margin:0ex 0ex 1ex 4ex;}
+\newstyle{.dt-description}{margin:0ex;}
+\newenvironment{@list@description}[2]
+  {\@open{DL}{\envclass@attr{description}}%
+  \renewcommand{\item}[1][#1]{\@dtdd{##1}{\envclass@attr{dt-description}}{\envclass@attr{dd-description}}}%
+  \@forcecommand{\makelabel}[1]{##1}%
+  #2%exec
+}{\@close{DL}}
+\newenvironment{description}{\begin{@list@description}{}{\renewcommand{\makelabel}[1]{\textbf{##1}}}}{\end{@list@description}}
+\setenvclass{trivlist}{trivlist}
+\setenvclass{dt-trivlist}{dt-trivlist}
+\setenvclass{dd-trivlist}{dd-trivlist}
+\newenvironment{trivlist}
+{\setlistclass{trivlist}\begin{list}{}{}}{\end{list}}
+%% Input...
+\newcommand{\listfiles}{}
+%% Line breaking
+\newcommand{\linebreak}[1][4]{\ifthenelse{#1=4}{\vspace{1em}}{}}
+\newcommand{\nolinebreak}[1][4]{}
+\newcommand{\sloppy}{}
+\newcommand{\fussy}{}
+\newenvironment{sloppypar}{}{}
+\newcommand{\goodbreak}{}
+%%%%%%%%%%%% Ignore hyphenation
+\newcommand{\-}{}
+\newcommand{\hyphenation}[1]{}
+%% Page Breaking
+\newcommand{\pagebreak}[1][]{}
+\newcommand{\nopagebreak}[1][]{}
+\newcommand{\enlargethispage}[1]{}
+\newcommand{\enlargethispage*}[1]{}
+\newcommand{\newpage}{}
+\newcommand{\clearpage}{}
+\newcommand{\cleardoublepage}{}
+%%Lengths are ignored
+\newcommand{\newlength}[1]
+  {\if@toplevel\begin{toimage}\newlength{#1}\end{toimage}\fi}
+\newcommand{\setlength}[2]
+  {\if@toplevel\begin{toimage}\setlength{#1}{#2}\end{toimage}\fi}
+\newcommand{\addtolength}[2]
+  {\if@toplevel\begin{toimage}\addtolength{#1}{#2}\end{toimage}\fi}
+\newcommand{\settowidth}[2]{}
+\newcommand{\settodepth}[2]{}
+\newcommand{\settoheight}[2]{}
+\newcommand{\fill}{}
+\newcommand{\stretch}[1]{}
+%%%%%%%%%%%%%%%%
+\def\makeatletter{}
+\def\makeatother{}
+%%%%%%%%%%%% Ignore head and foot specifications
+\def\cfoot{}
+\def\chead{}
+\newcommand{\rfoot}[2][]{}
+\newcommand{\lfoot}[2][]{}
+\newcommand{\rhead}[2][]{}
+\newcommand{\lhead}[2][]{}
+\newcommand{\chaptermark}[1]{}
+\newcommand{\sectionmark}[1]{}
+\newcommand{\oddsidemargin}{}
+\newcommand{\evensidemargin}{}
+%%%%%%%% various commands
+\def\protect{}
+\def\fancyplain#1#2{}
+\def\newblock{}
+\def\nobreak{}
+\def\newdimen#1{}
+\newenvironment{samepage}{}{}
+\def\raggedbottom{}
+\def\emergencystretch#1{}
+%%%%%%%%%%%% A few texisms
+\newcommand{\long}{}
+\newcommand{\newline}{\\}
+\newcommand{\expandafter}{}
+%% Arrays and tabular
+\newcommand{\extracolsep}[1]{}
+\newcommand{\cline}[1]{\hva@warn{\cline changed into \hline}\hline}
+\newcommand{\cases}[1]{\left\{\begin{array}{l>{$}l<{$}}#1\end{array}\right.}
+\newcommand{\endcases}{}
+%%% tabularx
+\newenvironment{tabularx}[2]{\begin{tabular}{#2}}{\end{tabular}}
+\newcolumntype{X}{p{}}
+%%% AtEof
+\newcommand{\AtEndOfFile}[1]{\addtokens{\@ateof}{#1}}
+%%% AtBeginDocument and AtEndDocument
+\newtokens{\@atbegindocument}
+\newcommand{\AtBeginDocument}[1]{\addtokens{\@atbegindocument}{#1}}
+\AtBeginDocument{\@begin@document}
+\AtBeginDocument
+{\begin{toimage}
+\pagestyle{empty}
+\thispagestyle{empty}
+\begin{document}
+\end{toimage}}
+\newtokens{\@atenddocument}
+\newcommand{\AtEndDocument}[1]{\addtokens{\@atenddocument}{#1}}
+\def\@final@footer{%
+\iffooter\ifhtml
+\@print{<!--FOOTER-->}
+\fi\@footer\fi}
+\AtEndDocument
+{\@imagenopt%
+\begin{toimage}
+\end{document}
+\end{toimage}}
+%%% Boxes
+\newcommand{\textfbox}[1]{\hva@warn{\fbox in text}\mbox{#1}}
+\def\fbox#1{%
+\ifdisplay\begin{tabular}{|c|}\hline#1\end{array}\else
+\textfbox{#1}\fi}
+\newcommand{\hbox}[1]{\hva@warn{\hbox}\mbox{#1}}
+\newcommand{\displaystyle}{\ifdisplay\else\hva@warn{\displaystyle ignored}\fi}
+%%% Paragraphs
+\let\par\@empty
+\AtBeginDocument{\let\par\hva@par}
+%%% References
+\newcommand{\@currentlabel}{}
+%%% Index references
+\newcommand{\hva@idx@counter}[1]{\def\csname #1@idx@counter\endcsname{}}
+\hva@idx@counter{part}%
+\hva@idx@counter{chapter}%
+\hva@idx@counter{section}%
+\hva@idx@counter{subsection}%
+\hva@idx@counter{subsubsection}%
+\hva@idx@counter{paragraph}%
+\hva@idx@counter{subparagraph}%
+\newcommand{\@indexlabel}{}
+\newcommand{\refstepcounter}[1]
+{\let\@currentlabel\csname the#1\endcsname%
+\ifu\csname #1@idx@counter\endcsname\else%
+\let\@indexlabel\csname the#1\endcsname\fi%
+\stepcounter{#1}}
+%%% Aux files
+\newcommand{\@fst}[2]{#1}
+\newcommand{\newlabel}[2]{\@newlabel{#1}{\@funcall{\@fst}{#2}}}
+\newcommand{\@writefile}[2]{}
+\newcommand{\@setckpt}[2]{}
+\newcommand{\label}[2][]{\@locname{#2}{#1}\@auxwrite{#2}{\@currentlabel}}
+\newcommand{\ref}[1]{\@locref{#1}{\@auxread{#1}}}
+\newcommand{\pageref}[1]{\@locref{#1}{??}}
+\let\@input\input%appears inside aux files
+\newcommand{\@readhaux}[1]
+{\@hauxinit%
+\@iffileexists{#1.haux}
+  {\@try{\input{#1.haux}}{\hva@warn{Failure while reading .haux}}}
+  {}%
+\@hauxfinal}
+\newcommand{\@readaux}[1]{\input{#1.aux}}
+\newcommand{\@readauxorhaux}[2]
+{\@stopoutput\@stopimage%
+\ifthenelse{\@fileexists{#1.aux} \and \not \boolean{fixpoint}}
+  {\@try
+     {\@readaux{#1}}
+     {\hva@warn{Failure while reading .aux, reading .haux}\@readhaux{#2}}}
+  {\@readhaux{#2}}%
+\@restartoutput\@restartimage}
+\AtBeginDocument
+{\@sawdocumenttrue\@readauxorhaux{\@basein}{\jobname}}
+%%%%%%%%%%% Bibliography
+\newcommand{\bibdata}[1]{}
+\newcommand{\bibliography}[1]
+{\@auxdowrite{\@print{\bibdata}\{\@getprint{#1}\}
+}%
+\@iffileexists{\jobname.hbbl}
+  {\input{\jobname.hbbl}}
+  {\@iffileexists{\jobname.bbl}
+     {\input{\jobname.bbl}}
+     {}}}
+\newcommand{\bibstyle}[1]{}
+\newcommand{\@bibliographystyle}[1]
+{\@auxdowrite{\@print{\bibstyle}\{\@getprint{#1}\}
+}}
+\newcommand{\bibliographystyle}[1]
+{\AtBeginDocument{\@bibliographystyle{#1}}}
+\AtBeginDocument{\let\bibliographystyle\@bibliographystyle}
+\newcommand{\citation}[1]{}
+\newcommand{\nocite}[1]
+{\@auxdowrite{\@print{\citation}\{\@getprint{#1}\}
+}}
+\setenvclass{thebibliography}{thebibliography}
+\setenvclass{dt-thebibliography}{dt-thebibliography}
+\setenvclass{dd-thebibliography}{dd-thebibliography}
+\newcommand{\refname}{References}
+\newenvironment{thebibliography}[1]
+  {\@end{thebibliography}%Execute sectionning command in outer scope
+  \@bibliosection{\refname}%
+  \@begin{thebibliography}%
+  \setlistclass{thebibliography}%
+  \begin{list}{\stepcounter{heveabib}\theheveabib}{\let\makelabel\@biblabel}}
+  {\end{list}}
+\newcounter{heveabib}\newcommand{\bibtaghook}[1]{#1}%
+\newcommand{\bibitem}[2][!*!]
+  {\ifthenelse{\equal{#1}{!*!}}
+    {\stepcounter{heveabib}\@bibwrite{\theheveabib}{\bibtaghook{#2}}}
+    {\@bibwrite{#1}{\bibtaghook{#2}}}\item[#2]}
+\newcommand{\@open@cite@one}{[}
+\newcommand{\@open@cite@two}{}
+\newcommand{\@cite@pre}[1]{}
+\newcommand{\@close@cite}{]}
+\newcommand{\@sep@cite}{,}
+\newcommand{\@sep@cite@space}{ }
+\newcommand{\@post@cite}{,}
+\newcommand{\@bib@post}[1]{\ifthenelse{\equal{#1}{}}{}{\@post@cite{} #1}}
+%%%%%%%%%%% Footnotes
+\newcommand{\@footnotelevel}{document}%
+\newcommand{\flushdef}[1]{\def\@footnotelevel{#1}}
+\let\footnoteflush\@footnoteflush
+\def\footnote@c{footnote}%indirection to footnote counter
+\newcommand{\footnotesep}[1]{}
+\newcounter{savenote}\newcounter{onemark}
+\newcommand{\@fnmarktext}[1]{%
+  \setcounter{savenote}{\value{footnote}}%
+  \setcounter{footnote}{#1}%
+  \thefootnote%
+  \setcounter{footnote}{\value{savenote}}}
+\newcommand{\@fnmarknote}[1]{%
+  \setcounter{savenote}{\value{footnote}}%
+  \setcounter{footnote}{#1}%
+  \@notenotestyle{\thefootnote}%
+  \setcounter{footnote}{\value{savenote}}}
+%%%%%%%%%%%%%%%%%%
+\newcommand{\footnotemark}[1][!*!]{%
+\ifthenelse{\equal{#1}{!*!}}%
+  {\stepcounter{\footnote@c}\@stepanchor{\value{\footnote@c}}\setcounter{onemark}{\value{\footnote@c}}}%
+  {\setcounter{onemark}{#1}}%
+\@notetextstyle{\@noteref{note}{text}
+  {\@anchorval{\value{onemark}}}
+  {\@fnmarktext{\value{onemark}}}}}
+\newcommand{\footnotetext}[2][\value{\footnote@c}]{\@footnotetext{#1}{#2}}
+\newcommand{\footnote}[2][!*!]{%
+\ifthenelse{\equal{#1}{!*!}}
+  {\footnotemark\footnotetext{#2}}
+  {\footnotemark[#1]\footnotetext[#1]{#2}}}
+%%% For defining Sectioning commands
+\newif\if@refs\@refstrue
+\newenvironment{@norefs}
+  {\@refsfalse\renewcommand{\@aelement}[2]{##2}\renewcommand{\label}[2][]{}\renewcommand{\ref}[1]{\@auxread{##1}}\renewcommand{\footnote}[1]{}}
+  {}
+\newcounter{secnumdepth}\setcounter{secnumdepth}{3}%
+\newcounter{tocdepth}\setcounter{tocdepth}{2}%
+\newcommand{\@altdepth}[3]{\ifthenelse{\value{secnumdepth} > #1}{#2}{#3}}
+\newcommand{\@checkdepth}[2]{\@altdepth{#1}{#2}{}}
+\newcommand{\@alttocdepth}[3]{\ifthenelse{\value{tocdepth} > #1}{#2}{#3}}%
+\newcommand{\@checktocdepth}[2]{\@alttocdepth{#1}{#2}{}}%
+%% Putting (or not putting) section numbers in table of content
+\newcommand{\@addsecnumber@yes}[3]{\@checkdepth{#1}{#2\quad}#3}
+\newcommand{\@addsecnumber@no}[3]{#3}
+\newcommand{\tocnumber}{\let\@addsecnumber\@addsecnumber@yes}
+\newcommand{\notocnumber}{\let\@addsecnumber\@addsecnumber@no}
+\notocnumber
+\newcounter{tocanchor}
+\newcommand{\@doaddtoc}[3]
+{\stepcounter{tocanchor}%
+\@auxdowrite{\@print{\@addtocsec{htoc}}\{\thetocanchor\}\{#1\}\{\@checkdepth{#1}{\@print{\@print}\{#2\}\@print{\quad{}}}\@subst{#3}\}\@print{
+}}}
+\newcommand{\@makesection}[7]{%
+\newcommand{\csname @#3@level\endcsname}{#2}%
+\newcommand{#1}[2][]{%
+\@secbegin\@checkdepth{#2}{\refstepcounter{#3}}%
+\ifoptarg\@checktocdepth{#2}{\@doaddtoc{#2}{#5}{##1}}\else
+\@checktocdepth{#2}{\@doaddtoc{#2}{#5}{##2{}}}\fi
+\ifoptarg\cuthere{#3}{\@addsecnumber{#2}{#5}{##1}}\else
+\cuthere{#3}{\@addsecnumber{#2}{#5}{\begin{@norefs}##2{}\end{@norefs}}}\fi
+#4\@secanchor%
+\@altdepth{#2}
+{\@alttocdepth{#2}{\@locname{htoc\thetocanchor}{#5}#6}{#5#6}}
+{\@checktocdepth{#2}{\@locname{htoc\thetocanchor}{}}}%
+##2{}#7\@secend}%
+\newcommand{#1*}[1]{%
+\@secbegin\cuthere{#3}{##1}%
+#4\@secanchor{}##1{}#7\@secend}}%
+%%%%%%%%%%%%%%
+% Images     %
+%%%%%%%%%%%%%%
+\newcounter{image}
+\newcommand{\heveaimageext}{.png}
+\newcommand{\heveaimagedir}{}
+\renewcommand{\theimage}{\@arabic{image}}
+\newcommand{\imageflush}[1][]
+{\@imageflush\stepcounter{image}%
+\imgsrc[#1]{\ife\heveaimagedir\else\heveaimagedir/\fi\jobname@base\theimage\heveaimageext}}
+%%%%%%%%%% Compatibility with old hevea \url
+\AtBeginDocument{\@ifundefined{url}{\input{compat.hva}}{}}
+%%%%%%%%% Time stuff
+%Change footnote counter when formatting title/autor/date
+\newcommand{\@fmt@title}[1]
+{{\def\footnote@c{titlenote}\let\thefootnote\thetitlenote#1}}
+\AtBeginDocument
+{\@ifundefined{theyear}
+{\renewcommand{\today}{\hva@warn{\today needs '-exec xxdate.exe' option}}}
+{\renewcommand{\theHour}{\@twoarabic{Hour}}
+\renewcommand{\thehour}{\@twoarabic{hour}}
+\renewcommand{\theminute}{\@twoarabic{minute}}
+\renewcommand{\thesecond}{\@twoarabic{second}}}%
+%Format date after \today is defined
+\ifu\@title\fi\let\title\@titlebis}
+%%End AtBeginDocument
+%%%%%%%% Day and month formats
+\def\default@day
+{\ifthenelse{\value{day}=1}{\theday\textsuperscript{st}}
+{\ifthenelse{\value{day}=21}{\theday\textsuperscript{st}}
+{\ifthenelse{\value{day}=31}{\theday\textsuperscript{st}}
+{\ifthenelse{\value{day}=2}{\theday\textsuperscript{nd}}
+{\ifthenelse{\value{day}=22}{\theday\textsuperscript{nd}}
+{\ifthenelse{\value{day}=3}{\theday\textsuperscript{rd}}
+{\ifthenelse{\value{day}=23}{\theday\textsuperscript{rd}}
+{\theday\textsuperscript{th}}}}}}}}}%
+\def\default@month
+{\ifthenelse{\value{month}=1}{January}
+{\ifthenelse{\value{month}=2}{February}
+{\ifthenelse{\value{month}=3}{March}
+{\ifthenelse{\value{month}=4}{April}
+{\ifthenelse{\value{month}=5}{May}
+{\ifthenelse{\value{month}=6}{June}
+{\ifthenelse{\value{month}=7}{July}
+{\ifthenelse{\value{month}=8}{August}
+{\ifthenelse{\value{month}=9}{September}
+{\ifthenelse{\value{month}=10}{October}
+{\ifthenelse{\value{month}=11}{November}
+{\ifthenelse{\value{month}=12}{December}{}
+}}}}}}}}}}}}%
+%%%%%%%% Default today slightly differs from english babel today
+\newcommand\today{\default@month~\theday, \theyear}
+%%%%%%%%%%%%%% Defined counter printing functions
+\newcommand{\@arabic}[1]{\@pad{0}{3}{\arabic{#1}}}
+\newcommand{\@twoarabic}[1]{\@pad{0}{2}{\arabic{#1}}}
+%%%%%%%%%%%%%%% Une horreur qui peut etre utile
+\newcommand{\newverbenv}[1]
+{\@stopimage%
+\let{\csname #1\endcsname}\verbatim
+\let{\csname end#1\endcsname}\endverbatim
+\@restartimage}
+\newcommand{\@noiso}[1]{\ifiso\isofalse#1\isotrue\else#1\fi}
+\newcommand{\@rawchars}[1]{\ifraw#1\else\rawtrue#1\rawfalse\fi}
+%%%%%%%%%%%%%%%%% Ignoring arguments
+\newcommand{\@skipopt}[1][!*!]{}
+\newcommand{\@skiparg}[1]{}
+%%%%Utility
+\newcommand{\@opencell}[3]{\@open{TABLE}{#1}\@open{TR}{#2}\@open{TD}{#3}}
+\newcommand{\@closecell}{\@force{TD}\@close{TR}\@close{TABLE}}
+%%%%%%%%%%%%%%%%% Length as percent
+\def\linewidth{@percent}
+\def\textwidth{@percent}
+\def\hsize{@percent}
+\def\baselineskip{1ex}
+%%%%%%%%%%%%%%%%% Toc
+\newstyle{.toc}{list-style:none;}
+\setenvclass{toc}{toc}
+\setenvclass{li-toc}{li-toc}
+\newenvironment{tocenv}
+{\setenvclass{itemize}{\getenvclass{toc}}%
+\setenvclass{li-itemize}{\getenvclass{li-toc}}%
+\begin{itemize}}
+{\end{itemize}}
+\newcommand{\tocitem}[1][]
+{\ifoptarg\item[#1]\else\item\fi}
+%%%%%%%%tocname changed to contentsname (standard)
+\newcommand{\contentsname}{Contents}
+\newcommand{\@readtoc}[2]
+{\@tocsection{#2}
+\@iffileexists{\jobname.#1}{\input{\jobname.#1}}{\hva@warn{File \jobname.#1 not found}}}
+\newcommand{\tableofcontents}{\@readtoc{htoc}{\contentsname}}
+\newcommand{\addcontentsline}[3]
+{\@auxdowrite{\@print{\@addcontentsline}{\{\@nostyle{}h#1\}\{\csname @#2@level\endcsname\}}\{\@subst{#3}\}\@print{
+}}}
+%%%%%%%%% Minipage
+%Manage footnotes in minipage, as latex does
+% 1. Use counter mpfootnote
+% 2. Flush notes at end
+\newcounter{mpfootnote}
+\renewcommand{\thempfootnote}{\alph{mpfootnote}}
+\newenvironment{minipage}[2][]
+  {\hva@warn{minipage, output may be poor}%
+  \renewcommand{\@footnotelevel}{document}\@footnotesub%
+  \setcounter{mpfootnote}{0}%
+  \def\footnote@c{mpfootnote}%
+  \@minipage\@start@text}
+  {\@end@text\@footnoteflush@sticky{document}\@endfootnotesub\end@minipage}
+%%%%% Extension des environnments hevea en lecture de fichier
+\newcommand{\rawhtmlinput}[1]
+{\@scaninput{\begin{rawhtml}}{#1}{\end{rawhtml}}}
+\newcommand{\rawtextinput}[1]
+{\@scaninput{\begin{rawtext}}{#1}{\end{rawtext}}}
+\newcommand{\rawinput}[1]
+{\@scaninput{\begin{raw}}{#1}{\end{raw}}}
+%%%Default definitions that can be redefined by babel
+\newcommand\prefacename{Preface}
+\newcommand\bibname{Bibliography}
+\newcommand\chaptername{Chapter}
+\newcommand\listfigurename{List of Figures}
+\newcommand\listtablename{List of Tables}
+\newcommand\indexname{Index}
+\newcommand\figurename{Figure}
+\newcommand\tablename{Table}
+\newcommand\enclname{encl}
+\newcommand\ccname{cc}
+\newcommand\headtoname{To}
+\newcommand\pagename{Page}
+\newcommand\headpagename{Page}
+\newcommand\seename{see}
+\newcommand\alsoseename{see also}
+\newcommand\dq{No-dq}
+%%% Footer
+\newif\iffooter\footertrue
+\def\heveaurl{http://hevea.inria.fr}
+\newcommand{\footertext}
+{This document was translated from \LaTeX{} by
+\footahref{\heveaurl/index.html}{\hevea}.}
+\newcommand{\@footer}
+{\rule{}{}\begin{quote}\em\footertext\end{quote}}
+%%%%% Compat
+%\let\@hva@newstack\hva@newstack
