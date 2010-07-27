@@ -31,13 +31,13 @@ function switchToSource() {
     $('#source_editor').show();
     $('#wysiwyg_editor').hide();
     
-    switch_to_latex_to_html_conversion();
-    
     resize_log();
     reload_editarea();
+            
+    switch_to_latex_to_html_conversion();
 }
 
-function init_tinyMCE() {
+function init_tinyMCE(setup_function) {
     tinyMCE.init({
         mode : "exact",
         elements : "wysiwyg-textarea",
@@ -58,21 +58,20 @@ function init_tinyMCE() {
 //      AScgiloc : 'scripts/php/svgimg.php',			      //change me  
      
   
-        content_css : "/css/content.css"
+        content_css : "/css/content.css",
+        setup : setup_function
     });
 }
 
 function switchToWYSIWYG() {
     //editor = CKEDITOR.replace("wysiwyg_editor");
-    init_tinyMCE();
+    init_tinyMCE(switch_to_html_to_latex_conversion);
     
     document.getElementById("source_button").disabled = "";
     document.getElementById("wysiwyg_button").disabled = "true";
 
     $('#wysiwyg_editor').show();
     $('#source_editor').hide();
-
-    switch_to_html_to_latex_conversion();
     
     resize_log();
 }
