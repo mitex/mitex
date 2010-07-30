@@ -80,13 +80,17 @@ function set_wysiwyg_html(html, editor) {
         if (tinyMCE.editors['wysiwyg-textarea'])
             return tinyMCE.editors['wysiwyg-textarea'].setContent(html);
         else
-            return document.getElementById("wysiwyg-textarea").innerHTML = html;
+            document.getElementById("wysiwyg-textarea").innerHTML = html;
     }
     return editor.setContent(html);
 }
 
 function get_wysiwyg_html(editor) {
-    if (editor === undefined)
-        editor = tinyMCE.editors['wysiwyg-textarea'];
+     if (editor === undefined) {
+        if (tinyMCE.editors['wysiwyg-textarea'])
+            return tinyMCE.editors['wysiwyg-textarea'].getContent();
+        else
+            return document.getElementById("wysiwyg-textarea").innerHTML;
+    }
     return editor.getContent();
 }
