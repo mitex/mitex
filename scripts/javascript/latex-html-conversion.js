@@ -161,15 +161,10 @@ function set_all_latex(tex) {
      
     if (body.indexOf("\\begin{document}") > -1) {
         if (cur_latex.middle.indexOf("\\begin{document}") > -1) {
-		alert(0);
             middle = cur_latex.middle;
             preamble = body.substring(0, body.indexOf(cur_latex.middle));
-            body = body.substring(body.indexOf(cur_latex.middle) + cur_latex.middle.length());
+            body = body.substring(body.indexOf(cur_latex.middle) + cur_latex.middle.length);
         } else {
-		alert(cur_latex.middle);
-		alert("\\begin{document}");
-		alert(escape(cur_latex.middle));
-		alert(escape("\\begin{document}"));
             preamble = body.substring(0, body.indexOf("\\begin{document}"));
             body = body.substring(body.indexOf("\\begin{document}"));
         }
@@ -184,7 +179,7 @@ function set_all_latex(tex) {
 
 
     if (preamble.indexOf(cur_latex.begin) > -1) {
-        preamble= preamble.substring(preamble.index(cur_latex.begin) + cur_latex.begin.length());
+        preamble= preamble.substring(preamble.index(cur_latex.begin) + cur_latex.begin.length);
     }
 
     set_latex_parts(cur_latex.begin, preamble, cur_latex.middle, body, cur_latex.end);
