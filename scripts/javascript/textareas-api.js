@@ -76,10 +76,11 @@ function get_latex_end() {
 }
 
 function set_wysiwyg_html(html, editor) {
-    if (editor === undefined)
-        editor = tinyMCE.editors['wysiwyg-textarea'];
-    //while (!tinyMCE.editors['wysiwyg-textarea']); // This is a terrible hack, and bad practice.  But I don't know how to fix it.
-    //editor = tinyMCE.editors['wysiwyg-textarea'];
+    if (editor === undefined) {
+        if (tinyMCE.editors['wysiwyg-textarea'])
+            return tinyMCE.editors['wysiwyg-textarea'].setContent(html);
+        else
+            return document.getElementById("wysiwyg-textarea").innerHTML = html;
     return editor.setContent(html);
 }
 
