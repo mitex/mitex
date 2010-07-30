@@ -38,7 +38,7 @@ function switchToSource() {
 }
 
 function init_tinyMCE(setup_function) {
-    tinyMCE.init({
+    var obj = {
         mode : "exact",
         elements : "wysiwyg-textarea",
         theme : "advanced",
@@ -59,13 +59,16 @@ function init_tinyMCE(setup_function) {
      
   
         content_css : "/css/content.css",
-        setup : setup_function
-    });
+    };
+    if (setup_function)
+        obj.setup = setup_function;
+    tinyMCE.init(obj);
 }
 
 function switchToWYSIWYG() {
     //editor = CKEDITOR.replace("wysiwyg_editor");
-    init_tinyMCE(switch_to_html_to_latex_conversion);
+    switch_to_html_to_latex_conversion();
+    init_tinyMCE();
     
     document.getElementById("source_button").disabled = "";
     document.getElementById("wysiwyg_button").disabled = "true";
