@@ -81,6 +81,7 @@ function set_wysiwyg_html(html, editor) {
             return tinyMCE.editors['wysiwyg-textarea'].setContent(html);
         else
             return document.getElementById("wysiwyg-textarea").innerHTML = html;
+    }
     return editor.setContent(html);
 }
 
