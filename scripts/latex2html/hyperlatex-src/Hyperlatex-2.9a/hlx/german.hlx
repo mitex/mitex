@@ -1,0 +1,133 @@
+%% -*- emacs-lisp -*-
+
+\typeout{Babel package: German}
+
+\HlxEval{
+(defun hyperlatex-german-active-doublequote ()
+  ;; doublequote has already been removed from text
+  (let ((here (point))
+	(match (assoc (following-char) hyperlatex-german-interesting-chars)))
+    (if match
+	;; if char is not in the list, we don't do anything
+	(progn
+	  ;; replace the character with its expansion
+	  (delete-region (point) (1+ (point)))
+	  (insert (cdr match))
+	  (goto-char here)))))
+
+(defvar hyperlatex-german-interesting-chars
+  '( ( ?a . "\\xmlent{auml}")
+     ( ?A . "\\xmlent{Auml}")
+     ( ?o . "\\xmlent{ouml}")
+     ( ?O . "\\xmlent{Ouml}")					      
+     ( ?u . "\\xmlent{uuml}")
+     ( ?U . "\\xmlent{Uuml}")					      
+     ( ?e . "\\xmlent{euml}")
+     ( ?E . "\\xmlent{Euml}")					      
+     ( ?i . "\\xmlent{iuml}")
+     ( ?I . "\\xmlent{Iuml}")					      
+     ( ?s . "\\xmlent{szlig}")
+     ( ?S . "SS")
+     ( ?z . "\\xmlent{szlig}")
+     ( ?Z . "SZ")
+     ( ?| . "")
+     ( ?- . "")
+     ( ?\" . "")
+     ( ?~ . "-")
+     ( ?= . "-")
+     ( ?` . "\\glqq{}")
+     ( ?' . "\\grqq{}")
+     ( ?< . "\\flqq{}")
+     ( ?> . "\\frqq{}")
+     ))
+}
+
+\newcommand{\mdqon}{
+  \HlxEval{
+	;; Make " an active character
+	(setq hyperlatex-additional-special-characters
+		  (concat "\"" hyperlatex-additional-special-characters))
+	(hyperlatex-update-special-chars)
+	;; Provide definition for active "
+	(put '\" 'hyperlatex-active 'hyperlatex-german-active-doublequote)
+  }
+}
+\newcommand{\mdqoff}{
+  \HlxEval{
+	;; Remove " definition
+	(string-match "\"" hyperlatex-additional-special-characters)
+	(replace-match "" t t hyperlatex-additional-special-characters)
+	(hyperlatex-update-special-chars)
+  }
+}
+
+\newcommand{\captionsgerman}{%
+  \newcommand{\prefacename}{Vorwort}%
+  \newcommand{\refname}{Literatur}%
+  \newcommand{\abstractname}{Zusammenfassung}%
+  \newcommand{\bibname}{Literaturverzeichnis}%
+  \newcommand{\chaptername}{Kapitel}%
+  \newcommand{\appendixname}{Anhang}%
+  \newcommand{\contentsname}{Inhaltsverzeichnis}%
+  \newcommand{\listfigurename}{Abbildungsverzeichnis}%
+  \newcommand{\listtablename}{Tabellenverzeichnis}%
+  \newcommand{\indexname}{Index}%
+  \newcommand{\figurename}{Abbildung}%
+  \newcommand{\tablename}{Tabelle}%
+  \newcommand{\partname}{Teil}%
+  \newcommand{\enclname}{Anlage(n)}%
+  \newcommand{\ccname}{Verteiler}%
+  \newcommand{\headtoname}{An}%
+  \newcommand{\pagename}{Seite}%
+  \newcommand{\seename}{siehe}%
+  \newcommand{\alsoname}{siehe auch}%
+  \newcommand{\proofname}{Beweis}%
+}
+
+\newcommand{\dategerman}{%
+  \renewcommand{\today}{\HlxTodayGerman}
+}
+
+\HlxEval{
+(put 'HlxTodayGerman 'hyperlatex 'hyperlatex-format-hlxtodaygerman)
+
+(defun hyperlatex-format-hlxtodaygerman ()
+   (let* ((date (decode-time))
+	  (day (elt date 3))
+	  (month (elt date 4))
+	  (year (elt date 5))
+	  (month-list '("Januar" "Februar" "M\\\"arz" "April"
+		      	"Mai" "Juni" "Juli" "August" 
+			"September" "Oktober" "November" "Dezember")))
+    (insert
+     (concat (int-to-string day) ". "
+             (elt month-list (1- month))
+	     " " (int-to-string year)))
+    (goto-char hyperlatex-command-start)))
+}
+
+\newcommand{\extrasgerman}{
+  \mdqon
+}
+
+\newcommand{\htmlpanelgerman}{
+  \renewcommand{\HlxGoBackName}{Zur"uck zu:}
+  \renewcommand{\HlxGoUpName}{Hoch zu:}
+  \renewcommand{\HlxGoForwardName}{Weiter zu:}
+}
+
+\newcommand{\noextrasgerman}{
+  \mdqoff
+}
+
+\newcommand{\glqq}{\xmlent{bdquo}}
+\newcommand{\grqq}{\xmlent{ldquo}}
+\newcommand{\glq}{\xmlent{sbquo}}
+\newcommand{\grq}{\xmlent{lsquo}}
+\newcommand{\flqq}{\xmlent{laquo}}
+\newcommand{\frqq}{\xmlent{raquo}}
+\newcommand{\flq}{\xmlent{lsaquo}}
+\newcommand{\frq}{\xmlent{rsaquo}}
+\newcommand{\dq}{\"{}}
+
+

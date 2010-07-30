@@ -1,0 +1,17 @@
+# KDE Config File
+[KDE Desktop Entry]
+Comment[C]=ttm
+SwallowExec=
+SwallowTitle=
+BinaryPattern=
+Name=Application
+Name[C]=ttm
+MimeType=
+Exec=ttm %f
+Icon=$HOME/.kde/share/icons/mini/ttm_mini.gif
+TerminalOptions=
+Path=
+Name[pt_BR]=Aplicativo
+Type=Application
+Terminal=0
+Name[no]=Applikasjon

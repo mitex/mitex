@@ -23,6 +23,12 @@
 import sys, cgi, cgitb, subprocess, os, re, tempfile, urllib
 cgitb.enable(format="nothtml")
 
+# Please note that the following are used by convert.py, at least.
+# If you change the functionality or interface of any of these
+# methods, be sure to update convert.py and any other files that use
+# them.
+__all__ = ["not_none", "LaTeXFile", "make_error_message"]
+
 def not_none(obj):
     """
     Make sure the object passed in is not None

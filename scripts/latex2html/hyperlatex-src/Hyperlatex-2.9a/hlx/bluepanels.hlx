@@ -1,0 +1,47 @@
+%% Hey Emacs, this is -*-latex-*- code
+%%
+%% bluepanels package
+%%
+
+\newcommand{\HlxPanelFields}{}
+
+\newcommand{\HlxImage}[2]{\xmlattributes*{img}{border="0"}%
+  \htmlimg{\HlxIcons{}#2}{#1}}
+
+\newcommand{\HlxTopPanel}{\EmptyP{\HlxSeqPrevUrl\HlxUpUrl\HlxSeqNextUrl}{%
+    \xml*{table width="100%" cellpadding="0" cellspacing="2"}\xml{tr}
+    \xml*{td bgcolor="##99ccff"}%
+    \EmptyP{\HlxSeqNextUrl}{\xlink{\HlxImage{\HlxSeqNextTitle}{next.png}}%
+      {\HlxSeqNextUrl}}%
+    {\htmlimg{\HlxIcons{}blank.png}{}}%
+    \xml*{/td}%
+    \xml*{td bgcolor="##99ccff"}%
+    \EmptyP{\HlxUpUrl}
+    {\xlink{\HlxImage{\HlxUpTitle}{up.png}}%
+      {\HlxUpUrl}}%
+    {\htmlimg{\HlxIcons{}blank.png}{}}%
+    \xml*{/td}%
+    \xml*{td bgcolor="##99ccff"}%
+    \EmptyP{\HlxSeqPrevUrl}
+    {\xlink{\HlxImage{\HlxSeqPrevTitle}{previous.png}}%
+      {\HlxSeqPrevUrl}}%
+    {\htmlimg{\HlxIcons{}blank.png}{}}%
+    \xml*{/td}%
+    \xml*{td align="center" bgcolor="##99ccff" width="100%"}%
+    \textbf{\HlxThisTitle}%
+    \xml*{/td}%
+    \HlxPanelFields
+    \xml*{/tr}%
+    \xml*{/table}}{}}
+
+\newcommand{\HlxBottomMatter}{%
+  \HlxBlk\htmlrule\EmptyP{\HlxAddress}
+  {\xml{address}\HlxAddress\HlxBlk\xml{/address}\\}{}}
+
+\newcommand{\HlxBottomPanel}{\HlxTopPanel}
+
+\newcommand{\htmlpanelfield}[2]{\HlxAppend{\HlxPanelFields}%
+  {\xml*{td bgcolor="###99ccff" align="center"}%
+    \link{#1}{#2}\xml*{/td}}}
+
+%% The end.

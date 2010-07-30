@@ -1,0 +1,20 @@
+%% -*-latex-*-
+%%
+%% Hyperlatex definitions for report class
+%%
+%% Last $Modified: Fri May  9 12:51:49 1997 by otfried $
+%%
+
+%% Chapters should be <H1>, Sections <H2> etc.
+\setcounter{HlxSecNumBase}{-1}
+
+\newcounter{chapter}
+\newcounter{section}[chapter]
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\newcounter{subsection}[section]
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\newcounter{subsubsection}[subsection]
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\newcounter{paragraph}
+\newcounter{subparagraph}[paragraph]
+\renewcommand{\thesubparagraph}{\theparagraph.\arabic{subparagraph}}

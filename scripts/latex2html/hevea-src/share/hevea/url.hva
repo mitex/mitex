@@ -1,0 +1,9 @@
+\@primitives{url}%
+\def\@urlttstyle{\def\UrlFont{\ttfamily}}%
+\def\@urlsfstyle{\def\UrlFont{\sffamily}}%
+\def\@urlrmstyle{\def\UrlFont{\rmfamily}}%
+\def\urlstyle#1{\csname @url#1style\endcsname}%
+\urlstyle{tt}%
+\def\url{\begingroup\urlstyle{tt}\Url}%
+\let\UrlLeft\relax\let\UrlRight\relax%
+

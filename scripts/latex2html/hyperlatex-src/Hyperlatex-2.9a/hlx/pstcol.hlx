@@ -1,0 +1,38 @@
+%%
+%% Support for `pstcol' package in Hyperlatex
+%%
+%% (C) 1997, Eric Delaunay <delaunay@lix.polytechnique.fr>
+
+\usepackage{color}
+\HlxEval{
+  (put 'newrgbcolor 'hyperlatex 'hyperlatex-format-newrgbcolor)
+  (put 'newgray 'hyperlatex 'hyperlatex-format-newgray)
+  (put 'newcmykcolor 'hyperlatex 'hyperlatex-format-newcmykcolor)
+
+  (defun hyperlatex-format-newgray ()
+	(let ((name (hyperlatex-parse-required-argument))
+		  (value (hyperlatex-parse-required-argument)))
+	  (hyperlatex-color-define name "gray" value)
+	)
+  )
+  (defun hyperlatex-format-newrgbcolor ()
+	(let ((name (hyperlatex-parse-required-argument))
+		  (value (hyperlatex-parse-required-argument)))
+	  (hyperlatex-color-define name "rgb" value)
+	)
+  )
+  (defun hyperlatex-format-newcmykcolor ()
+	(let ((name (hyperlatex-parse-required-argument))
+		  (value (hyperlatex-parse-required-argument)))
+	  (hyperlatex-color-define name "cmyk" value)
+	)
+  )
+
+  ;(message "Support for the `pstcol' package loaded.")
+}
+
+%% black and white already defined in color package
+\newgray{darkgray}{.25}
+\newgray{gray}{.5}
+\newgray{lightgray}{.75}
+

@@ -1,0 +1,60 @@
+%%
+%% Hyperlatex babel support for english language
+%%
+%% (C) 1997, Eric delaunay <delaunay@lix.polytechnique.fr>
+
+\newcommand{\captionsenglish}{
+  \newcommand{\prefacename}{Preface}%
+  \newcommand{\refname}{References}%
+  \newcommand{\abstractname}{Abstract}%
+  \newcommand{\bibname}{Bibliography}%
+  \newcommand{\chaptername}{Chapter}%
+  \newcommand{\appendixname}{Appendix}%
+  \newcommand{\contentsname}{Contents}%
+  \newcommand{\listfigurename}{List of Figures}%
+  \newcommand{\listtablename}{List of Tables}%
+  \newcommand{\indexname}{Index}%
+  \newcommand{\figurename}{Figure}%
+  \newcommand{\tablename}{Table}%
+  \newcommand{\partname}{Part}%
+  \newcommand{\enclname}{encl}%
+  \newcommand{\ccname}{cc}%
+  \newcommand{\headtoname}{To}%
+  \newcommand{\pagename}{Page}%
+  \newcommand{\seename}{see}%
+  \newcommand{\alsoname}{see also}%
+  \newcommand{\proofname}{Proof}%
+  \newcommand{\navigationname}{Navigation}%
+}
+
+\newcommand{\dateenglish}{
+  \newcommand{\today}{\HlxTodayEnglish}
+}
+
+\newcommand{\extrasenglish}{}
+
+\newcommand{\htmlpanelenglish}{
+  \renewcommand{\HlxGoBackName}{Go backward to}
+  \renewcommand{\HlxGoUpName}{Go up to}
+  \renewcommand{\HlxGoForwardName}{Go forward to}
+}
+
+\newcommand{\noextrasenglish}{}
+
+\HlxEval{
+(put 'HlxTodayEnglish 'hyperlatex 'hyperlatex-format-hlxtodayenglish)
+
+(defun hyperlatex-format-hlxtodayenglish ()
+   (let* ((date (decode-time))
+	  (day (elt date 3))
+	  (month (elt date 4))
+	  (year (elt date 5))
+	  (month-list '("January" "February" "March" "April"
+		      	"May" "June" "July" "August" 
+			"September" "October" "November" "December")))
+    (insert
+     (concat (elt month-list (1- month))
+	     " " (int-to-string day)
+	     ", " (int-to-string year)))))
+}
+

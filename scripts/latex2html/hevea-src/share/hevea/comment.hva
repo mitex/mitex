@@ -1,0 +1,17 @@
+\@primitives{comment}
+\def\CommentCutFile{comment.cut}
+\newcommand{\includecomment}[1]
+{\begin{toimage}\includecomment{#1}\end{toimage}%
+\typeout{Include comment '#1'}%
+\@stopimage%
+\def{\csname #1\endcsname}{\@end{#1}}%
+\def{\csname end#1\endcsname}{\@begin{#1}}%
+\@restartimage}
+\newcommand{\excludecomment}[1]
+{\begin{toimage}\excludecomment{#1}\end{toimage}%
+\typeout{Exclude comment '#1'}%
+\@stopimage%
+\let{\csname #1\endcsname}\@excludecomment%
+\let{\csname end#1\endcsname}\end@excludecomment%
+\@restartimage}
+\excludecomment{comment}

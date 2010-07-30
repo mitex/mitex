@@ -1,0 +1,10 @@
+%% -*-latex-*-
+%%
+%% Hyperlatex package "sequential" to link nodes sequentially
+%%
+
+\renewcommand{\HlxSeqPrevUrl}{\HlxBackUrl}
+\renewcommand{\HlxSeqNextUrl}{\HlxForwUrl}
+\renewcommand{\HlxSeqPrevTitle}{\HlxBackTitle}
+\renewcommand{\HlxSeqNextTitle}{\HlxForwTitle}
+
