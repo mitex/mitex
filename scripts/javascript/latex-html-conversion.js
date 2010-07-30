@@ -152,46 +152,7 @@ function set_latex_parts(begin, preamble, middle, body, end) {
 }
 
 function set_all_latex(tex) {
-    var cur_latex = get_latex_parts();
-    var begin = "",
-        preamble = "",
-        middle = "",
-        body = tex,
-        end = "";
-     
-    if (body.indexOf("\\begin{document}") > -1) {
-        if (cur_latex.middle == "\\begin{document}") {
-            middle = cur_latex.middle;
-            preamble = body.substring(0, body.indexOf("\\begin{document}"));
-            body = body.substring(body.indexOf("\\begin{document}") + "\\begin{document}".length());
-        } else {
-            preamble = body.substring(0, body.indexOf("\\begin{document}"));
-            body = body.substring(body.indexOf("\\begin{document}"));
-        }
-    }
-
-     
-    if (body.indexOf("\\end{document}") > -1) {
-        if (cur_latex.end == "\\end{document}") {
-            end = cur_latex.end;
-            body = body.substring(0, body.indexOf("\\end{document}"));
-        }
-    }
-
-     
-    if (body.indexOf("\\end{document}") > -1) {
-        if (cur_latex.end == "\\end{document}") {
-            end = cur_latex.end;
-            body = body.substring(0, body.indexOf("\\end{document}"));
-        }
-    }
-
-
-    if (preamble.indexOf(cur_latex.begin) > -1) {
-        preamble= preamble.substring(preamble.index(cur_latex.begin) + cur_latex.begin.length());
-    }
-
-    set_latex_parts(cur_latex.begin, preamble, cur_latex.middle, body, cur_latex.end);
+    set_latex_parts(undefined, undefined, undefined, tex, undefined);
 }
 
 function _default_convert_latex_to_html(converter_type) {
