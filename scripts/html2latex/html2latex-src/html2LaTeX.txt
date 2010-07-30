@@ -1,8 +1,0 @@
-Filename: html2latex.zip
-
-Function: Creates LateX 2.09 files from html-files.
-
-Comments: Compiled from Unix sources version 0.9c with emx 0.9c fix 2.
-          Runs on DOS, Windows (3.x, 9x, NT), OS/2 Warp
-
-Recompiled by Roland Reimers (reimers@muffin.physik.uni-bremen.de)

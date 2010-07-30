@@ -1,2 +1,0 @@
-\newcommand{\theorembodyfont}[1]{\def\th@font{#1}}
-\newcommand{\theoremstyle}[1]{}

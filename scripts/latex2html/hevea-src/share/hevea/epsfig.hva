@@ -1,3 +1,0 @@
-\ProvidesPackage{epsfig}
-\newcommand{\epsfig}[1]{\begin{toimage}\epsfig{#1}\end{toimage}\imageflush}
-

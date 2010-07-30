@@ -19,6 +19,8 @@
 // Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 function get_log () {
+    preamble = document.getElementById("latex_preamble");
+    body = document.getElementById("latex_body");
     filename = document.getElementById("filename");
     template = document.getElementById("templates");
     open_log();
@@ -26,7 +28,7 @@ function get_log () {
     log.innerHTML = "Loading, please wait...";
     
     $.get("scripts/python/compile.py", { template: template.value, type: "log", 
-        latex_preamble: get_latex_preamble(), latex_body: get_latex_body(),
+        latex_preamble: preamble.value, latex_body: body.value,
         filename: filename.value },
     function(data) {
         log.innerHTML = data;

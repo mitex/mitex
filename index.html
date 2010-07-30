@@ -1,11 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
   <title>MITeX</title>
 
   <script type="text/javascript" src="scripts/javascript/jquery.js"></script>
-  <script type="text/javascript" src="scripts/javascript/textareas-api.js"></script>
-  <script type="text/javascript" src="scripts/javascript/latex-html-conversion.js"></script>
   <script type="text/javascript" src="scripts/javascript/query-templates.js"></script>
   <script type="text/javascript" src="scripts/javascript/log.js"></script>
 <!--  <script type="text/javascript" src="scripts/javascript/ckeditor/ckeditor.js"></script>-->
@@ -16,8 +13,8 @@
 
   <link rel="stylesheet" type="text/css" href="mitex.css" />
   
-  <link rel="SHORTCUT ICON" href="/favicon.ico" />
-  <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+  <link rel="SHORTCUT ICON" href="/favicon.ico"/>
+  <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
 
   <script type="text/javascript" src="scripts/javascript/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js"></script> 
   <script type="text/javascript">
@@ -34,7 +31,7 @@
 
 <body>
 <a href="http://mitex.mit.edu" class="mitex">M<sup>I</sup>T<sub>E</sub>X</a>
-<a href="http://sipb.mit.edu"><img src="sipb.png" class="headerright" alt="SIPB Logo" /></a>
+<a href="http://sipb.mit.edu"><img src="sipb.png" class="headerright"></a>
 
 <form id="compile" action="scripts/python/compile.py" method="post" target="_blank">
   <div class="not-tex" id="top">
@@ -47,23 +44,12 @@
       or edit the source of the preamble and body.
     </p>
     
-    <div style="text-align:left">
-      <div style="float: left">
-        Please select a LaTeX template:
-        <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
-          <option value="none"></option>
-        </select>
-      </div>
-        
-      <div style="float: right">
-        Please select <span id="converter-type" name="converter-type">an HTML to LaTeX</span> converter:
-        <select id="converter" name="converter">
-          <option value="none">No converter</option>
-        </select>
-      </div>
-    </div>
-    
-    <br /><br /> <!-- I don't know how else to fix the align left-align right.  ToDo: Make this more robust -->
+    <p>
+      Please select a LaTeX template:
+      <select id="templates" onchange="loadTemplateFile(this.value);" name="template">
+        <option value="none"></option>
+      </select>
+    </p>
     
     <hr />
   </div>
