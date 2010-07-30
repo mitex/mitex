@@ -160,31 +160,27 @@ function set_all_latex(tex) {
         end = "";
      
     if (body.indexOf("\\begin{document}") > -1) {
-        if (cur_latex.middle == "\\begin{document}") {
+        if (cur_latex.middle.indexOf("\\begin{document}") > -1) {
+		alert(0);
             middle = cur_latex.middle;
-            preamble = body.substring(0, body.indexOf("\\begin{document}"));
-            body = body.substring(body.indexOf("\\begin{document}") + "\\begin{document}".length());
+            preamble = body.substring(0, body.indexOf(cur_latex.middle));
+            body = body.substring(body.indexOf(cur_latex.middle) + cur_latex.middle.length());
         } else {
+		alert(cur_latex.middle);
+		alert("\\begin{document}");
+		alert(escape(cur_latex.middle));
+		alert(escape("\\begin{document}"));
             preamble = body.substring(0, body.indexOf("\\begin{document}"));
             body = body.substring(body.indexOf("\\begin{document}"));
         }
     }
 
-     
-    if (body.indexOf("\\end{document}") > -1) {
-        if (cur_latex.end == "\\end{document}") {
+    if (cur_latex.end.indexOf("\\end{document}") > -1) {
+        if (body.indexOf("\\end{document}") > -1)
             end = cur_latex.end;
-            body = body.substring(0, body.indexOf("\\end{document}"));
-        }
+            body = body.substring(0, body.indexOf(cur_latex.end));
     }
-
-     
-    if (body.indexOf("\\end{document}") > -1) {
-        if (cur_latex.end == "\\end{document}") {
-            end = cur_latex.end;
-            body = body.substring(0, body.indexOf("\\end{document}"));
-        }
-    }
+    
 
 
     if (preamble.indexOf(cur_latex.begin) > -1) {
