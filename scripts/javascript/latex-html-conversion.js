@@ -120,11 +120,11 @@ function _set_converters_list(converters_list, default_function_call) {
 
 function get_latex_parts() {
     return {
-                "begin"    : document.getElementById("begin").innerHTML,
-                "middle"   : document.getElementById("middle").innerHTML,
-                "end"      : document.getElementById("end").innerHTML,
-                "preamble" : document.getElementById("latex_preamble").innerHTML,
-                "body"     : document.getElementById("latex_body").innerHTML
+                "begin"    : get_latex_begin(),
+                "middle"   : get_latex_middle(),
+                "end"      : get_latex_end(),
+                "preamble" : get_latex_preamble(),
+                "body"     : get_latex_body()
            };
 
 }
