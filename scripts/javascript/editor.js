@@ -40,7 +40,7 @@ function switchToSource() {
 function init_tinyMCE(setup_function) {
     var obj = {
         // Location of TinyMCE script
-        script_url = "scripts/javascript/tinymce/jscripts/tiny_mce/tiny_mce.js",
+        script_url : "scripts/javascript/tinymce/jscripts/tiny_mce/tiny_mce.js",
 
         // General options
 	// mode : "exact",
@@ -66,7 +66,7 @@ function init_tinyMCE(setup_function) {
     };
     if (setup_function)
         obj.setup = setup_function;
-    $(".wysiwyg-textarea").tinymce(obj);
+    $("#wysiwyg-textarea").tinymce(obj);
     //tinyMCE.init(obj);
 }
 
