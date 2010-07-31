@@ -22,7 +22,7 @@
 
 from __future__ import with_statement
 import cgi, cgitb
-cgitb.enable(format="nothtml")
+cgitb.enable(format="html")
 import sys, subprocess, os, re, tempfile, urllib
 from compile import not_none, LaTeXFile, make_error_message
 
@@ -91,7 +91,29 @@ def convert_html_to_tex_with_html2latex(html, begin, middle, end, preamble, body
 
     return rtn
 
+def convert_tex_to_html_with_tth(html, begin, middle, end, preamble, body):
+    with open(begin, 'r') as f:
+        begin = f.read()
+    with open(middle, 'r') as f:
+        middle = f.read()
+    with open(end, 'r') as f:
+        end = f.read()
+    html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+    html_file.write(html)
+    html_name = html_file.name
+    html_file.close()
     
+    p = subprocess.Popen("../latex2html/tth < %(html_name)" % locals(),
+                         shell=True, stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = p.communicate()
+
+    rtn = tex_file.read()
+    tex_file.close()
+    for name in (html_name, tex_name, skeleton_name):
+        os.remove(name)
+
+    return rtn
     
         
 def get_converter(name, check_list, attribute='short_name', case_insensitive=True):
@@ -143,6 +165,7 @@ def main():
                                body=not_none(form.getvalue("latex_body")))
         print "Content-type: text/html"
         print
+        print 1
         print allowed_types[form.getvalue("type")](latex_file, html=not_none(form.getvalue("html")))
     else:
         print "Content-type: text/html"
@@ -161,9 +184,13 @@ HTML_TO_TEX_CONVERTERS = [
      "_py_function": convert_html_to_tex_with_html2tex },
     {"full_name": "HTML2LaTeX",
      "short_name": "html2latex",
-     "_py_function": convert_html_to_tex_with_html2latex },
+     "_py_function": convert_html_to_tex_with_html2latex }
     ]
-TEX_TO_HTML_CONVERTERS = []
+TEX_TO_HTML_CONVERTERS = [
+    {"full_name": "TtH (version 3.82)",
+     "short_name": "TtH",
+     "_py_function": convert_tex_to_html_with_tth }
+    ]
 
 
 
