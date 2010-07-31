@@ -39,8 +39,12 @@ function switchToSource() {
 
 function init_tinyMCE(setup_function) {
     var obj = {
-        mode : "exact",
-        elements : "wysiwyg-textarea",
+        // Location of TinyMCE script
+        script_url = "scripts/javascript/tinymce/jscripts/tiny_mce/tiny_mce.js",
+
+        // General options
+	// mode : "exact",
+        // elements : "wysiwyg-textarea",
         theme : "advanced",
         theme_advanced_buttons1 : "fontselect,fontsizeselect,formatselect,bold,italic,underline,strikethrough,separator,sub,sup,separator,cut,copy,paste,undo,redo",
         theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,separator,numlist,bullist,outdent,indent,separator,forecolor,backcolor,separator,hr,link,unlink,image,table,code,separator,asciimath,asciimathcharmap,asciisvg",
@@ -53,7 +57,7 @@ function init_tinyMCE(setup_function) {
         
         // If someone can get the following php file working on scripts, change the path to a local version (scripts/php/svgimg.php).
         AScgiloc : 'http://www.imathas.com/editordemo/php/svgimg.php',			      //change me  
-        ASdloc : 'scripts/javascript/tiny_mce/plugins/asciisvg/js/d.svg',	
+        ASdloc : 'scripts/javascript/tinymce/jscripts/tiny_mce/plugins/asciisvg/js/d.svg',	
 
 //      AScgiloc : 'scripts/php/svgimg.php',			      //change me  
      
@@ -62,7 +66,8 @@ function init_tinyMCE(setup_function) {
     };
     if (setup_function)
         obj.setup = setup_function;
-    tinyMCE.init(obj);
+    $(".wysiwyg-textarea").tinymce(obj);
+    //tinyMCE.init(obj);
 }
 
 function switchToWYSIWYG() {
