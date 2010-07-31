@@ -1,0 +1,29 @@
+typedef enum {
+H_A, H_ABBREV, H_ACRONYM, H_ADDRESS, H_APP, H_APPLET, H_AREA, H_AU, H_B,
+H_BANNER, H_BASE, H_BASEFONT, H_BDO, H_BGSOUND, H_BIG, H_BLINK, H_BLOCKQUOTE,
+H_BODY, H_BQ, H_BR, H_CAPTION, H_CENTER, H_CITE, H_CODE, H_COL, H_COLGROUP,
+H_CREDIT, H_DD, H_DEL, H_DFN, H_DIR, H_DIV, H_DL, H_DT, H_EM, H_EMBED, H_FN,
+H_FIG, H_FONT, H_FORM, H_FRAME, H_FRAMESET, H_H1, H_H2, H_H3, H_H4, H_H5,
+H_H6, H_HEAD, H_HP, H_HR, H_HTML, H_I, H_IMG, H_INPUT, H_INS, H_ISINDEX,
+H_KBD, H_LANG, H_LH, H_LI, H_LINK, H_LISTING, H_MAP, H_MARQUEE, H_MENU, H_META,
+H_NEXTID, H_NOBR, H_NOEMBED, H_NOFRAMES, H_NOTE, H_OL, H_OPTION, H_OVERLAY,
+H_P, H_PARAM, H_PERSON, H_PLAINTEXT, H_PRE, H_Q, H_S, H_SAMP, H_SELECT,
+H_SMALL, H_SPAN, H_STRIKE, H_STRONG, H_SUB, H_SUP, H_TAB, H_TABLE, H_TBODY,
+H_TD, H_TEXTAREA, H_TFOOT, H_TH, H_THEAD, H_TITLE, H_TR, H_TT, H_U, H_UL,
+H_VAR, H_WBR, H_XMP,
+  H_unrecognized,
+  H_text,
+  H_eof
+  } elemtype;
+
+typedef struct {
+  elemtype type;
+  int is_end;
+  char *value;  
+  } HTMLelem;
+
+extern char *names[];
+
+extern long linenr;
+
+extern HTMLelem scanHTML(FILE *);
