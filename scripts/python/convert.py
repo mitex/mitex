@@ -28,6 +28,89 @@ from compile import not_none, LaTeXFile, make_error_message
 
 __all__ = ["HTML_TO_TEX_CONVERTERS", "TEX_TO_HTML_CONVERTERS"]
 
+
+def make_convert_html_to_tex(make_command, input_file_name="html_name", output_file_name="tex_name", pre_hook=None, post_hook=None):
+    def convert_html_to_tex(html, begin, middle, end, preamble, body):
+        dict_args = locals()
+        list_args = list()
+        if pre_hook:
+            hook_args = pre_hook(*list_args, **dict_args)
+            if isinstance(hook_args, dict):
+                dict_args.update(hook_args)
+            elif hook_args:
+                list_args = hook_args
+        html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+        html_file.write(html)
+        html_name = html_file.name
+        html_file.close()
+        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex", delete=False)
+        tex_name = tex_file.name
+
+        param_dict = {input_file_name:html_name, output_file_name:tex_name}
+        try:
+            cmd = make_command(**param_dict)
+        except TypeError:
+            cmd = make_command % param_dict
+
+        p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (stdout, stderr) = p.communicate()
+
+        rtn = tex_file.read()
+        tex_file.close()
+        for name in (html_name, tex_name):
+            os.remove(name)
+
+        if post_hook:
+            post_hook(*list_args, **dict_args)
+
+        return rtn
+    return convert_html_to_tex
+
+def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_file_name="html_name", pre_hook=None, post_hook=None):
+    def convert_tex_to_html(latex_document, html):
+        dict_args = locals()
+        list_args = list()
+        if pre_hook:
+            hook_args = pre_hook(*list_args, **dict_args)
+            if isinstance(hook_args, dict):
+                dict_args.update(hook_args)
+            elif hook_args:
+                list_args = hook_args
+        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex", delete=False)
+        tex_name = tex_file.name
+        tex_file.write(latex_document)
+        tex_file.close()
+        html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+        html_name = html_file.name
+        
+        param_dict = {input_file_name:tex_name, output_file_name:html_name}
+        try:
+            cmd = make_command(**param_dict)
+        except TypeError:
+            cmd = make_command % param_dict
+
+        p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (stdout, stderr) = p.communicate()
+
+        rtn = html_file.read()
+        html_file.close()
+        for name in (html_name, tex_name):
+            os.remove(name)
+
+        if post_hook:
+            post_hook(*list_args, **dict_args)
+
+        return rtn
+    return convert_tex_to_html
+
+convert_html_to_tex_with_html2latex = make_convert_html_to_tex("../html2latex/html2latex %(html_name)s %(tex_name)s")
+convert_html_to_tex_with_htmltolatex = make_convert_html_to_tex("../html2latex/htmltolatex -input %(html_name)s -output %(tex_name)s")
+
+convert_tex_to_html_with_tth = make_convert_tex_to_html("../latex2html/tth < %(tex_name) > %(html_name)s")
+
+#################################### html2tex ####################################
 def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
     with open(begin, 'r') as f:
         begin = f.read()
@@ -35,6 +118,7 @@ def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
         middle = f.read()
     with open(end, 'r') as f:
         end = f.read()
+    
     html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
     html_file.write(html)
     html_name = html_file.name
@@ -66,54 +150,10 @@ def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
         os.remove(name)
 
     return rtn
+################################## end html2tex ##################################
 
-def convert_html_to_tex_with_html2latex(html, begin, middle, end, preamble, body):
-    with open(begin, 'r') as f:
-        begin = f.read()
-    with open(middle, 'r') as f:
-        middle = f.read()
-    with open(end, 'r') as f:
-        end = f.read()
-    html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
-    html_file.write(html)
-    html_name = html_file.name
-    html_file.close()
-    
-    
-    p = subprocess.Popen("../html2latex/html2latex %(html_name)s -s" % locals(),
-                         shell=True, stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (stdout, stderr) = p.communicate()
 
-    rtn = stdout
-    for name in (html_name,):
-        os.remove(name)
 
-    return rtn
-
-def convert_tex_to_html_with_tth(html, begin, middle, end, preamble, body):
-    with open(begin, 'r') as f:
-        begin = f.read()
-    with open(middle, 'r') as f:
-        middle = f.read()
-    with open(end, 'r') as f:
-        end = f.read()
-    html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
-    html_file.write(html)
-    html_name = html_file.name
-    html_file.close()
-    
-    p = subprocess.Popen("../latex2html/tth < %(html_name)" % locals(),
-                         shell=True, stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (stdout, stderr) = p.communicate()
-
-    rtn = tex_file.read()
-    tex_file.close()
-    for name in (html_name, tex_name, skeleton_name):
-        os.remove(name)
-
-    return rtn
     
         
 def get_converter(name, check_list, attribute='short_name', case_insensitive=True):
@@ -165,8 +205,7 @@ def main():
                                body=not_none(form.getvalue("latex_body")))
         print "Content-type: text/html"
         print
-        print 1
-        print allowed_types[form.getvalue("type")](latex_file, html=not_none(form.getvalue("html")))
+        print allowed_types[form.getvalue("type")](str(latex_file), html=not_none(form.getvalue("html")))
     else:
         print "Content-type: text/html"
         print
@@ -184,7 +223,10 @@ HTML_TO_TEX_CONVERTERS = [
      "_py_function": convert_html_to_tex_with_html2tex },
     {"full_name": "HTML2LaTeX",
      "short_name": "html2latex",
-     "_py_function": convert_html_to_tex_with_html2latex }
+     "_py_function": convert_html_to_tex_with_html2latex },
+    {"full_name": "HTML to LaTeX",
+     "short_name": "htmltolatex",
+     "_py_function": convert_html_to_tex_with_htmltolatex }
     ]
 TEX_TO_HTML_CONVERTERS = [
     {"full_name": "TtH (version 3.82)",
