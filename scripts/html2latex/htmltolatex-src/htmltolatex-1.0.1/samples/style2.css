@@ -1,0 +1,33 @@
+
+.zpet {
+	text-align: right;
+	
+}
+
+.zvyr {
+	font-weight: bolder;
+}
+
+
+.vysvItal {
+	font-style: italic;
+	letter-spacing: 1px;
+	word-spacing: 2px;
+	font-size: larger;
+	font-weight: bolder;
+}
+
+
+.italob {
+	font-style: italic;
+}
+
+
+.zvets {
+	font-size: larger;
+}
+
+
+.code{
+	font-family: "Courier New", Courier, monospace; 
+}

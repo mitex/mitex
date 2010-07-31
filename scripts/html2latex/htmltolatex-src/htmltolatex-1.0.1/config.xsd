@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : config.xsd
+    Created on : August 2005
+    Author     : Michal Kebrt
+    Description: XSL schema for configuration of html2latex program
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ns="http://www.michalkebrt.cz/word2latex"
+            targetNamespace="http://www.michalkebrt.cz/word2latex"
+            xmlns="http://www.michalkebrt.cz/word2latex"
+            elementFormDefault="qualified">
+
+
+    <!-- root element -->
+    <xsd:element name='configuration' type='ns:ConfigurationType' />
+   
+    <!-- content of the root element -->
+    <xsd:complexType name='ConfigurationType'>
+        <xsd:all>
+            <xsd:element name='elements' type='ns:ElementsType' />
+            <xsd:element name='chars' type='ns:CharsType' />
+            <xsd:element name='links' type='ns:LinksConversionType' />
+            <xsd:element name='charsNum' type='ns:CharsNumType' />
+            <xsd:element name='cssStyles' type='ns:CssPropertiesType' />
+        </xsd:all>
+    </xsd:complexType>
+    
+    <!-- HTML tags (elements) -->
+    <xsd:complexType name='ElementsType'>
+        <xsd:sequence>
+            <xsd:element name='element' type='ns:ElementType' maxOccurs='unbounded' />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- HTML tags (elements) -->
+    <xsd:complexType name='ElementType'>
+        <xsd:sequence>        
+            <xsd:element name='start' type='xsd:string' />
+            <xsd:element name='end' type='xsd:string' />
+        </xsd:sequence>       
+
+        <xsd:attribute name='name' type='xsd:string' />
+        <xsd:attribute name='ignoreContent' use='optional' default='no' type='ns:YesNoAttribute' />
+        <xsd:attribute name='leaveText' use='optional' default='no' type='ns:YesNoAttribute' />
+        <xsd:attribute name='ignoreStyle' use='optional' default='no' type='ns:YesNoAttribute' />
+        
+    </xsd:complexType>    
+    
+    <!-- character entities -->
+    <xsd:complexType name='CharsType'>
+        <xsd:sequence>
+            <xsd:element name='char' type='ns:CharConversionType' maxOccurs='unbounded' />
+        </xsd:sequence>        
+    </xsd:complexType>
+    
+    <!-- character entities -->
+    <xsd:complexType name='CharConversionType'>
+        <xsd:complexContent>
+            <xsd:restriction base='xsd:anyType'>
+                <xsd:attribute name='name' type='xsd:string' />
+                <xsd:attribute name='convertTo' type='xsd:string' />
+                <xsd:attribute name='num' use='optional' default='0' type='xsd:integer' />
+            </xsd:restriction>
+        </xsd:complexContent>
+    </xsd:complexType>    
+
+    <!-- no named characters -->
+    <xsd:complexType name='CharsNumType'>
+        <xsd:sequence>
+            <xsd:element name='charNum' type='ns:CharNumConversionType' maxOccurs='unbounded' />
+        </xsd:sequence>        
+    </xsd:complexType>
+    
+    <!-- no named characters -->
+    <xsd:complexType name='CharNumConversionType'>
+        <xsd:complexContent>
+            <xsd:restriction base='xsd:anyType'>
+                <xsd:attribute name='num' type='xsd:integer' />
+                <xsd:attribute name='convertTo' type='xsd:string' />                
+            </xsd:restriction>
+        </xsd:complexContent>
+    </xsd:complexType>          
+    
+    <!-- hyperlinks configuration -->
+    <xsd:complexType name='LinksConversionType'>
+        <xsd:complexContent>
+            <xsd:restriction base='xsd:anyType'>
+                <xsd:attribute name='conversion' type='ConversionAttributeType' />
+            </xsd:restriction>
+        </xsd:complexContent>
+    </xsd:complexType>         
+    
+    <!-- hyperlinks configuration -->
+    <xsd:simpleType name='ConversionAttributeType'>
+        <xsd:restriction base='xsd:string'>
+            <xsd:enumeration value='footnotes' />
+            <xsd:enumeration value='biblio' />
+            <xsd:enumeration value='hypertex' />
+            <xsd:enumeration value='ignore' />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- CSS styles -->
+    <xsd:complexType name='CssPropertiesType'>
+        <xsd:sequence>
+            <xsd:element name='property' type='ns:CssPropertyValuesType' maxOccurs='unbounded' />
+        </xsd:sequence>                
+        
+        <xsd:attribute name='makeCommands' use='optional' default='no' type='ns:YesNoAttribute' />     
+        <xsd:attribute name='commandsPrefix' use='optional' default='MY' type='xsd:string' /> 
+    </xsd:complexType>
+    
+    <!-- CSS styles -->
+    <xsd:complexType name='CssPropertyValuesType'>
+        <xsd:sequence>
+            <xsd:element name='value' type='ns:CssPropertyValueType' maxOccurs='unbounded' />
+        </xsd:sequence>
+        
+        <xsd:attribute name='name' type='xsd:string' />  
+    </xsd:complexType>
+      
+    <!-- CSS styles -->
+    <xsd:complexType name='CssPropertyValueType'>
+        <xsd:complexContent>
+            <xsd:restriction base='xsd:anyType'>
+                <xsd:attribute name='name' type='xsd:string' />  
+                <xsd:attribute name='start' type='xsd:string' />   
+                <xsd:attribute name='end' type='xsd:string' />  
+            </xsd:restriction>
+        </xsd:complexContent>
+    </xsd:complexType>   
+    
+    <!-- "yes", "no" attribute -->
+    <xsd:simpleType name='YesNoAttribute'>
+        <xsd:restriction base='xsd:string'>
+            <xsd:enumeration value='yes' />
+            <xsd:enumeration value='no' />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>
