@@ -21,18 +21,12 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 from __future__ import with_statement
-import sys, cgi, cgitb, subprocess, os, re, tempfile, urllib
+import cgi, cgitb
+cgitb.enable(format="html")
+import sys, subprocess, os, re, tempfile, urllib
 from compile import not_none, LaTeXFile, make_error_message
-cgitb.enable(format="nothtml")
 
 __all__ = ["HTML_TO_TEX_CONVERTERS", "TEX_TO_HTML_CONVERTERS"]
-
-HTML_TO_TEX_CONVERTERS = [
-    {"full_name": "HTML to LaTeX (version 2.7)",
-     "short_name": "html2tex",
-     "_py_function": None }
-    ]
-TEX_TO_HTML_CONVERTERS = []
 
 def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
     with open(begin, 'r') as f:
@@ -90,14 +84,10 @@ def main():
     Parse the cgi input, and respond with the converted TeX/HTML
     """
     
-    allowed_types = {"tex": compile_tex, "pdf": compile_pdf,
-                       "ps": compile_ps,   "log": compile_log,
-                       "google": compile_google}
     form = cgi.FieldStorage()
-
     
     if "latex2html" in form and "html2latex" in form:
-        make_error_message("Please specify ONE of latex2html or html2latex.")
+        print make_error_message("Please specify ONE of latex2html or html2latex.")
         return
 
     elif "latex2html" in form:
@@ -108,7 +98,12 @@ def main():
         converter_list = HTML_TO_TEX_CONVERTERS
         latex2html = False
 
+    else:
+        print make_error_message("Please specify one of latex2html or html2latex.")
+        return
+
     allowed_types = dict((converter_type["short_name"], converter_type["_py_function"]) for converter_type in converter_list)
+    
     
     if "type" not in form:
         print make_error_message("Missing converter type!")
@@ -120,18 +115,30 @@ def main():
         latex_file = LaTeXFile(begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
                                middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
                                end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
-                               preamble=form.getvalue("latex_preamble"),
-                               body=form.getvalue("latex_body"))
-
-        allowed_types[form.getvalue("type")](latex_file, html=form.getvalue("html"))
+                               preamble=not_none(form.getvalue("latex_preamble")),
+                               body=not_none(form.getvalue("latex_body")))
+        print "Content-type: text/html"
+        print
+        print allowed_types[form.getvalue("type")](latex_file, html=not_none(form.getvalue("html")))
     else:
-        allowed_types[form.getvalue("type")](form.getvalue("html"),
-                                             begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
-                                             middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
-                                             end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
-                                             preamble=form.getvalue("latex_preamble"),
-                                             body=form.getvalue("latex_body"))
+        print "Content-type: text/html"
+        print
+        print allowed_types[form.getvalue("type")](not_none(form.getvalue("html")),
+                                                   begin=os.path.abspath("../../templates/%s/begin" % form.getvalue("template")),
+                                                   middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
+                                                   end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
+                                                   preamble=not_none(form.getvalue("latex_preamble")),
+                                                   body=not_none(form.getvalue("latex_body")))
         
+
+HTML_TO_TEX_CONVERTERS = [
+    {"full_name": "HTML to LaTeX (version 2.7)",
+     "short_name": "html2tex",
+     "_py_function": convert_html_to_tex_with_html2tex }
+    ]
+TEX_TO_HTML_CONVERTERS = []
+
+
 
 if __name__ == "__main__":
     sys.exit(main())

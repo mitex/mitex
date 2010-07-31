@@ -102,7 +102,6 @@ function _latex_html_switch(converter_type_description, old_input, new_input, ne
 function switch_to_latex_to_html_conversion(editor) {
     _latex_html_switch("a LaTeX to HTML", _LATEX_TO_HTML_CONVERTER_INPUT, _HTML_TO_LATEX_CONVERTER_INPUT, _latex_to_html_converters, _html_to_latex_converters, editor);
 }
-alert(switch_to_latex_to_html_conversion);
 
 function switch_to_html_to_latex_conversion(editor) {
     _latex_html_switch("an HTML to LaTeX", _HTML_TO_LATEX_CONVERTER_INPUT, _LATEX_TO_HTML_CONVERTER_INPUT, _html_to_latex_converters, _latex_to_html_converters, editor);

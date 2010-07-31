@@ -24,6 +24,33 @@ import sys, os, json, cgi, cgitb
 from convert import HTML_TO_TEX_CONVERTERS, TEX_TO_HTML_CONVERTERS, make_error_message
 cgitb.enable()
 
+def strip_hidden_entries(obj, iteratively=True, is_hidden=(lambda s: isinstance(s, str) and s[0] == '_'), default_type=list):
+    if is_hidden(obj):
+        return None
+    if iteratively:
+        def parse_value(value):
+            return strip_hidden_entries(value, iteratively, is_hidden)
+    else:
+        def parse_value(value):
+            return value
+            
+    if isinstance(obj, dict):
+        return dict((key, parse_value(obj[key])) for key in obj if not is_hidden(key))
+    elif isinstance(obj, str):
+        return obj
+    else:
+        try:
+            rtn = (parse_value(i) for i in obj if not is_hidden(i))
+        except TypeError:
+            return obj
+        try:
+            return type(obj)(rtn)
+        except Exception:
+            try:
+                return default_type(rtn)
+            except Exception:
+                return rtn
+
 def main():
     
     form = cgi.FieldStorage()
@@ -32,11 +59,11 @@ def main():
 
     elif "latex2html" in form:
         print "Content-type: text/json\n";
-        print json.dumps(TEX_TO_HTML_CONVERTERS)
+        print json.dumps(strip_hidden_entries(TEX_TO_HTML_CONVERTERS))
         
     elif "html2latex" in form:
         print "Content-type: text/json\n";
-        print json.dumps(HTML_TO_TEX_CONVERTERS)
+        print json.dumps(strip_hidden_entries(HTML_TO_TEX_CONVERTERS))
         
     else:
         make_error_message("Please specify one of latex2html or html2latex.")
