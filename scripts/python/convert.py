@@ -67,9 +67,17 @@ def make_convert_html_to_tex(make_command, input_file_name="html_name", output_f
         return rtn
     return convert_html_to_tex
 
-def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_file_name="html_name", pre_hook=None, post_hook=None):
+def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_file_name="html_name", pre_hook=None, post_hook=None, preamble_tex=None):
     def convert_tex_to_html(latex_document, html):
+        html_file = tempfile.NamedTemporaryFile(suffix='.html', mode='r', delete=False)
+        html_name = html_file.name
+        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="w", suffix=".tex", delete=False)
+        tex_name = tex_file.name
+        
+        param_dict = {input_file_name:tex_name, output_file_name:html_name}
+
         dict_args = locals()
+        dict_args.update(param_dict)
         list_args = list()
         if pre_hook:
             hook_args = pre_hook(*list_args, **dict_args)
@@ -77,14 +85,21 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
                 dict_args.update(hook_args)
             elif hook_args:
                 list_args = hook_args
-        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="w", suffix=".tex", delete=False)
-        tex_name = tex_file.name
+                
+        if preamble_tex:
+            try:
+                latex_document = latex_document.replace(r"\begin{document}", preamble_tex(*list_args, **dict_args) + r"\begin{document}")
+            except TypeError:                
+                try:
+                    latex_document = latex_document.replace(r"\begin{document}", preamble_tex % list_args + r"\begin{document}")
+                except TypeError:
+                    try:
+                        latex_document = latex_document.replace(r"\begin{document}", preamble_tex % dict_args + r"\begin{document}")
+                    except TypeError:                
+                        latex_document = latex_document.replace(r"\begin{document}", preamble_tex + r"\begin{document}")
         tex_file.write(latex_document)
         tex_file.close()
-        html_file = tempfile.NamedTemporaryFile(suffix='.html', mode='r', delete=False)
-        html_name = html_file.name
         
-        param_dict = {input_file_name:tex_name, output_file_name:html_name}
         try:
             cmd = make_command(**param_dict)
         except TypeError:
@@ -109,6 +124,14 @@ convert_html_to_tex_with_html2latex = make_convert_html_to_tex("../html2latex/ht
 convert_html_to_tex_with_htmltolatex = make_convert_html_to_tex("../html2latex/htmltolatex -input %(html_name)s -output %(tex_name)s")
 
 convert_tex_to_html_with_tth = make_convert_tex_to_html("../latex2html/tth < %(tex_name)s > %(html_name)s")
+convert_tex_to_html_with_ttm = make_convert_tex_to_html("../latex2html/ttm < %(tex_name)s > %(html_name)s")
+def hyperlatex_pre_hook(html_name, *args, **kargs):
+    if html_name[-len('.html'):] == '.html':
+        return {"html_base_name":html_name[:-len('.html')]}
+    else:
+        raise ValueError("Invalid HTML file name for HyperLaTeX; must end in .html")
+convert_tex_to_html_with_hyperlatex = make_convert_tex_to_html("../latex2html/hyperlatex %(tex_name)s", preamble_tex=r"\setcounter{htmldepth}{0}\htmlname{%(html_base_name)s}", pre_hook=hyperlatex_pre_hook)
+
 
 #################################### html2tex ####################################
 def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
@@ -232,7 +255,13 @@ HTML_TO_TEX_CONVERTERS = [
 TEX_TO_HTML_CONVERTERS = [
     {"full_name": "TtH (version 3.82) (not yet working)",
      "short_name": "TtH",
-     "_py_function": convert_tex_to_html_with_tth }
+     "_py_function": convert_tex_to_html_with_tth },
+    {"full_name": "TtM (version 3.82) (not yet tested)",
+     "short_name": "TtM",
+     "_py_function": convert_tex_to_html_with_ttm },
+    {"full_name": "HyperLaTeX (version 2.7) (not yet tested)",
+     "short_name": "HyperLaTeX",
+     "_py_function": convert_tex_to_html_with_hyperlatex }
     ]
 
 
