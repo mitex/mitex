@@ -76,15 +76,9 @@ function get_latex_end() {
 }
 
 function set_wysiwyg_html(html) {
-    if (tinyMCE.editors['wysiwyg-textarea'])
-        return tinyMCE.editors['wysiwyg-textarea'].setContent(html);
-    else
-        document.getElementById("wysiwyg-textarea").innerHTML = html;
+    return $("#wysiwyg-textarea").html(html);
 }
 
 function get_wysiwyg_html() {
-    if (tinyMCE.editors['wysiwyg-textarea'])
-        return tinyMCE.editors['wysiwyg-textarea'].getContent();
-    else
-        return document.getElementById("wysiwyg-textarea").innerHTML;
+    return $("#wysiwyg-textarea").html();
 }
