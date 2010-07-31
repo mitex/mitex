@@ -75,22 +75,16 @@ function get_latex_end() {
     return LATEX_END.innerHTML;
 }
 
-function set_wysiwyg_html(html, editor) {
-    if (editor === undefined) {
-        if (tinyMCE.editors['wysiwyg-textarea'])
-            return tinyMCE.editors['wysiwyg-textarea'].setContent(html);
-        else
-            return document.getElementById("wysiwyg-textarea").innerHTML = html;
-    }
-    return editor.setContent(html);
+function set_wysiwyg_html(html) {
+    if (tinyMCE.editors['wysiwyg-textarea'])
+        return tinyMCE.editors['wysiwyg-textarea'].setContent(html);
+    else
+        document.getElementById("wysiwyg-textarea").innerHTML = html;
 }
 
-function get_wysiwyg_html(editor) {
-     if (editor === undefined) {
-        if (tinyMCE.editors['wysiwyg-textarea'])
-            return tinyMCE.editors['wysiwyg-textarea'].getContent();
-        else
-            return document.getElementById("wysiwyg-textarea").innerHTML;
-    }
-    return editor.getContent();
+function get_wysiwyg_html() {
+    if (tinyMCE.editors['wysiwyg-textarea'])
+        return tinyMCE.editors['wysiwyg-textarea'].getContent();
+    else
+        return document.getElementById("wysiwyg-textarea").innerHTML;
 }

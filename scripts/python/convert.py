@@ -77,11 +77,11 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
                 dict_args.update(hook_args)
             elif hook_args:
                 list_args = hook_args
-        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex", delete=False)
+        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="w", suffix=".tex", delete=False)
         tex_name = tex_file.name
         tex_file.write(latex_document)
         tex_file.close()
-        html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+        html_file = tempfile.NamedTemporaryFile(suffix='.html', mode='r', delete=False)
         html_name = html_file.name
         
         param_dict = {input_file_name:tex_name, output_file_name:html_name}
@@ -108,7 +108,7 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
 convert_html_to_tex_with_html2latex = make_convert_html_to_tex("../html2latex/html2latex %(html_name)s %(tex_name)s")
 convert_html_to_tex_with_htmltolatex = make_convert_html_to_tex("../html2latex/htmltolatex -input %(html_name)s -output %(tex_name)s")
 
-convert_tex_to_html_with_tth = make_convert_tex_to_html("../latex2html/tth < %(tex_name) > %(html_name)s")
+convert_tex_to_html_with_tth = make_convert_tex_to_html("../latex2html/tth < %(tex_name)s > %(html_name)s")
 
 #################################### html2tex ####################################
 def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
@@ -202,7 +202,8 @@ def main():
                                middle=os.path.abspath("../../templates/%s/middle" % form.getvalue("template")),
                                end=os.path.abspath("../../templates/%s/end" % form.getvalue("template")),
                                preamble=not_none(form.getvalue("latex_preamble")),
-                               body=not_none(form.getvalue("latex_body")))
+                               body=not_none(form.getvalue("latex_body")),
+                               name=None)
         print "Content-type: text/html"
         print
         print allowed_types[form.getvalue("type")](str(latex_file), html=not_none(form.getvalue("html")))
@@ -224,12 +225,12 @@ HTML_TO_TEX_CONVERTERS = [
     {"full_name": "HTML2LaTeX",
      "short_name": "html2latex",
      "_py_function": convert_html_to_tex_with_html2latex },
-    {"full_name": "HTML to LaTeX",
+    {"full_name": "HTML to LaTeX (not yet working)",
      "short_name": "htmltolatex",
      "_py_function": convert_html_to_tex_with_htmltolatex }
     ]
 TEX_TO_HTML_CONVERTERS = [
-    {"full_name": "TtH (version 3.82)",
+    {"full_name": "TtH (version 3.82) (not yet working)",
      "short_name": "TtH",
      "_py_function": convert_tex_to_html_with_tth }
     ]
