@@ -247,10 +247,10 @@ HTML_TO_TEX_CONVERTERS = [
     {"full_name": "HTML to LaTeX (version 2.7)",
      "short_name": "html2tex",
      "_py_function": convert_html_to_tex_with_html2tex },
-    {"full_name": "HTML2LaTeX (not yet working)",
+    {"full_name": "HTML2LaTeX",
      "short_name": "html2latex",
      "_py_function": convert_html_to_tex_with_html2latex },
-    {"full_name": "HTML to LaTeX (not yet working)",
+    {"full_name": "HTML to LaTeX",
      "short_name": "htmltolatex",
      "_py_function": convert_html_to_tex_with_htmltolatex }
     ]
