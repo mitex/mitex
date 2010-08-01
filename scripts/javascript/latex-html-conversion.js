@@ -141,20 +141,20 @@ function get_all_latex() {
 }
 
 function set_latex_parts(begin, preamble, middle, body, end) {
-    if (begin)
-        set_latex_begin(begin);
+//    if (begin)
+//        set_latex_begin(begin);
 
-    if (preamble)
+    if (preamble !== undefined)
         set_latex_preamble(preamble);
 
-    if (middle)
-        set_latex_middle(middle);
+//    if (middle)
+//        set_latex_middle(middle);
 
-    if (body)
+    if (body !== undefined)
         set_latex_body(body);
         
-    if (end)
-        set_latex_end(end);
+//    if (end)
+//        set_latex_end(end);
 }
 
 function set_all_latex(tex) {
@@ -162,7 +162,7 @@ function set_all_latex(tex) {
     var begin = "",
         preamble = "",
         middle = "",
-        body = tex,
+        body = tex + "\n",
         end = "";
      
     if (body.indexOf("\\begin{document}") > -1) {
@@ -234,5 +234,4 @@ $(function () {
         jQuery.getJSON("scripts/python/serve-converters-list.py", {"html2latex":true}, _set_converters_list(_html_to_latex_converters, _default_convert_html_to_latex));
         _LATEX_TO_HTML_CONVERTER_INPUT = _HTML_TO_LATEX_CONVERTER_INPUT = document.getElementById("converter");
         _WHICH_CONVERTER_SPAN = document.getElementById("converter-type");
-	$(function(){alert(_latex_to_html_converters);});
     });
