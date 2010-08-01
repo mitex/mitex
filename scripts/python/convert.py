@@ -255,7 +255,7 @@ HTML_TO_TEX_CONVERTERS = [
      "_py_function": convert_html_to_tex_with_htmltolatex }
     ]
 TEX_TO_HTML_CONVERTERS = [
-    {"full_name": "TtH (version 3.82",
+    {"full_name": "TtH (version 3.82)",
      "short_name": "TtH",
      "_py_function": convert_tex_to_html_with_tth },
     {"full_name": "TtM (version 3.82)",
