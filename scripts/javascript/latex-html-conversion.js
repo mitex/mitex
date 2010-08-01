@@ -162,14 +162,14 @@ function set_all_latex(tex) {
     var begin = "",
         preamble = "",
         middle = "",
-        body = tex + "\n",
+        body = tex,
         end = "";
      
     if (body.indexOf("\\begin{document}") > -1) {
         if (cur_latex.middle.indexOf("\\begin{document}") > -1) {
             middle = cur_latex.middle;
-            preamble = body.substring(0, body.indexOf(cur_latex.middle));
-            body = body.substring(body.indexOf(cur_latex.middle) + cur_latex.middle.length);
+            preamble = body.substring(0, body.indexOf("\\begin{document}"));
+            body = body.substring(body.indexOf("\\begin{document}") + "\\begin{document}".length);
         } else {
             preamble = body.substring(0, body.indexOf("\\begin{document}"));
             body = body.substring(body.indexOf("\\begin{document}"));
@@ -179,7 +179,7 @@ function set_all_latex(tex) {
     if (cur_latex.end.indexOf("\\end{document}") > -1) {
         if (body.indexOf("\\end{document}") > -1)
             end = cur_latex.end;
-            body = body.substring(0, body.indexOf(cur_latex.end));
+            body = body.substring(0, body.indexOf("\\end{document}"));
     }
     
 
