@@ -1,4 +1,8 @@
 #!/bin/bash
-pushd htmltolatex-1.0.1/
+
+# Absolute path this script is in.
+SCRIPTPATH=`dirname $(readlink -f $0)`
+
+pushd $SCRIPTPATH/htmltolatex-1.0.1/
 ./htmltolatex "$@"
 popd

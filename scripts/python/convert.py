@@ -270,3 +270,4 @@ TEX_TO_HTML_CONVERTERS = [
 
 if __name__ == "__main__":
     sys.exit(main())
+
