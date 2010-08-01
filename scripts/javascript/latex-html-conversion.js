@@ -177,9 +177,10 @@ function set_all_latex(tex) {
     }
 
     if (cur_latex.end.indexOf("\\end{document}") > -1) {
-        if (body.indexOf("\\end{document}") > -1)
+        if (body.indexOf("\\end{document}") > -1) {
             end = cur_latex.end;
             body = body.substring(0, body.indexOf("\\end{document}"));
+        }
     }
     
 
