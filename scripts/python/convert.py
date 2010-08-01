@@ -39,11 +39,11 @@ def make_convert_html_to_tex(make_command, input_file_name="html_name", output_f
                 dict_args.update(hook_args)
             elif hook_args:
                 list_args = hook_args
-        html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+        html_file = tempfile.NamedTemporaryFile(suffix='.html')#, delete=False) # not available in python 2.5
         html_file.write(html)
         html_name = html_file.name
-        html_file.close()
-        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex", delete=False)
+        html_file.flush()
+        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex")#, delete=False)
         tex_name = tex_file.name
 
         param_dict = {input_file_name:html_name, output_file_name:tex_name}
@@ -58,8 +58,7 @@ def make_convert_html_to_tex(make_command, input_file_name="html_name", output_f
 
         rtn = tex_file.read()
         tex_file.close()
-        for name in (html_name, tex_name):
-            os.remove(name)
+        html_file.close()
 
         if post_hook:
             post_hook(*list_args, **dict_args)
@@ -69,9 +68,9 @@ def make_convert_html_to_tex(make_command, input_file_name="html_name", output_f
 
 def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_file_name="html_name", pre_hook=None, post_hook=None, preamble_tex=None):
     def convert_tex_to_html(latex_document, html):
-        html_file = tempfile.NamedTemporaryFile(suffix='.html', mode='r', delete=False)
+        html_file = tempfile.NamedTemporaryFile(suffix='.html', mode='r')#, delete=False) # not available in 2.5
         html_name = html_file.name
-        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="w", suffix=".tex", delete=False)
+        tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="w", suffix=".tex")#, delete=False) # not available in 2.5
         tex_name = tex_file.name
         
         param_dict = {input_file_name:tex_name, output_file_name:html_name}
@@ -98,7 +97,7 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
                     except TypeError:                
                         latex_document = latex_document.replace(r"\begin{document}", preamble_tex + r"\begin{document}")
         tex_file.write(latex_document)
-        tex_file.close()
+        tex_file.flush()
         
         try:
             cmd = make_command(**param_dict)
@@ -111,8 +110,9 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
 
         rtn = html_file.read()
         html_file.close()
-        for name in (html_name, tex_name):
-            os.remove(name)
+        tex_file.close()
+##        for name in (html_name, tex_name):
+##            os.remove(name)
 
         if post_hook:
             post_hook(*list_args, **dict_args)
@@ -142,13 +142,13 @@ def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
     with open(end, 'r') as f:
         end = f.read()
     
-    html_file = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+    html_file = tempfile.NamedTemporaryFile(suffix='.html')#, delete=False)
     html_file.write(html)
     html_name = html_file.name
-    html_file.close()
-    tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex", delete=False)
+    html_file.flush()
+    tex_file = tempfile.NamedTemporaryFile(dir="/tmp", mode="r", suffix=".tex")#, delete=False)
     tex_name = tex_file.name
-    skeleton = tempfile.NamedTemporaryFile(dir="/tmp", mode="w", delete=False)
+    skeleton = tempfile.NamedTemporaryFile(dir="/tmp", mode="w")#, delete=False)
     skeleton_name = skeleton.name
     skeleton.write(r"""%(begin)s
 %%html -s article
@@ -160,7 +160,7 @@ def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
 %%html %(html_name)s 1
 
 \end{document}""" % locals())
-    skeleton.close()
+    skeleton.flush()
     
     p = subprocess.Popen("../html2latex/html2tex -o %(tex_name)s %(skeleton_name)s" % locals(),
                          shell=True, stdin=subprocess.PIPE,
@@ -169,8 +169,10 @@ def convert_html_to_tex_with_html2tex(html, begin, middle, end, preamble, body):
 
     rtn = tex_file.read()
     tex_file.close()
-    for name in (html_name, tex_name, skeleton_name):
-        os.remove(name)
+    skeleton.close()
+    html_file.close()
+##    for name in (html_name, tex_name, skeleton_name):
+##        os.remove(name)
 
     return rtn
 ################################## end html2tex ##################################
