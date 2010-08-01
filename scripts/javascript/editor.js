@@ -18,13 +18,7 @@
 // along with MITeX; if not, write to the Free Software Foundation,
 // Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-var editor;
-
 function switchToSource() {
-    if (editor) {
-        editor.destroy();
-    }
-
     document.getElementById("source_button").disabled = "true";
     document.getElementById("wysiwyg_button").disabled = "";
 
@@ -73,7 +67,6 @@ function init_tinyMCE(setup_function) {
 function switchToWYSIWYG() {
     //editor = CKEDITOR.replace("wysiwyg_editor");
     switch_to_html_to_latex_conversion();
-    init_tinyMCE();
     
     document.getElementById("source_button").disabled = "";
     document.getElementById("wysiwyg_button").disabled = "true";
@@ -85,6 +78,7 @@ function switchToWYSIWYG() {
 }
 
 $(function () {
-        switchToSource();
+        init_tinyMCE();
+	switchToSource();
         close_log();
     });

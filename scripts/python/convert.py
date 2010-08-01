@@ -245,7 +245,7 @@ HTML_TO_TEX_CONVERTERS = [
     {"full_name": "HTML to LaTeX (version 2.7)",
      "short_name": "html2tex",
      "_py_function": convert_html_to_tex_with_html2tex },
-    {"full_name": "HTML2LaTeX",
+    {"full_name": "HTML2LaTeX (not yet working)",
      "short_name": "html2latex",
      "_py_function": convert_html_to_tex_with_html2latex },
     {"full_name": "HTML to LaTeX (not yet working)",
@@ -253,13 +253,13 @@ HTML_TO_TEX_CONVERTERS = [
      "_py_function": convert_html_to_tex_with_htmltolatex }
     ]
 TEX_TO_HTML_CONVERTERS = [
-    {"full_name": "TtH (version 3.82) (not yet working)",
+    {"full_name": "TtH (version 3.82",
      "short_name": "TtH",
      "_py_function": convert_tex_to_html_with_tth },
-    {"full_name": "TtM (version 3.82) (not yet tested)",
+    {"full_name": "TtM (version 3.82),
      "short_name": "TtM",
      "_py_function": convert_tex_to_html_with_ttm },
-    {"full_name": "HyperLaTeX (version 2.7) (not yet tested)",
+    {"full_name": "HyperLaTeX (version 2.7) (not yet working)",
      "short_name": "HyperLaTeX",
      "_py_function": convert_tex_to_html_with_hyperlatex }
     ]

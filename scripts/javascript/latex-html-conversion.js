@@ -234,4 +234,5 @@ $(function () {
         jQuery.getJSON("scripts/python/serve-converters-list.py", {"html2latex":true}, _set_converters_list(_html_to_latex_converters, _default_convert_html_to_latex));
         _LATEX_TO_HTML_CONVERTER_INPUT = _HTML_TO_LATEX_CONVERTER_INPUT = document.getElementById("converter");
         _WHICH_CONVERTER_SPAN = document.getElementById("converter-type");
+	$(function(){alert(_latex_to_html_converters);});
     });

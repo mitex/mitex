@@ -27,8 +27,8 @@ $(function () {
                 LATEX_MIDDLE = document.getElementById("middle");
                 LATEX_END = document.getElementById("end");
                 LATEX_PREAMBLE = document.getElementById("latex_preamble");
-	            LATEX_BODY = document.getElementById("latex_body");
-	          });
+                LATEX_BODY = document.getElementById("latex_body");
+              });
 
 function set_latex_begin(data) {
     LATEX_BEGIN.innerHTML = data;
