@@ -52,6 +52,8 @@ def make_convert_html_to_tex(make_command, input_file_name="html_name", output_f
         except TypeError:
             cmd = make_command % param_dict
 
+        raw_input(html)
+        raw_input(cmd)
         p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, stderr) = p.communicate()
