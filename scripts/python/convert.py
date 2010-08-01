@@ -52,8 +52,6 @@ def make_convert_html_to_tex(make_command, input_file_name="html_name", output_f
         except TypeError:
             cmd = make_command % param_dict
 
-        raw_input(html)
-        raw_input(cmd)
         p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (stdout, stderr) = p.communicate()
@@ -122,7 +120,7 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
         return rtn
     return convert_tex_to_html
 
-convert_html_to_tex_with_html2latex = make_convert_html_to_tex("../html2latex/html2latex %(html_name)s %(tex_name)s")
+convert_html_to_tex_with_html2latex = make_convert_html_to_tex("../html2latex/html2latex %(html_name)s -s > %(tex_name)s")
 convert_html_to_tex_with_htmltolatex = make_convert_html_to_tex("../html2latex/htmltolatex -input %(html_name)s -output %(tex_name)s")
 
 convert_tex_to_html_with_tth = make_convert_tex_to_html("../latex2html/tth < %(tex_name)s > %(html_name)s")
