@@ -74,6 +74,21 @@ function get_current_converter(converter_input, converters_list) {
     return _get_converter(name, converters_list);
 }
 
+function _update_converter_list_display(input, converters_list) {
+    // clear the options list
+    for (var i = input.options.length - 1; i >= 0; i--) {
+        input.removeChild(input.options[i]);
+    }
+    
+    var len = converters_list.length; // because JS is stupid and otherwise it's quadratic
+    for (var i = 0; i < len; i++) {
+        var converter = converters_list[i];
+        if (converter["full_name"] && converter["short_name"] && converter["function_call"]) {
+            input[input.options.length] = new Option(converter["full_name"], converter["short_name"]);
+        }
+    }
+}
+
 function _latex_html_switch(converter_type_description, old_input, new_input, new_converters_list, old_converters_list, editor) {
     // Convert the content
     converter = get_current_converter(old_input, old_converters_list);
@@ -84,19 +99,9 @@ function _latex_html_switch(converter_type_description, old_input, new_input, ne
     if (old_input != new_input) {
         $(old_input).hide();
         $(new_input).show();
+        
+        _update_converter_list_display(new_input, new_converters_list)
     }
-    // clear the options list
-    for (var i = new_input.options.length - 1; i >= 0; i--) {
-      new_input.removeChild(new_input.options[i]);
-    }
-    var len = new_converters_list.length; // because JS is stupid and otherwise it's quadratic
-    for (var i = 0; i < len; i++) {
-        var converter = new_converters_list[i];
-        if (converter["full_name"] && converter["short_name"] && converter["function_call"]) {
-            new_input[new_input.options.length] = new Option(converter["full_name"], converter["short_name"]);
-        }
-    }
-
 }
 
 function switch_to_latex_to_html_conversion(editor) {
@@ -233,6 +238,7 @@ $(function () {
         _add_html_to_latex_converter("Literal text", "literal", (function (editor) { set_all_latex(get_wysiwyg_html(editor)); }));
         jQuery.getJSON("scripts/python/serve-converters-list.py", {"latex2html":true}, _set_converters_list(_latex_to_html_converters, _default_convert_latex_to_html));
         jQuery.getJSON("scripts/python/serve-converters-list.py", {"html2latex":true}, _set_converters_list(_html_to_latex_converters, _default_convert_html_to_latex));
-        _LATEX_TO_HTML_CONVERTER_INPUT = _HTML_TO_LATEX_CONVERTER_INPUT = document.getElementById("converter");
+        _LATEX_TO_HTML_CONVERTER_INPUT = document.getElementById("latex-to-html-converter");
+	_HTML_TO_LATEX_CONVERTER_INPUT = document.getElementById("html-to-latex-converter");
         _WHICH_CONVERTER_SPAN = document.getElementById("converter-type");
     });
