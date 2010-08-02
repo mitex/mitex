@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]; then
+	echo "Usage: $0 -input <input-HTML-file> -output <output-LaTeX-file> [-css <css-file-assigned-to-input file>] [-config <configuration-file>]"
+	exit 1
+fi
+
+
+java -jar htmltolatex.jar $@

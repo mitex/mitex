@@ -1,0 +1,1 @@
+Program is distributed under GNU GPL. See gpl.txt for details.
