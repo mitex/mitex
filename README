@@ -11,3 +11,6 @@ option) any later version.  Please see the file COPYING for more
 information, and the file CONTRIBUTORS for a list of contributors to
 the project.  Please also email mitex@mit.edu if you are interested in
 contributing to MITeX.
+
+Detailed instructions for working on it can be found in setup.sh.  Running this file will execute the relevant commands.
+
