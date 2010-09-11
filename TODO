@@ -1,11 +1,17 @@
-- sandboxing the compiler (I bet you could easily get it in an infinte loop right now)
+- sandboxing the compiler (the TeX \def\a{\a}\a causes an infinite loop, and the page hangs)
 - provide a nice way for people to contribute/share templates (maybe read them from homedir via certs..?)
 - have it save a temp file automatically every so often
-- connect the WYSIWYG editor to the source editor
-- add math to the WYSIWYG editor (e.g. http://www.imathas.com/editordemo/demo.html)
 - add more templates
 - highlight errors
 - possibly provide a math-image service?
 - word count
 - possibly integrate with detexify?
-- possibly allow modification of the documentclass and options
+- fix the bug where text that is too long wraps only as a gray shadow
+
+LaTeX <---> HTML conversion
+- improve the connection between the WYSIWYG editor and the source editor (and move the connection to the master branch, when it's good enough)
+- make the conversion math-aware (TinyMCE does math in a special way; we need to patch the conversion to do this) (ask jgross for details on this)
+- make HyperLaTeX work
+- find more LaTeX to HTML converters, or HTML to LaTeX converters, install them/get them working, and include them in the website (ask jgross for details on the current method of inclusion)
+- "synchronize" conversion, so that updating a part of the document in the WYSIWYG only updates the corresponding TeX code, and does not regenerate the entire document (jgross has some ideas for this)
+
