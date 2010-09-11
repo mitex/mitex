@@ -4,7 +4,7 @@
 # 1) Add yourself to the mitex mailing list or ask someone already on the project to do so
 USER=`whoami`
 echo "Adding you ($USER) to the mitex mailing list..."
-blanche mitex -a $SUER
+blanche mitex -a $USER
 # 2) Wait ~15 minutes.  Type 
 #echo "Waiting 15 minutes for updates..."
 #sleep 900
