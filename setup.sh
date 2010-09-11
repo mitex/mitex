@@ -15,12 +15,11 @@ aklog sipb -force
 echo "Giving you a scripts account.  Select option 2 for the service."
 add scripts
 scripts
-# 4) Make a local directory for mitex, and change to it.
-mkdir ~/web_scripts/mitex
-cd ~/web_scripts/mitex
+# 4) Change to the directory you want MITeX in.
+cd ~/web_scripts
 # 5) Execute the following commands:
 echo "Giving you the git repository."
-git clone /afs/sipb/project/mitex/mitex.git ./
+git clone /afs/sipb/project/mitex/mitex.git ./mitex
 git branch dev
 git checkout dev
 git remote add dev /afs/sipb/project/mitex/web_scripts/dev -f
