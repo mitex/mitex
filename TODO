@@ -10,8 +10,13 @@
 
 LaTeX <---> HTML conversion
 - improve the connection between the WYSIWYG editor and the source editor (and move the connection to the master branch, when it's good enough)
+  in particular, turn MathML-like commands in the WYSIWYG editor into LaTeX commands
+- now the LaTeX2HTMLmod turns all <span> tags to $math$, so the <span> tags that aren't <span class="AM"> should be fixed not to turn into $math$
+- fix possible $$ from two consecutive maths.
 - make the conversion math-aware (TinyMCE does math in a special way; we need to patch the conversion to do this) (ask jgross for details on this)
+  it creates collision with `quotes' and ``quotes''
 - make HyperLaTeX work
 - find more LaTeX to HTML converters, or HTML to LaTeX converters, install them/get them working, and include them in the website (ask jgross for details on the current method of inclusion)
 - "synchronize" conversion, so that updating a part of the document in the WYSIWYG only updates the corresponding TeX code, and does not regenerate the entire document (jgross has some ideas for this)
+
 
