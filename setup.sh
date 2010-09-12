@@ -5,26 +5,21 @@
 USER=`whoami`
 echo "Adding you ($USER) to the mitex mailing list..."
 blanche mitex -a $USER
-# 2) Wait ~15 minutes.  Type 
-#echo "Waiting 15 minutes for updates..."
-#sleep 900
+# 2) Type 
 echo "Getting tokens..."
 kinit $USER
 aklog sipb -force
 # 3) (Optional) Go to scripts.mit.edu and follow the instructions to give yourself a scripts account.
-echo "Giving you a scripts account.  Select option 2 for the service, and then 1 to set up  "
+echo "Giving you a scripts account.  Select option 2 for the service, and then 1 to set it up for your local machine."
 mkdir ~/web_scripts
 athrun scripts
 # 4) Change to the directory you want MITeX in.
 cd ~/web_scripts
 # 5) Execute the following commands:
 echo "Giving you the git repository."
-git clone /afs/sipb/project/mitex/mitex.git ./mitex
+git clone git://mitex.scripts.mit.edu/mitex.git mitex
 cd mitex
-git branch dev
-git checkout dev
-git remote add dev /afs/sipb/project/mitex/web_scripts/dev -f
-git reset --hard
+git fetch /afs/sipb/project/mitex/web_scripts/dev master:dev
 # 6) Change directories to /afs/sipb/project/mitex/web_scripts/dev
 pushd /afs/sipb/project/mitex/web_scripts/dev
 # 7) Execute the following command:
