@@ -17,16 +17,11 @@ athrun scripts
 cd ~/web_scripts
 # 5) Execute the following commands:
 echo "Giving you the git repository."
-git clone git://mitex.scripts.mit.edu/mitex.git mitex
+git clone /afs/sipb/project/mitex/mitex.git mitex
 cd mitex
-git fetch /afs/sipb/project/mitex/web_scripts/dev master:dev
-# 6) Change directories to /afs/sipb/project/mitex/web_scripts/dev
-pushd /afs/sipb/project/mitex/web_scripts/dev
-# 7) Execute the following command:
-git remote add $USER ~/web_scripts/mitex
-popd
+git fetch /afs/sipb/project/mitex/mitex.git dev:dev
 # 
-# To change to the master (mitex.mit.edu) branch, execute
+# To change to the production (mitex.mit.edu) branch, execute
 #   git checkout master
 #
 # To change to the development version (dev.mitex.scripts.mit.edu)
@@ -36,21 +31,19 @@ popd
 #   git add .
 #   git commit -m "$message"
 #
-# To push your changes on the master branch, execute 
+# To push your changes on the production branch, execute 
 #   git checkout master
-#   git push
+#   git push origin master:master
 #
-# To push your changes on the dev branch, execute the following
-#   pushd /afs/sipb/project/mitex/web_scripts/dev
-#   git pull "`whoami`" dev:master
-#   git remote update
-#   popd
-#
-# To pull updates from the main branch, execute
+# To push your changes on the development branch, execute the following
 #   git checkout master
-#   git pull
+#   git push origin dev:dev
 #
-# To pull updates from the dev branch, execute
+# To pull updates from the production branch, execute
 #   git checkout dev
-#   git pull dev master:dev
+#   git pull origin master:master
+#
+# To pull updates from the development branch, execute
+#   git checkout dev
+#   git pull origin dev:dev
 
