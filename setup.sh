@@ -12,9 +12,9 @@ echo "Getting tokens..."
 kinit $USER
 aklog sipb -force
 # 3) (Optional) Go to scripts.mit.edu and follow the instructions to give yourself a scripts account.
-echo "Giving you a scripts account.  Select option 2 for the service."
-add scripts
-scripts
+echo "Giving you a scripts account.  Select option 2 for the service, and then 1 to set up  "
+mkdir ~/web_scripts
+athrun scripts
 # 4) Change to the directory you want MITeX in.
 cd ~/web_scripts
 # 5) Execute the following commands:
