@@ -1,0 +1,20 @@
+This version of html2latex has been compiled using emx 0.9c fix2 for OS/2 Warp.
+
+It should run on any DOS, Windows (3.1x, 9x,NT) and OS/2 machine provided the
+suitable runtime libraries/executables were installed.
+
+DOS, OS/2: you need emxrt.zip available e.g. from ftp.leo.org OS/2-section.
+Windows: you need rsxnt141.zip e.g. from ftp.uni-bielefeld.de
+
+Documentation is in src\html2latex.html
+
+If you want to recompile it, you need long filename support, i.e. HPFS (OS/2),
+VFAT (Win 9x), NTFS (WinNT).  
+
+DISCLAIMER: All I did, was modifying the makefile for emx OS/2 and compiling.
+            I have no idea of any malfunctioning of the resulting exe-file,
+            so don't bother me with such questions !
+
+Good luck !
+           
+Roland Reimers (reimers@muffin.physik.uni-bremen.de)

@@ -121,6 +121,7 @@ def make_convert_tex_to_html(make_command, input_file_name="tex_name", output_fi
     return convert_tex_to_html
 
 convert_html_to_tex_with_html2latex = make_convert_html_to_tex("../html2latex/html2latex %(html_name)s -s > %(tex_name)s")
+convert_html_to_tex_with_html2latexmod = make_convert_html_to_tex("../html2latex/html2latexmod %(html_name)s -s > %(tex_name)s")
 convert_html_to_tex_with_htmltolatex = make_convert_html_to_tex("../html2latex/htmltolatex -input %(html_name)s -output %(tex_name)s")
 
 convert_tex_to_html_with_tth = make_convert_tex_to_html("../latex2html/tth < %(tex_name)s > %(html_name)s")
@@ -250,6 +251,9 @@ HTML_TO_TEX_CONVERTERS = [
     {"full_name": "HTML2LaTeX",
      "short_name": "html2latex",
      "_py_function": convert_html_to_tex_with_html2latex },
+     {"full_name": "HTML2LaTeX (Modified)",
+     "short_name": "html2latexmod",
+     "_py_function": convert_html_to_tex_with_html2latexmod },
     {"full_name": "HTML to LaTeX",
      "short_name": "htmltolatex",
      "_py_function": convert_html_to_tex_with_htmltolatex }
