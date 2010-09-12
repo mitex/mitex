@@ -43,6 +43,7 @@ popd
 # To push your changes on the dev branch, execute the following
 #   pushd /afs/sipb/project/mitex/web_scripts/dev
 #   git pull "`whoami`" dev:master
+#   git remote update
 #   popd
 #
 # To pull updates from the main branch, execute
