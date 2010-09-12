@@ -20,6 +20,7 @@ cd ~/web_scripts
 # 5) Execute the following commands:
 echo "Giving you the git repository."
 git clone /afs/sipb/project/mitex/mitex.git ./mitex
+cd mitex
 git branch dev
 git checkout dev
 git remote add dev /afs/sipb/project/mitex/web_scripts/dev -f
