@@ -9,6 +9,7 @@
 - fix the bug where text that is too long wraps only as a gray shadow
 - code completion/autosuggest
 - automatically download packages from ctan that aren't on the system (e.g., etoolbox)
+- make a hook for github so that if someone modifies the project with the github interface/pushes to github, the AFS copy gets updated
 
 LaTeX <---> HTML conversion
 - improve the connection between the WYSIWYG editor and the source editor (and move the connection to the master branch, when it's good enough)
