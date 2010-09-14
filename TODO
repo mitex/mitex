@@ -7,6 +7,8 @@
 - word count
 - possibly integrate with detexify?
 - fix the bug where text that is too long wraps only as a gray shadow
+- code completion/autosuggest
+- automatically download packages from ctan that aren't on the system (e.g., etoolbox)
 
 LaTeX <---> HTML conversion
 - improve the connection between the WYSIWYG editor and the source editor (and move the connection to the master branch, when it's good enough)
